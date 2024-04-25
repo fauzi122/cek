@@ -1,0 +1,22 @@
+<html>
+<body>
+<?php 
+
+$today=date('Y-m-d');
+$tgl_mulai="2017-09-01";
+$tgl_selesai="2023-10-27";
+
+if($today<$tgl_mulai){
+  
+	 $url="../";
+}elseif($today>$tgl_selesai){
+ 
+	 $url="../";
+}elseif($today>=$tgl_mulai){
+	$url="login";
+}
+?>
+<meta http-equiv="Refresh" content="0; URL=<?php echo $url;?>">
+
+</body>
+</html>                

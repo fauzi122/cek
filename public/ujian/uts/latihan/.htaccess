@@ -1,0 +1,20 @@
+RewriteEngine On
+
+RewriteRule ^login$ content.php?page=login [L]
+RewriteRule ^logout-(.*)$ content.php?page=logout&id=$1 [L]
+RewriteRule ^-(.*)$ wrapper.php?page=home&id=$1 [L]
+
+RewriteRule ^ujian-(.*)$ wrapper.php?page=ujian&id=$1 [L]
+RewriteRule ^ujian.-(.*)$ wrapper.php?page=ujian_simpan&id=$1 [L]
+RewriteRule ^bukti-ujian-(.*)$ wrapper.php?page=ujian_bukti&id=$1 [L]
+RewriteRule ^edit-(.*)$ wrapper.php?page=edit&id=$1 [L]
+RewriteRule ^eujian-(.*)$ wrapper.php?page=ujian_edit&id=$1 [L]
+RewriteRule ^eujian.-(.*)$ wrapper.php?page=ujian_edit_simpan&id=$1 [L]
+RewriteRule ^bukti-pdf-(.*)$ content.php?page=ujian_bukti_pdf&id=$1 [L]
+RewriteRule ^bukti-pdf-email-(.*)-(.*)$ page/pg_bukti_pdf2.php?id1=$1&id2=$2 [L]
+RewriteRule ^foto1/(.*)$ http://foto.kampus.id/f0t0mhs/$1 [L]
+RewriteRule ^foto2/(.*)$ http://foto.kampus.id/fotomhsubsi/$1 [L]
+RewriteRule ^foto3/(.*)$ http://foto.kampus.id/fotomhsnuri/$1 [L]
+RewriteRule ^foto4/(.*)$ http://foto.kampus.id/fotomhsabang/$1 [L]
+
+Options All -Indexes

@@ -1,0 +1,171 @@
+[33mcommit 0622b1906ec7a36d3d4adc12dec8d7e82fb0820a[m[33m ([m[1;36mHEAD -> [m[1;32mazis[m[33m, [m[1;31morigin/fauzi[m[33m, [m[1;31morigin/azis[m[33m, [m[1;31morigin/HEAD[m[33m)[m
+Author: fauzi ahmad <ozanfauzi39@gmail.com>
+Date:   Thu Mar 7 17:47:38 2024 +0700
+
+    ke enam
+
+[33mcommit d7d02835c614be376b0896a0e4748fc48312fb30[m
+Author: fauzi ahmad <ozanfauzi39@gmail.com>
+Date:   Thu Mar 7 17:43:11 2024 +0700
+
+    ke lima
+
+[33mcommit d37ad50cd36f789357de22e551e7e0d199945799[m
+Merge: ab9128d 68990eb
+Author: fauzi122 <33724446+fauzi122@users.noreply.github.com>
+Date:   Thu Mar 7 17:22:02 2024 +0700
+
+    Merge pull request #9 from fauzi122/main
+    
+    Merge pull request #8 from fauzi122/fauzi
+
+[33mcommit 68990ebca2376ac76f2d2c6b8eb182de4b1d5124[m
+Merge: fd914ad ab9128d
+Author: fauzi122 <33724446+fauzi122@users.noreply.github.com>
+Date:   Thu Mar 7 17:18:42 2024 +0700
+
+    Merge pull request #8 from fauzi122/fauzi
+    
+    Merge pull request #7 from fauzi122/main
+
+[33mcommit ab9128d5deae7c1148c8f11f291385805878394c[m
+Merge: f1f7abb fd914ad
+Author: fauzi122 <33724446+fauzi122@users.noreply.github.com>
+Date:   Thu Mar 7 17:16:17 2024 +0700
+
+    Merge pull request #7 from fauzi122/main
+    
+    Merge pull request #6 from fauzi122/fauzi
+
+[33mcommit fd914adb4778ebcbd2a98a4f8e5fb348d324ac98[m
+Merge: 2922fcc f1f7abb
+Author: fauzi122 <33724446+fauzi122@users.noreply.github.com>
+Date:   Thu Mar 7 17:15:51 2024 +0700
+
+    Merge pull request #6 from fauzi122/fauzi
+    
+    ke emapat
+
+[33mcommit f1f7abbb2317a123d59bfb22f0de772a67081a28[m
+Merge: 47b1490 b653b6a
+Author: fauzi ahmad <ozanfauzi39@gmail.com>
+Date:   Thu Mar 7 17:13:39 2024 +0700
+
+    Merge branch 'fauzi' of https://github.com/fauzi122/uji into fauzi
+
+[33mcommit b653b6ac54c8ff986258b11a3e480dad96f9bee9[m
+Merge: faa5de0 2922fcc
+Author: fauzi122 <33724446+fauzi122@users.noreply.github.com>
+Date:   Thu Mar 7 17:07:06 2024 +0700
+
+    Merge pull request #5 from fauzi122/main
+    
+    Main
+
+[33mcommit 2922fccd8d0160499fa6d2b54efd4f313f54a5dd[m
+Author: fauzi122 <33724446+fauzi122@users.noreply.github.com>
+Date:   Thu Mar 7 17:06:31 2024 +0700
+
+    Update AppServiceProvider.php
+
+[33mcommit 47b14903551244ed2d71f66692b4e3bf70861f78[m
+Author: fauzi ahmad <ozanfauzi39@gmail.com>
+Date:   Thu Mar 7 17:05:01 2024 +0700
+
+    ke empat
+
+[33mcommit 24b95b8493598c0b1a46f26dbc34771c0ba329b5[m
+Merge: 711b90f faa5de0
+Author: fauzi122 <33724446+fauzi122@users.noreply.github.com>
+Date:   Thu Mar 7 16:59:10 2024 +0700
+
+    Merge pull request #4 from fauzi122/fauzi
+    
+    ok
+
+[33mcommit 7b045fe73038ef43c9db90ddf0661474c2289d9b[m
+Merge: b3d13c4 faa5de0
+Author: fauzi ahmad <ozanfauzi39@gmail.com>
+Date:   Thu Mar 7 16:41:55 2024 +0700
+
+    Merge branch 'fauzi' of https://github.com/fauzi122/uji into fauzi
+
+[33mcommit b3d13c4fb7735a2f16841be094398ed30daf32a2[m
+Author: fauzi ahmad <ozanfauzi39@gmail.com>
+Date:   Thu Mar 7 16:39:05 2024 +0700
+
+    Commit pesan menjelaskan perubahan
+
+[33mcommit faa5de04c5dbc503963f4de8b135d8861cc79bd0[m
+Merge: a8f1845 711b90f
+Author: fauzi122 <33724446+fauzi122@users.noreply.github.com>
+Date:   Thu Mar 7 16:21:51 2024 +0700
+
+    Merge pull request #2 from fauzi122/main
+    
+    Merge pull request #1 from fauzi122/fauzi
+
+[33mcommit a8f18456813df7c2f14bd7eb52f8e918e80af0d5[m
+Author: fauzi ahmad <ozanfauzi39@gmail.com>
+Date:   Thu Mar 7 16:10:49 2024 +0700
+
+    push ke tiga kali
+
+[33mcommit 711b90fa4e72d0a60e7bcebeeec0460c7d4a04b6[m
+Merge: 4f5f690 668d8d7
+Author: fauzi ahmad <ozanfauzi39@gmail.com>
+Date:   Wed Mar 6 16:28:11 2024 +0700
+
+    Merge branch 'fauzi' of https://github.com/fauzi122/uji
+
+[33mcommit 668d8d73a16df7fdf64282e5e94ccc0a2ad14aaf[m
+Author: fauzi ahmad <ozanfauzi39@gmail.com>
+Date:   Wed Mar 6 16:27:43 2024 +0700
+
+    to main
+
+[33mcommit 4f5f690f1c0debbbb6071df09efcfb5ebe6a76b0[m
+Merge: 93aa54a 4177e65
+Author: fauzi ahmad <ozanfauzi39@gmail.com>
+Date:   Wed Mar 6 16:16:32 2024 +0700
+
+    Merge branch 'fauzi' of https://github.com/fauzi122/uji
+
+[33mcommit 4177e65ea7cb15c9b6157cda469953dbc404a895[m
+Author: fauzi ahmad <ozanfauzi39@gmail.com>
+Date:   Wed Mar 6 16:12:15 2024 +0700
+
+    ada perubahan di show uts
+
+[33mcommit 5d837944dbd8b6bed682f8ca9c6d52335334eb68[m
+Author: fauzi ahmad <ozanfauzi39@gmail.com>
+Date:   Wed Mar 6 15:54:10 2024 +0700
+
+    ada perubahan di show uts
+
+[33mcommit 93aa54ae4bfaaa4204c333e85f9f7bc316e262b6[m
+Merge: 42510a0 0661f26
+Author: fauzi122 <33724446+fauzi122@users.noreply.github.com>
+Date:   Wed Mar 6 15:41:35 2024 +0700
+
+    Merge pull request #1 from fauzi122/fauzi
+    
+    pertama
+
+[33mcommit 0661f262028f5cbe56eba8d247020b71ddfb4c65[m
+Author: fauzi ahmad <ozanfauzi39@gmail.com>
+Date:   Wed Mar 6 15:33:58 2024 +0700
+
+    pertama
+
+[33mcommit 91034c89d43c9634dee48663698e2358e08223e6[m
+Author: fauzi ahmad <ozanfauzi39@gmail.com>
+Date:   Mon Mar 4 11:55:42 2024 +0700
+
+    pertama
+
+[33mcommit 42510a05af6ff97efec8b7af31c3104a766f9103[m
+Author: fauzi ahmad <ozanfauzi39@gmail.com>
+Date:   Mon Mar 4 11:23:37 2024 +0700
+
+    first commit

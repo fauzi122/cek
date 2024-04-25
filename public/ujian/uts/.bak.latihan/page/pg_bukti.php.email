@@ -1,0 +1,286 @@
+
+<?php 
+//ambil id
+$id_user = mysql_real_escape_string(base64_decode($_GET["id"]));
+$list_sess=mysql_fetch_array(mysql_query("select testuser, testname, userid from  ".$db_prefix."session where id_session = '$id_user'"));
+
+if($_POST['userid']=="" or $_POST['testid']==""){
+		$nim=$list_sess['userid'];
+		$test_id=$list_sess['testuser'];
+	}else{
+		$nim=$_POST['userid'];
+		$test_id=$_POST['testid'];
+	}
+		
+		
+	$s_code=md5($tgl_sekarang."%".$jam_sekarang."%".$nim."%".$test_id);
+	if ($nim=="" or $test_id==""){
+	?>
+		<script language='javascript'>document.location = '<?php echo $path_base."-".base64_encode($id_user);?>';</script>
+		<meta http-equiv="Refresh" content="0; URL=<?php echo $path_base."-".base64_encode($id_user);?> ">
+	<?php
+	}else{
+	$q_bukti=mysql_query("SELECT a.resultid,a.userid,c.user_firstname,c.user_email,c.user_title,a.testid,
+							b.test_name, SEC_TO_TIME(a.result_timespent) AS spent_time, 
+							MID(FROM_UNIXTIME(b.test_datestart),9,2) AS tanggal, 
+							MID(FROM_UNIXTIME(b.test_datestart),6,2) AS bulan,
+							LEFT(FROM_UNIXTIME(b.test_datestart),4) AS tahun,
+							RIGHT(FROM_UNIXTIME(b.test_datestart),8) AS mulai, a.result_pointsmax
+							FROM ".$db_prefix."results AS a, ".$db_prefix."tests AS b, ".$db_prefix."users AS c 
+							WHERE a.testid=b.testid AND a.userid=c.userid AND a.userid='$nim' AND a.testid='$test_id'");
+	
+	$list_bkt=mysql_fetch_array($q_bukti);
+
+	/*$q_bukti2=mysql_query("SELECT count(resultid) as jml from ".$db_prefix."results_answers WHERE resultid=$list_bkt[resultid] ");
+	$list_bkt2=mysql_fetch_array($q_bukti2); */
+?>
+	
+
+<script type="text/javascript">
+            $(document).ready(function(){
+
+               $('#myModal').modal({
+									  keyboard: false,
+									  backdrop: false
+									});
+			
+            });
+</script>
+
+<style>
+.hero-unit{
+	height:320px !important;
+}
+.modal-title{
+	background:url('img/logo bsi_150.png') no-repeat;background-size:50px 50px;height:50px;width:500px;
+}
+font strong{
+	margin-left:58px;margin-top:-12px;display:block;font-size:16px;
+}
+</style>
+
+	 <!-- Button trigger modal
+  <a data-toggle="modal" href="#myModal" class="btn btn-primary btn-lg">Launch demo modal</a> -->
+
+  <!-- Modal -->
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <a type="button" class="close"  aria-hidden="true" href="<?php echo $path_base."-".base64_encode($id_user);?>">&times;</a>
+           <p class="modal-title">&nbsp;<font><strong><?php echo $web_title; ?></font></p>
+        </div>
+        <div class="modal-body">
+			<table>
+		<tr>
+			<td><h2><?php echo $list_bkt['test_name'];?></h2></td>
+		</tr>
+		<tr>
+			<td>Tanggal Ujian : <?php echo $list_bkt['tanggal']."/".$list_bkt['bulan']."/".$list_bkt['tahun'];?>   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Jam Ujian : <?php echo $list_bkt['mulai'];?></td>
+		</tr>
+		<tr>
+			<td>Spent Waktu : <?php echo $list_bkt['spent_time'];?></td>
+		</tr>
+		<!--<tr>
+			<td>Jumlah Jawab: <?php echo $list_bkt2['jml'];?> dari <?php echo $list_bkt['result_pointsmax'];?> Soal</td>
+		</tr> -->
+		<tr>
+			<td>&nbsp;</td>
+		</tr>
+		<tr>
+			<td>NIM : <?php echo $list_bkt['userid'];?></td>
+		</tr>
+		<tr>
+			<td>Nama Lengkap : <?php echo $list_bkt['user_firstname'];?></td>
+		</tr>
+		<tr>
+			<td>&nbsp;</td>
+		</tr>
+		<tr>
+			<td>Terimakasih anda telah mengikuti ujian online</td>
+		</tr>
+		<tr>
+			<td>&nbsp;</td>
+		</tr>
+		<tr>
+			<td>Simpan lembar ini sebagai bukti bahwa anda telah mengikuti ujian online<br></td>
+		</tr>
+		
+	</table>
+        </div>
+        <div class="modal-footer">
+          <!--<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
+		  <form action="bukti-pdf" method="post" style="margin:0;padding:0;" name="bukti" target="_blank">
+			<input type="hidden" name="userid" value="<?php echo $nim; ?>">
+			<input type="hidden" name="testid" value="<?php echo $test_id; ?>">
+			<!--<a  type="button" class="btn btn-primary" onclick="document.forms['bukti-ujian-pdf-<?php echo $test_id;?>'].submit();return false;">Download Bukti Ujian</a>-->
+            <input name="cmdbukti" type="submit" value="Cetak Bukti Ujian" class="btn btn-primary" />
+		  </form>
+          <!--<a type="button" class="btn btn-primary" href="bukti-ujian-pdf">Download PDF</a>-->
+        </div>
+      </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+  </div><!-- /.modal -->
+
+<?php 
+	}
+	
+	if($list_sess['testuser']<>"" or $list_sess['testname']<>""){
+				mysql_query("update ".$db_prefix."session set testuser='', testname='', questionid = 0, nomor = 0 where id_session = '$id_user'");
+				/*unset($_SESSION['851testuser']);
+				unset($_SESSION['851testname']); */
+			}
+?>
+
+<!-- SCRIP SEND EMAIL -->
+<?php
+$to = $list_bkt['user_email'];
+$subject = "BUKTI UJIAN ONLINE - BINA SARANA INFORMATIKA";
+
+$message = "
+<html>
+<head>
+
+
+
+<title>Bukti Ujian Online</title>
+</head>
+<body>
+<script language='javascript' type='text/javascript' src='".$path_file."js/jquery.min.js'></script>
+<script language='javascript' type='text/javascript' src='".$path_file."js/jquery-barcode.min.js'></script>
+<script  type='text/javascript'>
+	$('#bc1').barcode('".$list_bkt['user_title']."', 'code128', {barWidth:3, barHeight:30, output:'bmp'});
+	$('#bc2').barcode('".$nim."', 'code128', {barWidth:3, barHeight:30, output:'bmp'});
+</script>
+<table align='center' border='0'><tr><td>
+  
+  <p>
+
+<div  style='float: center;margin-bottom: 10px;width: 678px;line-height: 1.5;	display: block;	padding: 8px;border: 1px #000000 solid;	border-top: 5px #000000 solid;'>
+		<div class='ahead' align='center'>
+			<table width='100%' border='0' align='center' cellpadding='0' cellspacing='0' style='padding-bottom:10px;border-bottom:#000 solid 1px;'>
+			  <!--DWLayoutTable-->
+			  <tr > 
+				<td width='120' rowspan='3'> <div align='left' style='margin-left:10px;'><img src='".$path_file."img/logo%20bsi_150.png' width='100' height='100' align='middle'></div></td>
+				<td height='5' valign='middle'> <div align='center'><font size='3' face='Verdana, Arial, Helvetica, sans-serif'> </font> </div></td>
+				<td width='1'></td>
+			  </tr>
+			  <tr > 
+				<td width='515' height='25' valign='bottom'> <div align='left'><font size='5' face='Verdana, Arial, Helvetica, sans-serif'>BINA SARANA INFORMATIKA</font></div></td>
+				<td></td>
+			  </tr>
+			  <tr> 
+				<td height='26' valign='top'> <div align='left' ><font size='4' face='Verdana, Arial, Helvetica, sans-serif'>KARTU BUKTI UJIAN ONLINE</font></div></td>
+				<td ></td>
+			  </tr>
+
+			</table>
+		</div>
+		<div class='ahead' align='center'><strong></strong></div>
+		<table border='0' cellpadding='3' cellspacing='0' width='80%' align='center'>
+		<tr> 
+          <td colspan='3' align='left'><font face='Verdana, Arial, Helvetica, sans-serif' size='-1'>&nbsp;</font></td>
+        </tr>
+         
+		<tr> 
+			  <td colspan='3'  align='center'>NO FORMULIR</td>
+		</tr> 
+		<tr> 
+			  <td colspan='3'  align='center'><div id='bc1'></div></td>
+		</tr>
+		<tr> 
+			  <td colspan='3'  align='center'><font size=-2>".$list_bkt['user_title']."</font></td>
+		</tr>
+		<tr> 
+          <td colspan='3' align='left'><strong><font face='Verdana, Arial, Helvetica, sans-serif' color='#000000' size='-1'>&nbsp;</font></strong></td>
+        </tr>
+		<tr> 
+			  <td colspan='3'  align='center'><font face='Verdana, Arial, Helvetica, sans-serif' size='-1'>Terima Kasih Anda Telah Mengikuti Ujian Online</font></td>
+		</tr>
+		<tr> 
+          <td colspan='3' align='left'><font face='Verdana, Arial, Helvetica, sans-serif' size='-1'>&nbsp;</font></td>
+        </tr>
+        <tr> 
+          <td width='33%' align='left' bgcolor='#c7c7c7'><font size='-1'>NIM</font></td>
+          <td width='2%' align='left' bgcolor='#c7c7c7'><strong><font color='#000000' size='-1'>:</font></strong></td>
+          <td width='65%' align='left' bgcolor='#c7c7c7'><font color='#000000' size='-1'>". $list_bkt['userid']."</font></td>
+        </tr>
+        <tr> 
+          <td width='33%' align='left'><font size='-1'>NAMA</font></td>
+          <td width='2%' align='left'><strong><font color='#000000' size='-1'>:</font></strong></td>
+          <td width='65%' align='left'><strong><font color='#000000' size='-1'>". $list_bkt['user_firstname']."</font></strong></td>
+        </tr>
+         <tr> 
+          <td width='33%' align='left' bgcolor='#c7c7c7'><font size='-1'>TANGGAL UJIAN</font></td>
+          <td width='2%' align='left' bgcolor='#c7c7c7'><strong><font color='#000000' size='-1'>:</font></strong></td>
+          <td width='65%' align='left' bgcolor='#c7c7c7'><strong><font color='#000000' size='-1'>". $list_bkt['tanggal'].'/'.$list_bkt['bulan'].'/'.$list_bkt['tahun'] ."</font></strong></td>
+        </tr>
+        <tr> 
+          <td width='33%' align='left'><font size='-1'>JAM UJIAN</font></td>
+          <td width='2%' align='left'><strong><font color='#000000' size='-1'>:</font></strong></td>
+          <td width='65%' align='left'><strong><font color='#000000' size='-1'>".$list_bkt['mulai']."</font></strong></td>
+        </tr>
+		<tr> 
+          <td width='33%' align='left'  bgcolor='#c7c7c7'><font size='-1'>MATAKULIAH</font></td>
+          <td width='2%' align='left'  bgcolor='#c7c7c7'><strong><font color='#000000' size='-1'>:</font></strong></td>
+          <td width='65%' align='left'  bgcolor='#c7c7c7'><strong><font color='#000000' size='+1'>".$list_bkt['test_name']."</font></strong></td>
+        </tr>
+        <tr> 
+          <td colspan='3' align='left'><font face='Verdana, Arial, Helvetica, sans-serif' size='-1'>&nbsp;</font></td>
+        </tr>
+        <tr> 
+          <td colspan='3' align='center'><font face='Verdana, Arial, Helvetica, sans-serif' size='-1'>Simpan sebagai bukti bahwa anda telah mengikuti ujian online</font></td>
+        </tr>
+		<tr> 
+          <td colspan='3' align='left'><font face='Verdana, Arial, Helvetica, sans-serif' size='-1'>&nbsp;</font></td>
+        </tr>
+		<tr> 
+			  <td colspan='3'  align='center'>NO INDUK MAHASISWA</td>
+		</tr> 
+		
+		<tr> 
+			  <td colspan='3'  align='center'><div id='bc2'></div></td>
+		</tr>
+		<tr> 
+			  <td colspan='3'  align='center'><font size=-2>".$nim."</font></td>
+		</tr>
+        
+    <tr>
+      <td colspan='3' bgcolor='#FFFFFF' align='center'><font face='Verdana, Arial, Helvetica, sans-serif'>&nbsp; </font><font size='1' face='Verdana, Arial, Helvetica, sans-serif'><tr> 
+          <td colspan='3' align='center'><font face='Verdana, Arial, Helvetica, sans-serif' size='-4'>Tanggal Cetak: ".$tgl_sekarang." - Jam Cetak: ".$jam_sekarang." <br> <i>ScurityCode: ".$s_code."</i></font></td>
+        </tr></font></td>
+    </tr>
+  </table>
+
+
+
+	  					
+		
+</div>
+
+<!-- Ini Buat  Penutup Tampilan -->
+</p>
+
+</td>
+</tr>
+</table>
+</body>
+</html>
+";
+
+// Always set content-type when sending HTML email
+$headers = "MIME-Version: 1.0\r\n";
+$headers .= "Content-Type: text/html; charset=ISO-8859-1\r\n";
+
+// More headers
+$headers .= 'From: <hasil.ujian@bsi.ac.id>' . "\r\n";
+$headers .= 'Cc: hasil.ujian@bsi.ac.id' . "\r\n";
+
+mail($to,$subject,$message,$headers);
+?>
+
+<script language="javascript" type="text/javascript" src="js/jquery-barcode.min.js"></script>
+<script>
+	$("#bc1").barcode("<?php echo $list_bkt['user_title']; ?>", "code128", {barWidth:3, barHeight:30, output:'bmp'});
+	$("#bc2").barcode("<?php echo $nim;?>", "code128", {barWidth:3, barHeight:30, output:'bmp'});
+</script>
