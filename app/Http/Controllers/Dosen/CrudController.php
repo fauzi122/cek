@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Dosen;
 
 use Illuminate\Http\Request;
 
@@ -17,6 +17,8 @@ use App\Models\Aktifitas;
 use App\Models\Jawab;
 use App\Imports\UserImport;
 use Maatwebsite\Excel\Facades\Excel;
+use App\Http\Controllers\Controller;
+
 
 class CrudController extends Controller
 {
@@ -73,7 +75,6 @@ class CrudController extends Controller
         $query          = new Materi;
         $query->id_user = auth()->user()->id;
         $query->sesi    = $request->sesi;
-        
       } else {
         $query = Materi::where('sesi', $request->sesi)->first();
       }
@@ -84,7 +85,7 @@ class CrudController extends Controller
       return 'ok';
     }
   }
- 
+
   public function terbitSoal(Request $request)
   {
     $cek = Distribusisoal::where('id_soal', $request->id_soal)->where('id_kelas', $request->id_kelas)->first();
@@ -123,7 +124,7 @@ class CrudController extends Controller
     $query->save();
     return 'ok';
   }
- 
+
 
   public function simpanKelas(Request $request)
   {
@@ -191,58 +192,57 @@ class CrudController extends Controller
     return 1;
   }
 
-  public function import_excel(Request $request) 
-	{
+  public function import_excel(Request $request)
+  {
     if (auth()->user()->status == 'G' or auth()->user()->status == 'A') {
       $user = User::where('id', auth()->user()->id)->first();
-		// validasi
-		$this->validate($request, [
-			'file' => 'required|mimes:csv,xls,xlsx'
-		]);
- 
-		// menangkap file excel
-		$file = $request->file('file');
- 
-		// membuat nama file unik
-		$nama_file = rand().$file->getClientOriginalName();
- 
-		// upload ke folder file_siswa di dalam folder public
-		$file->move('file_siswa',$nama_file);
- 
-		// import data
-		Excel::import(new UserImport, public_path('/file_siswa/'.$nama_file));
- 
-		// notifikasi dengan session
-		 Session::flash('sukses','Data Siswa Berhasil Diimport!');
- 
-		// alihkan halaman kembali
-		return redirect('/master/siswa',compact('user'));
-  } else {
-    return redirect('/home');
-  }
-	}
-
-
-
-  public function update_profil(Request $request,User $user)
-  {
-    $this->validate($request,[
-      'nama'   => 'required'
-      
-  ]);
-
-  if ($request->file('gambar') == "") {
-  
-      $user = User::findOrFail($user->id);
-      $user->update([
-          'nama'        => $request->input('nama')
-        
+      // validasi
+      $this->validate($request, [
+        'file' => 'required|mimes:csv,xls,xlsx'
       ]);
 
-  } else {
+      // menangkap file excel
+      $file = $request->file('file');
+
+      // membuat nama file unik
+      $nama_file = rand() . $file->getClientOriginalName();
+
+      // upload ke folder file_siswa di dalam folder public
+      $file->move('file_siswa', $nama_file);
+
+      // import data
+      Excel::import(new UserImport, public_path('/file_siswa/' . $nama_file));
+
+      // notifikasi dengan session
+      Session::flash('sukses', 'Data Siswa Berhasil Diimport!');
+
+      // alihkan halaman kembali
+      return redirect('/master/siswa', compact('user'));
+    } else {
+      return redirect('/home');
+    }
+  }
+
+
+
+  public function update_profil(Request $request, User $user)
+  {
+    $this->validate($request, [
+      'nama'   => 'required'
+
+    ]);
+
+    if ($request->file('gambar') == "") {
+
+      $user = User::findOrFail($user->id);
+      $user->update([
+        'nama'        => $request->input('nama')
+
+      ]);
+    } else {
 
       //remove old gambar
-      Storage::disk('local')->delete('public/guru/'.$user->gambar);
+      Storage::disk('local')->delete('public/guru/' . $user->gambar);
 
       //upload new gambar
       $gambar = $request->file('gambar');
@@ -250,21 +250,20 @@ class CrudController extends Controller
 
       $user = User::findOrFail($user->id);
       $user->update([
-          'nama'        => $request->input('nama'),
-          'gambar'       => $gambar->hashName()
-        
-       
+        'nama'        => $request->input('nama'),
+        'gambar'       => $gambar->hashName()
+
+
       ]);
+    }
 
-  }
-
-  if($user){
+    if ($user) {
       //redirect dengan pesan sukses
       return redirect('/pengaturan')->with(['success' => 'Data Berhasil Diupdate!']);
-  }else{
+    } else {
       //redirect dengan pesan error
       return redirect('/pengaturan')->with(['error' => 'Data Gagal Diupdate!']);
-  }
+    }
   }
 
   public function updateGuru(Request $request)
