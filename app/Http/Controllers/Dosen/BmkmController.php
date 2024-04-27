@@ -7,11 +7,11 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 
-class InfoController extends Controller
+class BmkmController extends Controller
 {
     public function __construct()
     {
-        if(!$this->middleware('auth:sanctum')){
+        if (!$this->middleware('auth:sanctum')) {
             return redirect('/login');
         }
     }
@@ -22,7 +22,7 @@ class InfoController extends Controller
      */
     public function index()
     {
-       
+
         return view('admin.mbkm.index');
     }
 

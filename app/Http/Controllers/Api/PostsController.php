@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
 use App\Models\Post;
 use Illuminate\Http\Request;
@@ -13,7 +13,7 @@ class PostsController extends Controller
         $posts = Post::all();
         return response()->json([
             'success' => true,
-            'message' =>'List Semua Post',
+            'message' => 'List Semua Post',
             'data'    => $posts
         ], 200);
     }
@@ -24,22 +24,21 @@ class PostsController extends Controller
             'title'   => 'required',
             'content' => 'required',
         ]);
-    
+
         if ($validator->fails()) {
-    
+
             return response()->json([
                 'success' => false,
                 'message' => 'Semua Kolom Wajib Diisi!',
                 'data'   => $validator->errors()
-            ],401);
-    
+            ], 401);
         } else {
-    
+
             $post = Post::create([
                 'title'     => $request->input('title'),
                 'content'   => $request->input('content'),
             ]);
-    
+
             if ($post) {
                 return response()->json([
                     'success' => true,
@@ -52,7 +51,6 @@ class PostsController extends Controller
                     'message' => 'Post Gagal Disimpan!',
                 ], 400);
             }
-    
         }
     }
 
@@ -79,24 +77,25 @@ class PostsController extends Controller
     public function update(Request $request)
     {
         //validate data
-        $validator = Validator::make($request->all(), [
-            'title'     => 'required',
-            'content'   => 'required',
-        ],
+        $validator = Validator::make(
+            $request->all(),
+            [
+                'title'     => 'required',
+                'content'   => 'required',
+            ],
             [
                 'title.required' => 'Masukkan Title Post !',
                 'content.required' => 'Masukkan Content Post !',
             ]
         );
 
-        if($validator->fails()) {
+        if ($validator->fails()) {
 
             return response()->json([
                 'success' => false,
                 'message' => 'Silahkan Isi Bidang Yang Kosong',
                 'data'    => $validator->errors()
-            ],400);
-
+            ], 400);
         } else {
 
             $post = Post::whereId($request->input('id'))->update([
@@ -116,9 +115,7 @@ class PostsController extends Controller
                     'message' => 'Post Gagal Diupdate!',
                 ], 500);
             }
-
         }
-
     }
 
     public function destroy($id)
@@ -137,6 +134,5 @@ class PostsController extends Controller
                 'message' => 'Post Gagal Dihapus!',
             ], 500);
         }
-
     }
 }
