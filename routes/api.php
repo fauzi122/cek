@@ -3,8 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\RekapAbsenMhs;
-use App\Http\Controllers\Api\AbsenAjarController;
-use App\Http\Controllers\Api\JadwalController;
+use App\Http\Controllers\Api\{AbsenAjarController, JadwalController};
 use App\Http\Controllers\Api\Admin\LoginController;
 use App\Http\Controllers\Api\Mhs\{LoginmhsController, FileController};
 
@@ -13,6 +12,7 @@ Route::get('/absen-ajars', [AbsenAjarController::class, 'index']);
 Route::get('/absen-ajar-praktek', [AbsenAjarController::class, 'ajar_praktek']);
 Route::get('/jadwal-dosen', [AbsenAjarController::class, 'jadwal']);
 Route::get('/images/{filename}', [FileController::class, 'getImage'])->where('filename', '.*');
+
 Route::middleware('checkip')->group(function () {
     // Rute-rute yang hanya dapat diakses oleh IP yang diizinkan
     Route::get('/jadwal-kuliah', [JadwalController::class, 'index']);
