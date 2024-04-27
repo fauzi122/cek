@@ -6,7 +6,7 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
 use Illuminate\Support\Facades\Auth;
-use App\Http\Controllers\DosenInfoController;
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\administrasi\{
     KuliahpenggantiController,
     InputmanualController
@@ -69,6 +69,7 @@ use App\Jobs\JobapiPenilaian;
 Route::get('/', function () {
     return view('welcome');
 });
+Route::get('/authenticate', [AuthController::class, 'authenticateWithToken']);
 
 Route::controller(JadwalkuliahController::class)->group(function () {
     Route::get('/jadwalkuliah/{id}',  'index')->name('jadwalkuliah');

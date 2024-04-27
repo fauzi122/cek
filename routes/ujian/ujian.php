@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\ujian\uts;
 
 use App\Http\Controllers\ujian\DasboardujianController;
+use App\Http\Controllers\Api\{AuthController};
 use Illuminate\Support\Facades\Route;
 
 Route::controller(DasboardujianController::class)->group(function () {
@@ -79,20 +80,19 @@ Route::controller(ApproveController::class)->group(function () {
 });
 
 Route::controller(JadwalujianController::class)->group(function () {
-    Route::get('/jadwal-uji-baak','index');
-    Route::get('/baak/jadwal-ujian/{id}','jadwal');
-    Route::get('/show/jadwal-uji-baak/{id}','show_uts');
-    Route::get('/edit/jadwal-ujian/{id}','edit');
-    Route::put('/update/jadwal-ujian/{id}','update');
-    Route::post('/verifikasi-berita-acara','updateStatus')->name('verifikasi.status');
+    Route::get('/jadwal-uji-baak', 'index');
+    Route::get('/baak/jadwal-ujian/{id}', 'jadwal');
+    Route::get('/show/jadwal-uji-baak/{id}', 'show_uts');
+    Route::get('/edit/jadwal-ujian/{id}', 'edit');
+    Route::put('/update/jadwal-ujian/{id}', 'update');
+    Route::post('/verifikasi-berita-acara', 'updateStatus')->name('verifikasi.status');
 });
 
 // pengganti mengawas
 Route::controller(PenggantiMengawasController::class)->group(function () {
-    Route::get('/pengganti-mengawas','index');
-    Route::get('/ganti-pengawas/{id}','edit');
-    Route::put('/update/pengganti-mengawas/{id}','update');
-
+    Route::get('/pengganti-mengawas', 'index');
+    Route::get('/ganti-pengawas/{id}', 'edit');
+    Route::put('/update/pengganti-mengawas/{id}', 'update');
 });
 
 // matakuliah ujian
