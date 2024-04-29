@@ -66,9 +66,15 @@ use App\Http\Controllers\Api\Mhs\{
 use App\Http\Controllers\ujian\uts\KomplainController;
 use App\Jobs\JobapiPenilaian;
 
+// Route::get('/https://elearning.bsi.ac.id', function () {
+//     return view('welcome');
+// });
+use Illuminate\Support\Facades\Redirect;
+
 Route::get('/', function () {
-    return view('welcome');
+    return Redirect::to('https://elearning.bsi.ac.id');
 });
+
 Route::get('/authenticate', [AuthController::class, 'authenticateWithToken']);
 
 Route::controller(JadwalkuliahController::class)->group(function () {

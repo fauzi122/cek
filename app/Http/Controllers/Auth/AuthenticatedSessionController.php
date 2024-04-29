@@ -34,7 +34,7 @@ class AuthenticatedSessionController extends Controller
     $captcha = $this->generateCaptcha(); // Generate CAPTCHA
     session(['captcha_answer' => $captcha['answer']]); // Store the expected answer in session
 
-    return view('https://elearning.bsi.ac.id/login', compact('captcha'));
+    return view('auth.login', compact('captcha'));
 }
 
     private function generateCaptcha()
