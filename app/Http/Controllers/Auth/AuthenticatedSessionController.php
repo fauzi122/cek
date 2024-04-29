@@ -16,13 +16,26 @@ class AuthenticatedSessionController extends Controller
     /**
      * Display the login view.
      */
-    public function create(): View
-    {
+    // public function create(): View
+    // {
 
-        $captcha = $this->generateCaptcha(); // Generate CAPTCHA
-        session(['captcha_answer' => $captcha['answer']]); // Store the expected answer in session
-        return view('auth.login', compact('captcha'));
+    //     $captcha = $this->generateCaptcha(); // Generate CAPTCHA
+    //     session(['captcha_answer' => $captcha['answer']]); // Store the expected answer in session
+    //     return view('auth.login', compact('captcha'));
+    // }
+    public function create(): View
+{
+    // Cek jika pengguna sudah terautentikasi
+    if (!Auth::check()) {
+        // Jika tidak, arahkan ke halaman login di Web 1
+        return redirect('https://elearning.bsi.ac.id/dashboard');
     }
+
+    $captcha = $this->generateCaptcha(); // Generate CAPTCHA
+    session(['captcha_answer' => $captcha['answer']]); // Store the expected answer in session
+
+    return view('https://elearning.bsi.ac.id/login', compact('captcha'));
+}
 
     private function generateCaptcha()
     {
@@ -57,6 +70,6 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerateToken();
 
-        return redirect('/');
+        return redirect('https://elearning.bsi.ac.id/dashboard');
     }
 }
