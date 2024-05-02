@@ -1,4 +1,3 @@
-
 <div class="modal fade" id="basicModal" tabindex="-1" role="dialog" aria-labelledby="basicModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document"> <!-- Large modal -->
         <div class="modal-content">
@@ -9,10 +8,11 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form action="/store/berita-mengawas-uts/" method="post" enctype="multipart/form-data">
+                {{-- @if(!empty($soal->kd_gabung))
+                <form method="POST" action="{{ route('store-berita-mengaws-ujian-gabung') }}">
                     @csrf
                     <input type="hidden" name="kd_mtk" value="{{ $soal->kd_mtk }}">
-                    <input type="hidden" name="kel_ujian" value="{{ $soal->kel_ujian }}">
+                    <input type="hidden" name="kd_gabung" value="{{ $soal->kd_gabung }}">
                     <input type="hidden" name="paket" value="{{ $soal->paket }}">
                 
                     <div class="form-group">
@@ -23,6 +23,23 @@
                         Kirim Data
                     </button> 
                 </form>
+                @else --}}
+                <form method="POST" action="{{ route('store-berita-mengaws-ujian') }}">
+                    {{-- <form action="/store/berita-mengawas-uts/" method="post" enctype="multipart/form-data"> --}}
+                        @csrf
+                        <input type="hidden" name="kd_mtk" value="{{ $soal->kd_mtk }}">
+                        <input type="hidden" name="kel_ujian" value="{{ $soal->kel_ujian }}">
+                        <input type="hidden" name="paket" value="{{ $soal->paket }}">
+                    
+                        <div class="form-group">
+                            <label for="isi">Berita Acara:</label>
+                            <textarea class="form-control" id="isi" name="isi" rows="7">{{ $beritaAcara->isi ?? '' }}</textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">
+                            Kirim Data
+                        </button> 
+                    </form>
+                {{-- @endif --}}
                 <hr>
                 {{-- <label>
                     <h5>*Catatan :</h5> 
@@ -37,5 +54,3 @@
         </div>
     </div>
 </div>
-
-

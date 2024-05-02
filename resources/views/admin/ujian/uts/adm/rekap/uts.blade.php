@@ -9,7 +9,7 @@
                         <span class="type">Info</span>
                         <span class="type">Info</span>
                         <div class="alert-notify-title">
-                            <h4>Rekap Mengawas Ujian UTS</h4>
+                            <h4>Rekap Mengawas Ujian</h4>
                         </div>
                        
                         
@@ -38,8 +38,10 @@
                                                         <th>Ruang</th>
                                                         <th>paket</th>
                                                         <th>Kampus</th>
+                                                        <th>status</th>
                                                        
                                                         <th>Aksi</th>
+                                                        <th><span class="icon-edit1"></span></th>
 
                                                        
                                                     </tr>
@@ -66,23 +68,44 @@
 											
 											 <td>{{ $jadwal->nm_kampus }}</td>
 											 <td>
-						@php
-						$id=Crypt::encryptString($jadwal->kd_dosen.','.$jadwal->kd_mtk.','.$jadwal->kel_ujian.','.$jadwal->paket);                                    
-						@endphp
+                                                 {{-- Key definition for lookup in resultArray --}}
+                                                 @php
+                                                    $key = $jadwal->kd_dosen . '_' . $jadwal->kel_ujian . '_' . $jadwal->kd_mtk. '_' . $jadwal->paket;
+                                                @endphp
+                                            @php
+                                                $verifikasi = $resultArray[$key]->verifikasi ?? 0; // Menetapkan default sebagai 0 jika tidak ditemukan
+                                            @endphp
 
-												{{-- <a href="/show/jadwal-uji-baak/{{ $id }}" class="btn btn-xs btn-info">show</a> --}}
-												@php
-													$key = $jadwal->kd_dosen . '_' . $jadwal->kel_ujian . '_' . $jadwal->kd_mtk;
-												@endphp
+                                            @if($verifikasi == 1)
+                                                {{-- Jika verifikasi 1, tampilkan emoji ceklis dengan title "Ujian Lancar" --}}
+                                                <span title="Ujian Lancar" style="font-size: 24px;">✔️</span>
+                                            @elseif($verifikasi == 2)
+                                                {{-- Jika verifikasi 2, tampilkan emoji silang dengan title "Ujian Bermasalah" --}}
+                                                <span title="Ujian Bermasalah" style="font-size: 24px;">❌</span>
+                                            @endif
+                                            </td>
+											 <td>
 
-												@if(array_key_exists($key, $resultArray))
-													<!-- Jika ada data yang cocok di resultArray, aktifkan tombol Show -->
-													<a href="/show/jadwal-uji-baak/{{ $id }}" class="btn btn-xs btn-info">Show</a>
-												@else
-													<!-- Jika tidak, nonaktifkan tombol Show -->
-													<button class="btn btn-xs btn-info" disabled>Show</button>
-												@endif	 
-											
+                                                @php
+                                                    $id = Crypt::encryptString($jadwal->kd_dosen.','.$jadwal->kd_mtk.','.$jadwal->kel_ujian.','.$jadwal->paket.','.$jadwal->nm_kampus);
+                                                @endphp
+                                                
+                                               
+
+                                                {{-- Check if the data already exists in the resultArray --}}
+                                                @if(array_key_exists($key, $resultArray))
+                                                    <!-- Jika ada data yang cocok di resultArray, aktifkan tombol Show -->
+                                                    <a href="/show/jadwal-uji-baak/{{ $id }}" class="btn btn-xs btn-info">Show</a>
+                                                @else
+                                                    <!-- Jika tidak ada data yang cocok di resultArray, tampilkan tombol Show yang tidak aktif atau pesan -->
+                                                    {{-- <button class="btn btn-xs btn-info" disabled>Show</button> --}}
+                                                @endif
+                                                
+											</td>
+                                            <td>
+                                                @if(!array_key_exists($key, $resultArray))
+												<a href="/ganti-pengawas/{{ $id }}" class="btn btn-xs btn-secondary" title="ganti pengawas">Pengawas</a>
+                                                @endif
 											</td>
 											</tr>
 											@endforeach

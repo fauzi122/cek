@@ -73,7 +73,7 @@
                     </div>
                     <!-- Tabel Form Dosen Pengganti -->
                     <div class="col-md-6">
-                        <form method="POST" action="/store/ganti-pengawas"> <!-- Sesuaikan action -->
+                        <form method="POST" action="/stor/pengganti-mengawas"> <!-- Sesuaikan action -->
                             @csrf
                             <div class="table-responsive">
                                 <table class="table">

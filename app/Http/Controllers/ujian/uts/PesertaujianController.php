@@ -86,16 +86,16 @@ class PesertaujianController extends Controller
     }
 
 
-    public function singpesertauji()
-    {
-        $singpesertauji = DB::select('call uts_insert_peserta_ujian');
-        return redirect()->back()->with(['success' => 'peserta ujian success di singkron']);
-    }
-    public function singpesertauji_t()
-    {
-        $singpesertauji_t = DB::select('call insert_peserta_ujian');
-        return redirect()->back()->with(['success' => 'peserta ujian success di singkron']);
-    }
+    // public function singpesertauji()
+    // {
+    //     $singpesertauji = DB::select('call uts_insert_peserta_ujian');
+    //     return redirect()->back()->with(['success' => 'peserta ujian success di singkron']);
+    // }
+    // public function singpesertauji_t()
+    // {
+    //     $singpesertauji_t = DB::select('call insert_peserta_ujian');
+    //     return redirect()->back()->with(['success' => 'peserta ujian success di singkron']);
+    // }
 
     public function destroy($id)
     {

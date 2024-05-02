@@ -1,17 +1,9 @@
 @extends('layouts.dosen.main')
 
-
 @section('content')
 <div class="flash-tambah" data-flashdata="{{ session('status') }}"></div>
 <div class="flash-error" data-flasherror="{{ session('error') }}"></div>
 	<div class="main-container">
-
-
-				<!-- Page header start -->
-				
-				<!-- Page header end -->
-
-
 				<!-- Content wrapper start -->
 				<div class="content-wrapper">
 
@@ -34,10 +26,23 @@
 												<td>Nama Dosen</td>
 												<td>{{ Auth::user()->name }} <b>({{ $soal->kd_dosen }}) </b></td>
 											</tr>
+											{{-- @if(!empty($soal->kd_gabung))
+											<tr>
+												<td>Kelompok Ujian</td>
+												<td><b> Kode Gabung :{{ $soal->kd_gabung }} </b>
+													<br>
+													<br>
+													@foreach($kelUjianArray1 as $kelas)
+													{{ trim($kelas) }}
+												@endforeach
+												</td>
+											</tr>
+											@else --}}
 											<tr>
 												<td>Kelompok Ujian</td>
 												<td>{{ $soal->kel_ujian }}</td>
 											</tr>
+											{{-- @endif --}}
 											<tr>
 												<td>Matakuliah</td>
 												<td><b>{{ $soal->kd_mtk }}</b> {{ $soal->nm_mtk }}</td>
@@ -60,217 +65,83 @@
 												<td>Berita Acara</td>
 												<td>
 													@php
-													$tanggalSekarang = \Carbon\Carbon::now()->startOfDay();
-													$tanggalUjian = \Carbon\Carbon::createFromFormat('Y-m-d', $soal->tgl_ujian)->startOfDay();
-													$isTanggalSesuai = $tanggalSekarang->eq($tanggalUjian);
-													$isBeritaAcaraTersedia = $beritaAcara != null;
-												@endphp
-
-												@if($isTanggalSesuai && !$isBeritaAcaraTersedia)
-													<!-- Jika sudah waktunya ujian dan belum ada berita acara, tampilkan tombol mengawas ujian -->
-													<form method="POST" action="{{ route('store-mengawas-ujian') }}">
-														@csrf
-														<input type="hidden" name="kd_mtk" value="{{ $soal->kd_mtk }}">
-														<input type="hidden" name="kel_ujian" value="{{ $soal->kel_ujian }}">
-														<input type="hidden" name="hari" value="{{ $soal->hari_t }}">
-														<input type="hidden" name="tgl_ujian" value="{{ $soal->tgl_ujian }}">
-														<input type="hidden" name="paket" value="{{ $soal->paket }}">
-
-														<button type="submit" class="btn btn-info">
-															Mengawas Ujian
-														</button>
-													</form>
-												@elseif($isBeritaAcaraTersedia)
-													<!-- Jika berita acara sudah ada, beri informasi bahwa pengawasan sudah terdaftar -->
-													<button class="btn btn-secondary" disabled>
-														Anda sudah absen mengawas, {{ formatDate($soal->created_at) }}
-
-													</button>
-												@else
-													<!-- Jika belum waktunya, tidak menampilkan tombol mengawas -->
-													<button class="btn btn-danger" disabled>
-														Belum waktunya mengawas ujian
-													</button>
-												@endif
-
-
-													@if($beritaAcara && is_null($beritaAcara->field_yang_diperiksa))
-														<!-- Tombol isi berita acara ditampilkan jika $beritaAcara ada dan field tertentu null -->
-														<button type="button" class="btn btn-info" data-toggle="modal" data-target="#basicModal">
-															berita acara
-														</button>
+														$tanggalSekarang = \Carbon\Carbon::now()->startOfDay();
+														$tanggalUjian = \Carbon\Carbon::createFromFormat('Y-m-d', $soal->tgl_ujian)->startOfDay();
+														// Periksa apakah tanggal saat ini sama dengan atau setelah tanggal ujian
+														$isTanggalSesuai = $tanggalSekarang->gte($tanggalUjian);
+														$isBeritaAcaraTersedia = $beritaAcara != null;
+													@endphp
+													{{-- {{ $isTanggalSesuai }} --}}
+													@if($isTanggalSesuai && !$isBeritaAcaraTersedia)
+														<!-- Jika sudah waktunya atau lewat waktu ujian dan belum ada berita acara, tampilkan tombol mengawas ujian -->
+														{{-- @if(!empty($soal->kd_gabung))
+															<!-- Gabung -->
+															<form method="POST" action="{{ route('store-mengawas-ujian-gabung') }}">
+																@csrf
+																<input type="hidden" name="kd_mtk" value="{{ $soal->kd_mtk }}">
+																@foreach($kelUjianArray1 as $kelas)
+																	<input type="hidden" name="kel_ujian[]" value="{{ trim($kelas) }}">
+																@endforeach
+																<input type="hidden" name="hari" value="{{ $soal->hari_t }}">
+																<input type="hidden" name="tgl_ujian" value="{{ $soal->tgl_ujian }}">
+																<input type="hidden" name="paket" value="{{ $soal->paket }}">
+																<input type="hidden" name="kd_gabung" value="{{ $soal->kd_gabung }}">
+																<button type="submit" class="btn btn-info">Mengawas Ujian</button>
+															</form>
+														@else --}}
+															<!-- Reguler -->
+															<form method="POST" action="{{ route('store-mengawas-ujian') }}">
+																@csrf
+																<input type="hidden" name="kd_mtk" value="{{ $soal->kd_mtk }}">
+																<input type="hidden" name="kel_ujian" value="{{ $soal->kel_ujian }}">
+																<input type="hidden" name="hari" value="{{ $soal->hari_t }}">
+																<input type="hidden" name="tgl_ujian" value="{{ $soal->tgl_ujian }}">
+																<input type="hidden" name="paket" value="{{ $soal->paket }}">
+																<button type="submit" class="btn btn-info">Mengawas Ujian</button>
+															</form>
+														{{-- @endif --}}
+													@else
+														<!-- Jika berita acara sudah ada atau belum waktunya, tampilkan informasi sesuai -->
+														@if($isBeritaAcaraTersedia)
+															<button class="btn btn-secondary" disabled>
+																Anda sudah absen mengawas, {{ formatDate($soal->created_at) }}
+															</button>
+														@else
+															<button class="btn btn-danger" disabled>
+																Belum waktunya mengawas ujian
+															</button>
+														@endif
 													@endif
-												
+													
 
-												
-											
+								@if($beritaAcara && is_null($beritaAcara->field_yang_diperiksa))
+									<!-- Tombol isi berita acara ditampilkan jika $beritaAcara ada dan field tertentu null -->
+									<button type="button" class="btn btn-info" data-toggle="modal" data-target="#basicModal">
+										Berita Acara
+									</button>
+								@endif
 
 												</td>
 											<button onclick="window.location.reload();" class="btn btn-danger">Refresh Data</button>
 
 											</tr>
+											<tr>
+												<td colspan="2"> <div class="container mt-3">
+													<div style="padding: 10px; background: linear-gradient(to right, #6a11cb, #2575fc); color: white; text-align: center;">
+														<h4>*Catatan: Klik 'Mengawas Ujian' untuk memulai sesi pengawasan.</h4>
+													</div>
+													
+														
+												</div></td>
+											</tr>
 										</tbody>
 									</table>
 								</div>
-								<div class="nav-tabs-container">
-									<!-- Navigation Tabs -->
-									<ul class="nav nav-tabs" id="myTab3" role="tablist">
-										<li class="nav-item">
-											<a class="nav-link active" id="home-tab3" data-toggle="tab" href="#home3" role="tab" aria-controls="home3" aria-selected="true">
-												<i class="icon-edit1"></i> Rekap Hadir Mahasiswa Ujian
-											</a>
-										</li>
-										<li class="nav-item">
-											<a class="nav-link" id="profile-tab3" data-toggle="tab" href="#profile3" role="tab" aria-controls="profile3" aria-selected="false">
-												<i class="icon-download-cloud"></i> Download Rekap Hadir Mahasiswa
-											</a>
-										</li>
-									</ul>
-				
-									<!-- Tab Content -->
-									<div class="tab-content" id="myTabContent3">
-										<!-- Tab Pane 1 -->
-										<div class="tab-pane fade show active" id="home3" role="tabpanel" aria-labelledby="home-tab3">
-											<div class="row gutters">
-												<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-													
-														<div class="table-responsive">
-															<table class="custom-table">
-																		<thead>
-																			<tr>
-																				<th>No</th>
-																				<th>NIM</th>
-																				<th>Nama</th>
-																				<th>Komentar</th>
-																				@if($beritaAcara && is_null($beritaAcara->field_yang_diperiksa))
-																				<th>Status Hadir</th>
-																				@endif	
-																				<th>Status Mulai Ujian</th>
-																			</tr>
-																		</thead>
-																		<tbody>
-																			@forelse ($mhsujian as $item)
-																				<tr>
-																					<td>{{ $loop->iteration }}</td>
-																					<td>{{ $item->nim }}</td>
-																					<td>{{ $item->nm_mhs }}</td>
-																					<td>
 
-																						{{-- {{ $item->id }} --}}
-																						<select name="ket" class="custom-select ket-dropdown" data-id="{{ $item->id }}">
-																							<option value="">-- Pilih Status --</option>
-																							<option value="ujian_bermasalah" {{ $item->ket == 'ujian_bermasalah' ? 'selected' : '' }}>Ujian Bermasalah</option>
-																							<option value="nyontek" {{ $item->ket == 'nyontek' ? 'selected' : '' }}>Nyontek</option>
-																							<!-- Tambahkan lebih banyak opsi sesuai kebutuhan -->
-																						</select>
-																						
-																						
-																						
-																					
-																					</td> <!-- Assuming each item has an 'id' -->
-																					@if($beritaAcara && is_null($beritaAcara->field_yang_diperiksa))
-																					<td>
+								@include('admin.mengawas.table_absen')
 
-																						
-																					<label class="switch">
-																						<input type="checkbox" class="status-checkbox" id="switch{{ $item->id }}" data-id="{{ $item->id }}" {{ $item->status ? 'checked' : '' }}>
-																						<span class="slider round"></span>
-																					</label>
-																																										
-																						
-																					</td>
-																					@endif	
-																					<td> 
-																						@if($item->isInHasilUjian)
-																						<span class="badge badge-info">Sudah Mulai Ujian</span>
-																					@else
-																						<span class="badge badge-danger">Belum Mulai Ujian</span>
-																					@endif
-																				</td>
-																				</tr>
-																			@empty
-																				<tr>
-																					<td colspan="5">No data available</td>
-																				</tr>
-																			@endforelse
-																		</tbody>
-																	</table>
-																	
-																</tbody>
-															</table>
-															
-														</div>
-												
-												</div>
-											</div>
-										</div>
-				
-										<!-- Tab Pane 2 -->
-										<div class="tab-pane fade" id="profile3" role="tabpanel" aria-labelledby="profile-tab3">
-											<div class="table-responsive">
-												<table id="copy-print-csv" class="table custom-table">
-														<thead>
-															<tr>
-																<th>No</th>
-																<th>NIM</th>
-																<th>Nama</th>
-																<th>Status</th>
-																<th>Aksi</th>
-															
-															</tr>
-														</thead>
-														<tbody>
-															@forelse ($mhsujian as $item)
-																<tr>
-																	<td>{{ $loop->iteration }}</td>
-																	<td>{{ $item->nim }}</td>
-																	<td>{{ $item->nm_mhs }}</td>
-																	<td>
-																		@if($item->status==1)
-
-																		<b>Hadir</b>
-																	@else
-																		<b>Tidak Hdir</b>
-																	@endif
-																	</td>
-																	<td>
-																		@php
-																			$id=Crypt::encryptString($item->nim.','.$item->no_kel_ujn.','.$item->kd_mtk.','.$item->paket);                                    
-																			@endphp
-
-																		@if($item->isInHasilUjian)
-																		<a href="/show/log-mhs/mengawas-uts/{{ $id }}}" class="btn btn-info" >
-																			Log Aktivitas
-																		</a>
-																		{{-- <span class="badge badge-info">Sudah Mulai Ujian</span> --}}
-																	@else
-																		<span class="badge badge-danger">Belum Mulai Ujian</span>
-																	@endif
-																		 
-																	
-																	</td> <!-- Assuming each item has an 'id' -->
-															
-																</tr>
-															@empty
-																<tr>
-																	<td colspan="5">No data available</td>
-																</tr>
-															@endforelse
-														</tbody>
-													</table>
-													
-												</tbody>
-											</table>
-											</div>
-										</div>
-									</div>
-								</div>
 								</div>
 							</div>
-
-						
-
-
 						</div>
 
 					</div>
@@ -281,46 +152,8 @@
 
 
 			</div>
-			<div class="modal fade" id="basicModal" tabindex="-1" role="dialog" aria-labelledby="basicModalLabel" aria-hidden="true">
-				<div class="modal-dialog modal-lg" role="document"> <!-- Large modal -->
-					<div class="modal-content">
-						<div class="modal-header">
-							<h5 class="modal-title" id="basicModalLabel">Form Berita Acara Ujian</h5>
-							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-								<span aria-hidden="true">&times;</span>
-							</button>
-						</div>
-						<div class="modal-body">
-							<form method="POST" action="{{ route('store-berita-mengaws-ujian') }}">
-							{{-- <form action="/store/berita-mengawas-uts/" method="post" enctype="multipart/form-data"> --}}
-								@csrf
-								<input type="hidden" name="kd_mtk" value="{{ $soal->kd_mtk }}">
-								<input type="hidden" name="kel_ujian" value="{{ $soal->kel_ujian }}">
-								<input type="hidden" name="paket" value="{{ $soal->paket }}">
-							
-								<div class="form-group">
-									<label for="isi">Berita Acara:</label>
-									<textarea class="form-control" id="isi" name="isi" rows="7">{{ $beritaAcara->isi ?? '' }}</textarea>
-								</div>
-								<button type="submit" class="btn btn-primary">
-									Kirim Data
-								</button> 
-							</form>
-							<hr>
-							{{-- <label>
-								<h5>*Catatan :</h5> 
-								<br>
-								<h6> 
-									1. Upload soal harus sesuai format excel yang tersedia.  
-									<br>
-									<br>
-								</h6> 
-							</label> --}}
-						</div>
-					</div>
-				</div>
-			</div>
-	{{-- @include('admin.mengawas.modal_acara') --}}
+
+	@include('admin.mengawas.modal_acara')
 			
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 	<script>

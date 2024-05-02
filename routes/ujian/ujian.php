@@ -66,7 +66,7 @@ Route::controller(MastersoalController::class)->group(function () {
     Route::patch('/baak/uts-pilih/update/{detailsoal_ujian}', 'update_soalpilih_uts');
     Route::patch('/baak/uts-essay/update/{detailSoalEssay_ujian}', 'update_essay_uts');
 
-    Route::post('/baak/singkron-mtkuji', 'singmtkuji');
+    // Route::post('/baak/singkron-mtkuji', 'singmtkuji');
     Route::post('/baak/upload-soalpg-ujian', 'storeData_SoalPg');
     Route::post('/baak/upload-soalessay-ujian', 'storeData_SoalEssay');
 });
@@ -91,8 +91,9 @@ Route::controller(JadwalujianController::class)->group(function () {
 // pengganti mengawas
 Route::controller(PenggantiMengawasController::class)->group(function () {
     Route::get('/pengganti-mengawas', 'index');
+    Route::post('/stor/pengganti-mengawas', 'store');
     Route::get('/ganti-pengawas/{id}', 'edit');
-    Route::put('/update/pengganti-mengawas/{id}', 'update');
+    
 });
 
 // matakuliah ujian
@@ -108,8 +109,8 @@ Route::controller(PesertaujianController::class)->group(function () {
     Route::get('/peserta-ujian-uts/{id}', 'uts');
     Route::get('/baak/cari-peserta-ujian', 'cari');
     Route::post('/upload-peserta-ujian', 'storeData_Pesertaujian');
-    Route::post('/baak/pesertauji', 'singpesertauji');
-    Route::post('/baak/pesertauji-tambahan', 'singpesertauji_t');
+    // Route::post('/baak/pesertauji', 'singpesertauji');
+    // Route::post('/baak/pesertauji-tambahan', 'singpesertauji_t');
     Route::delete('/baak-peserta/{id}/destroy', 'destroy');
     Route::get('/baak-peserta/destroy-all', 'destroy_all');
 });
