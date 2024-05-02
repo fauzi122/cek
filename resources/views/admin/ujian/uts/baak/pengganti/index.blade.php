@@ -38,47 +38,38 @@
 										<thead>
 											<tr>
 											  
-                                                <th>NIP</th>
-                                                <th>NM MTK</th>
-                                                <th>Kode MTK</th>
-
-                                                <th>Kelas</th>
+                                                <th>DOSEN ASLI</th>
+                                                <th>DOSEN PENGGANTI</th>
                                                 <th>Kel-Ujian</th>
-                                                <th>Hari</th>
-                                                <th>Mulai</th>
-                                                <th>Selsai</th>
-                                                <th>Ruang</th>
+                                                <th>MTK</th>
                                                 <th>paket</th>
-                                                <th>Aksi</th>
+                                                <th>PETUGAS</th>
+                                                <th>ket</th>
+                                                <th>updated_at</th>
+                                               
 											</tr>
 										</thead>
 										<tbody>
 											 @foreach ($jadwal as $no => $jadwal)
 											<tr>
 											
-											
-											 
-											<td>{{ $jadwal->nip }}
-                                                <br>
-                                                {{ $jadwal->kd_dosen }}
-                                            </td>
 										
-											 <td>{{ $jadwal->nm_mtk }}</td>
-											 <td>{{ $jadwal->kd_mtk }}</td>
-											 <td>{{ $jadwal->kd_lokal }}</td>
+											 <td>{{ $jadwal->kd_dosen_asli }}</td>
+											 <td>{{ $jadwal->kd_dosen_pengganti }}</td>
 											 <td>{{ $jadwal->kel_ujian }}</td>
-											 <td>{{ $jadwal->hari_t }}</td>
-											 <td>{{ $jadwal->mulai }}</td>
-											 <td>{{ $jadwal->selesai }}</td>
-											 <td>{{ $jadwal->no_ruang }}</td>
+											 <td>{{ $jadwal->kd_mtk }}</td>
 											 <td>{{ $jadwal->paket }}</td>
+											 <td>{{ $jadwal->petugas_input }}</td>
+											 <td>{{ $jadwal->ket }}</td>
+											 <td>{{ $jadwal->updated_at }}</td>
+											 
                                              @php
                                                 $id=Crypt::encryptString($jadwal->kd_dosen.','.$jadwal->kd_mtk.','.$jadwal->kel_ujian.','.$jadwal->paket);                                    
                                                 @endphp
                         
-											 <td>
+											 {{-- <td>
                                                 <a href="/show/jadwal-uji-baak/{{ $id }}" class="btn btn-xs btn-info">show</a>
-                                             </td>
+                                             </td> --}}
 
 											</tr>
 											@endforeach 

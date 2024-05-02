@@ -56,7 +56,7 @@
 										</div>
 										@endif
 								<div class="table-responsive">
-									<table id="myTable1" class="table custom-table">
+									<table id="myTable10" class="table custom-table">
 										<thead>
 											<tr>
 											  
@@ -78,7 +78,7 @@
 												<th>ket</th>
 												<th>Aksi</th>
 												<th><span class="icon-edit1"></span></th>
-												<th><span class="icon-edit1"></span></th>
+												
 											</tr>
 										</thead>
 										<tbody>
@@ -103,7 +103,13 @@
 											 <td>{{ $jadwal->paket }}</td>
 											 <td>{{ $jadwal->sks }}</td>
 											 <td>{{ $jadwal->nm_kampus }}</td>
-											 <td>{{ $jadwal->nm_kampus }}</td>
+											 <td>
+												@if(is_null($jadwal->petugas_edit)|| $jadwal->petugas_edit === '')
+												
+												@else
+												di ubah {{ $jadwal->petugas_edit }}
+												@endif
+												</td>
 											
 											 <td>
 						@php
@@ -129,10 +135,7 @@
 												
 
 											</td>
-											<td>
-												<a href="/ganti-pengawas/{{ $id }}" class="btn btn-sm btn-secondary" title="ganti pengawas">Pengawas</a>
-
-											</td>
+											
 											</tr>
 											@endforeach
 										</tbody>
@@ -162,7 +165,7 @@
 			</style>
 <script>
 	$(document).ready(function() {
-		$('#myTable1').DataTable({
+		$('#myTable10').DataTable({
 			"scrollX": true,
 			"scrollY": "500px",
 			"scrollCollapse": true,

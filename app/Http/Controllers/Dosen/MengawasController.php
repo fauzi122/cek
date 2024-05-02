@@ -21,40 +21,37 @@ class MengawasController extends Controller
         return view('admin.mengawas.index');
     }
 
-    public function m_uts()
-    {
-        $uts = Soal_ujian::where('kd_dosen', Auth::user()->kode)
-            ->where('paket', 'UTS')
-            ->get();
-        return view('admin.mengawas.uts', compact('uts'));
-    }
 
-    public function m_uas()
+    public function m_uts($id)
     {
-        $uas = DB::table('uts_soals')
+        // Mengambil semua soal ujian yang memenuhi kriteria
+        $groupedSoals = Soal_ujian::where('no_ruang', 'not like', 'E%')
+            ->where('paket', $id)
             ->where('kd_dosen', Auth::user()->kode)
-            ->where('paket', 'UAS')
             ->get();
-        return view('admin.mengawas.uas', compact('uas'));
+    
+            // $groupedSoals = $allSoals->groupBy(function ($item) {
+            //     // Jika kd_gabung tidak null, gunakan sebagai kunci. Jika null, gunakan kombinasi kel_ujian dan kd_mtk
+            //     return $item->kd_gabung ?? $item->kel_ujian . '-' . $item->kd_mtk;
+            // })
+            // ->mapWithKeys(function ($group, $key) {
+            //     if (!is_null($group->first()->kd_gabung)) { // Cek apakah kd_gabung ada
+            //         $first = $group->first();
+            //         $first->kel_ujian = $group->pluck('kel_ujian')->join(', '); // Menggabungkan semua kel_ujian dalam satu string
+            //         return [$key => $first]; // Kembalikan sebagai item tunggal dengan kunci kd_gabung
+            //     } else { // Ini adalah kunci gabungan dari kel_ujian dan kd_mtk dari kd_gabung yang null
+            //         // Setiap item unik berdasarkan gabungan kel_ujian dan kd_mtk, kembalikan mereka sebagai individu
+            //         return $group->mapWithKeys(function ($item) {
+            //             return [$item->kel_ujian . '-' . $item->kd_mtk => $item]; // Menggunakan gabungan kel_ujian dan kd_mtk sebagai kunci
+            //         });
+            //     }
+            // })
+            // ->flatten(); // Meratakan array untuk memastikan tidak ada nesting yang tidak diinginkan
+    
+        return view('admin.mengawas.uts', compact('groupedSoals'));
     }
+    
 
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         $this->validate($request, [
@@ -91,26 +88,21 @@ class MengawasController extends Controller
     }
 
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function show_uts($id)
     {
         try {
             // Dekripsi dan pecah string $id menjadi array
             $pecah = explode(',', Crypt::decryptString($id));
+     
+                $soal = Soal_ujian::where([
+                    'kd_dosen'  => $pecah[0],
+                    'kd_mtk'    => $pecah[1],
+                    'kel_ujian' => $pecah[2],
+                    'paket'     => $pecah[3],
+                    'tgl_ujian'    => $pecah[4]
+                ])->first(); 
 
-            // Mengambil data soal ujian
-            $soal = Soal_ujian::where([
-                'kd_dosen'  => $pecah[0],
-                'kd_mtk'    => $pecah[1],
-                'kel_ujian' => $pecah[2],
-                'paket'     => $pecah[3],
-                'hari_t'    => $pecah[4]
-            ])->first();
+            // dd($soal);
 
             // Mengambil data berita acara ujian
             $beritaAcara = Ujian_berita_acara::where([
@@ -123,7 +115,7 @@ class MengawasController extends Controller
             // Mengambil dan memproses data absen ujian
             $mhsujian = Absen_ujian::where([
                 'kd_mtk'    => $pecah[1],
-                'no_kel_ujn' => $pecah[2],
+                'no_kel_ujn'=> $pecah[2],
                 'paket'     => $pecah[3]
             ])->get()->map(function ($item) {
                 $item->isInHasilUjian = DB::table('ujian_hasilujians')

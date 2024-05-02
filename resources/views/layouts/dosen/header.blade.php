@@ -21,7 +21,7 @@
                     <span class="user-name">{{ Auth::user()->username }}</span>
                     <span class="avatar"><i class="icon-user"></i><span class="status busy"></span></span>
                 </a>
-                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userSettings">
+                {{-- <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userSettings">
                     <div class="header-profile-actions">
                         <div class="header-user-profile">
                          
@@ -43,7 +43,7 @@
                             
                         
                     </div>
-                </div>
+                </div> --}}
             </li>
         </ul>						
         <!-- Header actions end -->

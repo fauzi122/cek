@@ -34,7 +34,7 @@
                                                 <i class="icon-activity"></i>
                                             </div>
                                             <div class="stats-detail">
-                                                <h3><a href="/adm/rekap-mengawas/{{ $encryptedValue }}">Master Soal {{ ucwords(strtolower($examType)) }}</a></h3>
+                                                <h3><a href="/adm/rekap-mengawas/{{ $encryptedValue }}">Jadwal Ujian {{ ucwords(strtolower($examType)) }}</a></h3>
                                             </div>
                                         </div>
                                     </div>

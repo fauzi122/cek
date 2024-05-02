@@ -129,6 +129,8 @@ class JadwalujianController extends Controller
             'paket'       => $pecah[3] 
             ])->first();
 
+            // dd($beritaAcara);
+
             $mhsujian = Absen_ujian::where([    
                 'kd_mtk'        => $pecah[1],
                 'no_kel_ujn'    => $pecah[2],

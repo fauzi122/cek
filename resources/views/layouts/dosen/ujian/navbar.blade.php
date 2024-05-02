@@ -78,11 +78,7 @@
 						</li>
 						@endcan
 
-						@can('dosen_pengganti_mengawas')
-						<li>
-							<a class="dropdown-item" href="/pengganti-mengawas">Dosen Pengganti</a>
-						</li>
-						@endcan
+						
 
 					</ul>
 				</li>
@@ -136,11 +132,11 @@
 					ADMINISTRASI
 				</a>
 				<ul class="dropdown-menu" aria-labelledby="formsDropdown">
-					{{-- @can('panitia_administrasi_ujian') --}}
+					@can('panitia_administrasi_ujian')
 					<li>
 						<a class="dropdown-item" href="/adm-panitia-uji">Panitia Ujian</a>
 					</li>
-					{{-- @endcan --}}
+					@endcan
 
 					@can('peserta_administrasi_ujian')
 					<li>
@@ -152,6 +148,12 @@
 					<li>
 						<a class="dropdown-item" href="/adm-rekap-mengawas">Rekap Mengawas</a>
 					</li>
+					@endcan
+
+					@can('dosen_pengganti_mengawas')
+						<li>
+							<a class="dropdown-item" href="/pengganti-mengawas">Dosen Pengganti</a>
+						</li>
 					@endcan
 				</ul>
 			</li>

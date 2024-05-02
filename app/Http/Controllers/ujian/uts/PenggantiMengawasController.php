@@ -19,15 +19,10 @@ class PenggantiMengawasController extends Controller
     }
     public function index()
     {
-        $jadwal = Soal_ujian::get();
-        $result = Soal_ujian::join('ujian_berita_acaras', function ($join) {
-                    $join->on('uts_soals.kel_ujian', '=', 'ujian_berita_acaras.kel_ujian')
-                         ->on('uts_soals.kd_mtk', '=', 'ujian_berita_acaras.kd_mtk');
-                })
-                ->select('ujian_berita_acaras.*', 'uts_soals.kd_dosen', 'uts_soals.kel_ujian', 'uts_soals.kd_mtk')
-                ->get();
+        $jadwal = Ganti_pengawas_ujian::get();
+
     
-        return view('admin.ujian.uts.baak.pengganti.index', compact('jadwal', 'result'));
+        return view('admin.ujian.uts.baak.pengganti.index', compact('jadwal',));
     }
 
     public function store(Request $request)
@@ -80,7 +75,6 @@ class PenggantiMengawasController extends Controller
             return redirect('/pengganti-mengawas')->with('error', 'Tidak ada perubahan pada data, Soal Ujian tidak diperbarui');
         }
     }
-    
     
     
     public function edit($id)

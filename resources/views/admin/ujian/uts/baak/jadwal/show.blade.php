@@ -5,13 +5,6 @@
 @section('content')
 	<div class="main-container">
 
-
-				<!-- Page header start -->
-				
-				<!-- Page header end -->
-
-
-				<!-- Content wrapper start -->
 				<div class="content-wrapper">
 
 					<!-- Row start -->
@@ -51,7 +44,10 @@
 												<td>{{ $soal->nm_kampus }}</td>
 											</tr>
 											<tr>
-												<td>Berita Acara</td>
+												<td>Berita Acara 
+
+													
+												</td>
 												<td>
 
 												
@@ -76,7 +72,9 @@
 										@else
 											@endif                                                
 								
-
+											@if(is_null($beritaAcara->isi) || $beritaAcara->isi === '')
+											<pre><h4>Dosen belum isi berita acara</h4></pre>
+										@endif
 											<!-- Modal Structure -->
 											<div class="modal fade" id="beritaAcaraModal" tabindex="-1" role="dialog" aria-labelledby="beritaAcaraModalLabel" aria-hidden="true">
 												<div class="modal-dialog" role="document" style="max-width: 70%;"> <!-- Inline CSS for wider modal -->
@@ -89,12 +87,10 @@
 														</div>
 														<div class="modal-body">
 															@if($beritaAcara)
-																{{-- Escaping the content to display as plain text --}}
+																
 																<pre>{{ htmlspecialchars($beritaAcara->isi) }}</pre>
-																{{-- Display other fields from berita acara as needed --}}
-															@else
-																<p>No berita acara found.</p>
-															@endif
+																
+																@endif
 														</div>
 														<form action="{{ route('verifikasi.status') }}" method="POST">
 															@csrf
@@ -119,148 +115,11 @@
 
 												</td>
 											</tr>
+
 										</tbody>
 									</table>
 								</div>
-								<div class="nav-tabs-container">
-									<!-- Navigation Tabs -->
-									<ul class="nav nav-tabs" id="myTab3" role="tablist">
-										<li class="nav-item">
-											<a class="nav-link active" id="home-tab3" data-toggle="tab" href="#home3" role="tab" aria-controls="home3" aria-selected="true">
-												<i class="icon-edit1"></i> Rekap Hadir Mahasiswa Ujian
-											</a>
-										</li>
-										<li class="nav-item">
-											<a class="nav-link" id="profile-tab3" data-toggle="tab" href="#profile3" role="tab" aria-controls="profile3" aria-selected="false">
-												<i class="icon-download-cloud"></i> Download Rekap Hadir Mahasiswa
-											</a>
-										</li>
-									</ul>
-				
-									<!-- Tab Content -->
-									<div class="tab-content" id="myTabContent3">
-										<!-- Tab Pane 1 -->
-										<div class="tab-pane fade show active" id="home3" role="tabpanel" aria-labelledby="home-tab3">
-											<div class="row gutters">
-												<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-													
-														<div class="table-responsive">
-															<table class="custom-table">
-																		<thead>
-																			<tr>
-																				<th>No</th>
-																				<th>NIM</th>
-																				<th>Nama</th>
-																				<th>Komentar</th>
-																				
-																				<th>Status Hadir</th>
-																				<th>Waktu</th>
-																			
-																			</tr>
-																		</thead>
-																		<tbody>
-																			@forelse ($mhsujian as $item)
-																				<tr>
-																					<td>{{ $loop->iteration }}</td>
-																					<td>{{ $item->nim }}</td>
-																					<td>{{ $item->nm_mhs }}</td>
-																					<td>
-
-																						
-																						<select name="ket" class="custom-select ket-dropdown" data-id="{{ $item->id }}">
-																							<option value="">-- Pilih Status --</option>
-																							<option value="ujian_bermasalah" {{ $item->ket == 'ujian_bermasalah' ? 'selected' : '' }}>Ujian Bermasalah</option>
-																							<option value="nyontek" {{ $item->ket == 'nyontek' ? 'selected' : '' }}>Nyontek</option>
-																							<!-- Add more options as needed -->
-																						</select>
-																					
-																					</td> <!-- Assuming each item has an 'id' -->
-																					<td>
-
-																					
-																					<label class="switch">
-																						<input type="checkbox" class="status-checkbox" id="switch{{ $item->id }}" data-id="{{ $item->id }}" {{ $item->status ? 'checked' : '' }}>
-																						<span class="slider round"></span>
-																					</label>
-																																											
-																						
-																					</td>
-																					<td>
-																						@if($item->updated_at)
-																						
-																						<span>
-																							{{ $item->updated_at->format('d F Y, H:i') }} <!-- Format: 13 Januari 2024, 15:30 -->
-																						</span>
-																						
-																						<!-- {{ $item->updated_at->format('l, d M Y H:i:s') }} <!-- Format: Sabtu, 13 Jan 2024 15:30:00 -->
-																						<!-- {{ $item->updated_at->diffForHumans() }} <!-- Format: 2 jam yang lalu -->
-																					@else
-																						<span>Belum Pernah Diperbarui</span>
-																					@endif
-																						
-																						</td>
-																				</tr>
-																			@empty
-																				<tr>
-																					<td colspan="5">No data available</td>
-																				</tr>
-																			@endforelse
-																		</tbody>
-																	</table>
-																	
-																</tbody>
-															</table>
-															
-														</div>
-												
-												</div>
-											</div>
-										</div>
-				
-										<!-- Tab Pane 2 -->
-										<div class="tab-pane fade" id="profile3" role="tabpanel" aria-labelledby="profile-tab3">
-											<div class="table-responsive">
-												<table id="copy-print-csv" class="table custom-table">
-														<thead>
-															<tr>
-																<th>No</th>
-																<th>NIM</th>
-																<th>Nama</th>
-																<th>Aksi</th>
-															
-															</tr>
-														</thead>
-														<tbody>
-															@forelse ($mhsujian as $item)
-																<tr>
-																	<td>{{ $loop->iteration }}</td>
-																	<td>{{ $item->nim }}</td>
-																	<td>{{ $item->nm_mhs }}</td>
-																	<td>
-																		<center>
-																		<a href="" class="btn btn-info" data-toggle="modal" data-target="#basicModal">
-																			Log Aktivitas
-																		</a>
-																	</center>
-																		 
-																	
-																	</td> <!-- Assuming each item has an 'id' -->
-															
-																</tr>
-															@empty
-																<tr>
-																	<td colspan="5">No data available</td>
-																</tr>
-															@endforelse
-														</tbody>
-													</table>
-													
-												</tbody>
-											</table>
-											</div>
-										</div>
-									</div>
-								</div>
+								@include('admin.ujian.uts.baak.jadwal.table_absen')
 								</div>
 							</div>
 
@@ -288,24 +147,7 @@
 							</button>
 						</div>
 						<div class="modal-body">
-							{{-- <form action="/store/mengawas-uts/" method="post" enctype="multipart/form-data">
-								@csrf
-								
-								<input type="text" hidden readonly name="kd_mtk" value="{{ $soal->kd_mtk }}">
-								<input type="text" hidden readonly name="kel_ujian" value="{{ $soal->kel_ujian }}">
-								<input type="text" hidden readonly name="hari" value="{{ $soal->hari_t }}">
-								<input type="text" hidden readonly name="paket" value="{{ $soal->paket }}">
-
-								<!-- Text area added here -->
-								<div class="form-group">
-									<label for="additionalNotes">Berita Acara:</label>
-									<textarea class="form-control" id="isi" name="isi" rows="7"></textarea>
-								</div>
-								<button type="submit" class="btn btn-primary">
-									Kirim Data
-								</button> 
-							</form> --}}
-							<hr>
+							
 							{{-- <label>
 								<h5>*Catatan :</h5> 
 								<br>
