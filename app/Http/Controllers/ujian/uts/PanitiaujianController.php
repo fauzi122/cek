@@ -16,11 +16,11 @@ class PanitiaujianController extends Controller
 {
     public function __construct()
     {
-        if (!$this->middleware('auth:sanctum')) {
-            return redirect('/login');
-        }
+       $this->middleware(['permission:panitia_administrasi_ujian']);
+       if(!$this->middleware('auth:sanctum')){
+        return redirect('/login');
     }
-
+    }
     public function index()
     {
 
