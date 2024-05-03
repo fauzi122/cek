@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Cookie;
 
 class AuthenticatedSessionController extends Controller
 {
@@ -73,27 +74,29 @@ class AuthenticatedSessionController extends Controller
     //     return redirect('https://elearning.bsi.ac.id/dashboard');
     // }
     public function destroy(Request $request): RedirectResponse
-{
-    // Mendapatkan user yang sedang login
-    $user = Auth::guard('web')->user();
-
-    // Logout user
-    Auth::guard('web')->logout();
-
-    // Jika user ditemukan, update atau hapus session_id di database
-    if ($user) {
-        $user->session_id = null; // Atau bisa juga $user->session_id = '';
-        $user->save();
+    {
+        $user = Auth::guard('web')->user();
+        Auth::guard('web')->logout();
+    
+        if ($user) {
+            $user->session_id = null;
+            if (!$user->save()) {
+                Log::error('Failed to clear Session ID for user: ' . $user->id);
+            }
+        }
+    
+        // Invalidate session
+        $request->session()->invalidate();
+        
+        // Regenerate CSRF token
+        $request->session()->regenerateToken();
+    
+        // Hapus cookie yang spesifik
+        // Ganti 'laravel_session' dengan nama cookie kamu jika berbeda
+        $cookie = Cookie::forget('laravel_session');
+    
+        // Redirect dan hapus cookie pada response
+        return redirect('https://elearning.bsi.ac.id/dashboard')->withCookie($cookie);
     }
-
-    // Invalidate session
-    $request->session()->invalidate();
-
-    // Regenerate token
-    $request->session()->regenerateToken();
-
-    // Redirect user
-    return redirect('https://elearning.bsi.ac.id/dashboard');
-}
 
 }

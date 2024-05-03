@@ -14,7 +14,7 @@ class DasboardujianController extends Controller
 {
     public function __construct()
     {
-        //    $this->middleware(['permission:examschedule.index']);
+           $this->middleware(['permission:examschedule.index']);
         if (!$this->middleware('auth:sanctum')) {
             return redirect('/login');
         }
