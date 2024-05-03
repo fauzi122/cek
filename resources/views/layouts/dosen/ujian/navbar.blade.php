@@ -132,11 +132,11 @@
 					ADMINISTRASI
 				</a>
 				<ul class="dropdown-menu" aria-labelledby="formsDropdown">
-					@can('panitia_administrasi_ujian')
+					{{-- @can('panitia_administrasi_ujian')
 					<li>
 						<a class="dropdown-item" href="/adm-panitia-uji">Panitia Ujian</a>
 					</li>
-					@endcan
+					@endcan --}}
 
 					@can('peserta_administrasi_ujian')
 					<li>

@@ -13,9 +13,10 @@ class PenggantiMengawasController extends Controller
 {
     public function __construct()
     {
-        if (!$this->middleware('auth:sanctum')) {
-            return redirect('/login');
-        }
+       $this->middleware(['permission:dosen_pengganti_mengawas']);
+       if(!$this->middleware('auth:sanctum')){
+        return redirect('/login');
+    }
     }
     public function index()
     {
