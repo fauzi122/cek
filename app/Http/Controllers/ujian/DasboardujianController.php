@@ -14,10 +14,10 @@ class DasboardujianController extends Controller
 {
     public function __construct()
     {
-       $this->middleware(['permission:examschedule.index']);
-       if(!$this->middleware('auth:sanctum')){
-        return redirect('/login');
-    }
+        //    $this->middleware(['permission:examschedule.index']);
+        if (!$this->middleware('auth:sanctum')) {
+            return redirect('/login');
+        }
     }
 
     public function index()
@@ -29,10 +29,10 @@ class DasboardujianController extends Controller
         $jumat  = Uts_soal::where('hari_t', 'Jumat')->count();
         $sabtu  = Uts_soal::where('hari_t', 'Sabtu')->count();
 
-        $jadwal= Uts_soal::where([
+        $jadwal = Uts_soal::where([
             'hari_t' => hari_ini()
-            ])->get();
-           
-        return view('admin.ujian.dashboardujian',compact('jadwal','senin','selasa','rabu','kamis','jumat','sabtu'));
+        ])->get();
+
+        return view('admin.ujian.dashboardujian', compact('jadwal', 'senin', 'selasa', 'rabu', 'kamis', 'jumat', 'sabtu'));
     }
 }

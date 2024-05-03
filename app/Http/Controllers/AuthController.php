@@ -36,13 +36,13 @@ class AuthController extends Controller
             return redirect('/dashboard');
         } catch (TokenExpiredException $e) {
             // Tangani kasus ketika token sudah kedaluwarsa
-            return back()->with('error', 'Token has expired');
+            return redirect('/')->with('error', 'Token has expired');
         } catch (TokenInvalidException $e) {
             // Tangani kasus ketika token tidak valid
-            return back()->with('error', 'Token is invalid');
+            return redirect('/')->with('error', 'Token is invalid');
         } catch (JWTException $e) {
             // Tangani kesalahan lain yang terkait dengan JWT
-            return back()->with('error', 'Error fetching token');
+            return redirect('/')->with('error', 'Error fetching token');
         }
     }
 }

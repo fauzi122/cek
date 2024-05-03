@@ -82,8 +82,8 @@ Route::controller(JadwalkuliahController::class)->group(function () {
 });
 
 Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    // Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    // Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     // Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
@@ -111,7 +111,6 @@ Route::middleware('auth')->group(function () {
                 Route::get('/show/mengawas-uts-gabung/{id}', 'show_uts');
                 Route::post('/store/mengawas-uts-gabung/', 'store')->name('store-mengawas-ujian-gabung');
                 Route::post('/store/berita-mengawas-uts-gabung/', 'updateBeritaAcara')->name('store-berita-mengaws-ujian-gabung');
-                           
             });
             //  Api sisfo
             Route::get('/meeting', [ApipertemuanController::class, 'index']);
