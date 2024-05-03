@@ -62,14 +62,38 @@ class AuthenticatedSessionController extends Controller
     /**
      * Destroy an authenticated session.
      */
+    // public function destroy(Request $request): RedirectResponse
+    // {
+    //     Auth::guard('web')->logout();
+
+    //     $request->session()->invalidate();
+
+    //     $request->session()->regenerateToken();
+
+    //     return redirect('https://elearning.bsi.ac.id/dashboard');
+    // }
     public function destroy(Request $request): RedirectResponse
-    {
-        Auth::guard('web')->logout();
+{
+    // Mendapatkan user yang sedang login
+    $user = Auth::guard('web')->user();
 
-        $request->session()->invalidate();
+    // Logout user
+    Auth::guard('web')->logout();
 
-        $request->session()->regenerateToken();
-
-        return redirect('https://elearning.bsi.ac.id/dashboard');
+    // Jika user ditemukan, update atau hapus session_id di database
+    if ($user) {
+        $user->session_id = null; // Atau bisa juga $user->session_id = '';
+        $user->save();
     }
+
+    // Invalidate session
+    $request->session()->invalidate();
+
+    // Regenerate token
+    $request->session()->regenerateToken();
+
+    // Redirect user
+    return redirect('https://elearning.bsi.ac.id/dashboard');
+}
+
 }
