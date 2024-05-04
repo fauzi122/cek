@@ -105,7 +105,7 @@
     <div class="content-wrapper">
         <div class="alert alert-info" role="alert">
             <h4 class="alert-heading">Selamat Datang</h4>
-            <p>Selamat datang di halaman pengawasan ujian, Ahmad Fauzi. Semoga sukses mengawasi ujian yang akan datang.</p>
+            <p>Selamat datang di halaman pengawasan ujian, {{ Auth::user()->name }}. Semoga sukses mengawasi ujian yang akan datang.</p>
         </div>
         <div class="row gutters">
             <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12">
