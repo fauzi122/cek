@@ -12,6 +12,7 @@ Route::get('/absen-ajars', [AbsenAjarController::class, 'index']);
 Route::get('/absen-ajar-praktek', [AbsenAjarController::class, 'ajar_praktek']);
 Route::get('/jadwal-dosen', [AbsenAjarController::class, 'jadwal']);
 Route::get('/images/{filename}', [FileController::class, 'getImage'])->where('filename', '.*');
+Route::get('/images-essay/{filename}', [FileController::class, 'getImageEssay'])->where('filename', '.*');
 
 Route::middleware('checkip')->group(function () {
     // Rute-rute yang hanya dapat diakses oleh IP yang diizinkan
