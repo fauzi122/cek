@@ -65,21 +65,15 @@ class AuthenticatedSessionController extends Controller
      */
     public function destroy(Request $request): RedirectResponse
     {
-        $user = Auth::guard('web')->user();
+        
         Auth::guard('web')->logout();
-        if ($user) {
-                    $user->session_id = null;
-                    if (!$user->save()) {
-                        Log::error('Failed to clear Session ID for user: ' . $user->id);
-                    }
-                }
+
         $request->session()->invalidate();
 
         $request->session()->regenerateToken();
 
         return redirect('https://elearning.bsi.ac.id/dashboard');
     }
-    
     // public function destroy(Request $request): RedirectResponse
     // {
     //     $user = Auth::guard('web')->user();
