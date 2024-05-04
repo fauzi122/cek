@@ -63,40 +63,40 @@ class AuthenticatedSessionController extends Controller
     /**
      * Destroy an authenticated session.
      */
-    // public function destroy(Request $request): RedirectResponse
-    // {
-    //     Auth::guard('web')->logout();
-
-    //     $request->session()->invalidate();
-
-    //     $request->session()->regenerateToken();
-
-    //     return redirect('https://elearning.bsi.ac.id/dashboard');
-    // }
     public function destroy(Request $request): RedirectResponse
     {
-        $user = Auth::guard('web')->user();
         Auth::guard('web')->logout();
-    
-        if ($user) {
-            $user->session_id = null;
-            if (!$user->save()) {
-                Log::error('Failed to clear Session ID for user: ' . $user->id);
-            }
-        }
-    
-        // Invalidate session
+
         $request->session()->invalidate();
-        
-        // Regenerate CSRF token
+
         $request->session()->regenerateToken();
-    
-        // Hapus cookie yang spesifik
-        // Ganti 'laravel_session' dengan nama cookie kamu jika berbeda
-        $cookie = Cookie::forget('laravel_session');
-    
-        // Redirect dan hapus cookie pada response
-        return redirect('https://elearning.bsi.ac.id/dashboard')->withCookie($cookie);
+
+        return redirect('https://elearning.bsi.ac.id/dashboard');
     }
+    // public function destroy(Request $request): RedirectResponse
+    // {
+    //     $user = Auth::guard('web')->user();
+    //     Auth::guard('web')->logout();
+    
+    //     if ($user) {
+    //         $user->session_id = null;
+    //         if (!$user->save()) {
+    //             Log::error('Failed to clear Session ID for user: ' . $user->id);
+    //         }
+    //     }
+    
+    //     // Invalidate session
+    //     $request->session()->invalidate();
+        
+    //     // Regenerate CSRF token
+    //     $request->session()->regenerateToken();
+    
+    //     // Hapus cookie yang spesifik
+    //     // Ganti 'laravel_session' dengan nama cookie kamu jika berbeda
+    //     $cookie = Cookie::forget('laravel_session');
+    
+    //     // Redirect dan hapus cookie pada response
+    //     return redirect('https://elearning.bsi.ac.id/dashboard')->withCookie($cookie);
+    // }
 
 }
