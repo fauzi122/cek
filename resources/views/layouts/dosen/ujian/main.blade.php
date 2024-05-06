@@ -136,8 +136,8 @@
 		</div>
 		<!-- Page header end -->
 		<iv class="main-container">
-			<div class="flash-tambah" data-flashdata="{{ session('status') }}"></div>
-			<div class="flash-error" data-flasherror="{{ session('error') }}"></div>
+			{{-- <div class="flash-tambah" data-flashdata="{{ session('status') }}"></div>
+			<div class="flash-error" data-flasherror="{{ session('error') }}"></div> --}}
 			@yield('content')
 
 	</div>

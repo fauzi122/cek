@@ -16,7 +16,7 @@ class PanitiaujianController extends Controller
 {
     public function __construct()
     {
-       $this->middleware(['permission:panitia_administrasi_ujian']);
+       $this->middleware(['permission:panitia_ujian']);
        if(!$this->middleware('auth:sanctum')){
         return redirect('/login');
     }

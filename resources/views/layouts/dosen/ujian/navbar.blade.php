@@ -18,7 +18,7 @@
 							<a class="dropdown-item" href="/dashboard-ujian">Dashboard Ujian</a>
 						</li>
 						<li>
-							<a class="dropdown-item" href="/dashboard">Kembali Ke My-Best</a>
+							<a class="dropdown-item" href="/dashboard">Kembali Ke Dasboard</a>
 						</li>
 
 

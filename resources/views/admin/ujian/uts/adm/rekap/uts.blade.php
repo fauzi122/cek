@@ -39,7 +39,8 @@
                                                         <th>paket</th>
                                                         <th>Kampus</th>
                                                         <th>status</th>
-                                                       
+                                                        <th>ot</th>
+
                                                         <th>Aksi</th>
                                                         <th><span class="icon-edit1"></span></th>
 
@@ -83,6 +84,18 @@
                                                 {{-- Jika verifikasi 2, tampilkan emoji silang dengan title "Ujian Bermasalah" --}}
                                                 <span title="Ujian Bermasalah" style="font-size: 24px;">❌</span>
                                             @endif
+                                            </td>
+                                            <td>
+                                                @php
+                                                    $ot = $resultArray[$key]->ot ?? 0; // Menetapkan default sebagai 0 jika tidak ditemukan
+                                                @endphp
+    
+                                                @if($ot == 1)
+                                                    {{-- Jika verifikasi 1, tampilkan emoji ceklis dengan title "Ujian Lancar" --}}
+                                                    <span title="Ujian Lancar" style="font-size: 12px;">YA</span>
+                                                @else
+
+                                                @endif
                                             </td>
 											 <td>
 

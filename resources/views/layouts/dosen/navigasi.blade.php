@@ -9,8 +9,7 @@
                     <i class="icon-devices_other"></i>
                     <span class="menu-text">Dashboard</span>
 
-                </a>
-                  
+                </a>   
 		    </a>
 
                          <a href="{{ url('/master-soal') }}">
@@ -66,7 +65,7 @@
                                               this.closest('form').submit();">
                         <i class="icon-log-out1"></i> <!-- Ikon logout ditambahkan di sini -->
                         
-                        <span class="menu-text">{{ __('Kembali ke Mybest') }}</span>
+                        <span class="menu-text">{{ __('Logout') }}</span>
                     </x-dropdown-link>
                 </form>
             </li>

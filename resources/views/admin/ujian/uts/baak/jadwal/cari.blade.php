@@ -43,7 +43,6 @@
                                                         <th>ket</th>
                                                         <th>Aksi</th>
                                                         <th><span class="icon-edit1"></span></th>
-                                                        <th><span class="icon-edit1"></span></th>
 
                                                        
                                                     </tr>
@@ -70,8 +69,13 @@
 											 <td>{{ $jadwal->paket }}</td>
 											 <td>{{ $jadwal->sks }}</td>
 											 <td>{{ $jadwal->nm_kampus }}</td>
-											 <td>{{ $jadwal->nm_kampus }}</td>
-											
+											 <td>
+												@if(is_null($jadwal->petugas_edit)|| $jadwal->petugas_edit === '')
+												
+												@else
+												di ubah {{ $jadwal->petugas_edit }}
+												@endif
+												</td>
 											 <td>
 						@php
 						$id=Crypt::encryptString($jadwal->kd_dosen.','.$jadwal->kd_mtk.','.$jadwal->kel_ujian.','.$jadwal->paket.','.$jadwal->nm_kampus);                                    
@@ -81,14 +85,14 @@
 												@php
 													$key = $jadwal->kd_dosen . '_' . $jadwal->kel_ujian . '_' . $jadwal->kd_mtk;
 												@endphp
-
+{{-- 
 												@if(array_key_exists($key, $resultArray))
 													<!-- Jika ada data yang cocok di resultArray, aktifkan tombol Show -->
 													<a href="/show/jadwal-uji-baak/{{ $id }}" class="btn btn-sm btn-info">Show</a>
 												@else
 													<!-- Jika tidak, nonaktifkan tombol Show -->
 													<button class="btn btn-sm btn-custom btn-info" disabled>Show</button>
-												@endif
+												@endif --}}
 											</td>
 											<td>
 
@@ -96,10 +100,7 @@
 												
 
 											</td>
-											<td>
-												<a href="/ganti-pengawas/{{ $id }}" class="btn btn-sm btn-secondary" title="ganti pengawas">Pengawas</a>
-
-											</td>
+											
 											</tr>
 											@endforeach
                                                 </tbody>

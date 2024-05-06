@@ -44,51 +44,24 @@ class JadwalujianController extends Controller
             'paket'    => $pecah[0]
             ])->get();
 
-        $result = DB::table('uts_soals')
-                ->join('ujian_berita_acaras', function($join) {
-                    $join->on('uts_soals.kel_ujian', '=', 'ujian_berita_acaras.kel_ujian')
-                    ->on('uts_soals.kd_mtk', '=', 'ujian_berita_acaras.kd_mtk');
-                    })
-                ->select('ujian_berita_acaras.*', 'uts_soals.kd_dosen', 'uts_soals.kel_ujian', 'uts_soals.kd_mtk')
-                ->where(['uts_soals.paket'    => $pecah[0]])->get();
-    
-        // Membuat array untuk pencocokan data
+       // Query untuk mengambil data dari tabel uts_soals dan ujian_berita_acaras
+       $result = DB::table('uts_soals')
+       ->join('ujian_berita_acaras', function($join) {
+           $join->on('uts_soals.kel_ujian', '=', 'ujian_berita_acaras.kel_ujian')
+                ->on('uts_soals.kd_mtk', '=', 'ujian_berita_acaras.kd_mtk');
+       })
+       ->select('ujian_berita_acaras.*', 'uts_soals.kd_dosen', 'uts_soals.kel_ujian', 'uts_soals.kd_mtk', 'uts_soals.paket', 'ujian_berita_acaras.verifikasi')
+       ->where(['uts_soals.paket' => $pecah[0]])
+       ->get();
+
+        // Membuat array untuk pencocokan data dengan menyertakan 'paket' dalam kunci
         $resultArray = $result->mapWithKeys(function ($item) {
-            return [$item->kd_dosen . '_' . $item->kel_ujian . '_' . $item->kd_mtk => $item];
+        return [$item->kd_dosen . '_' . $item->kel_ujian . '_' . $item->kd_mtk . '_' . $item->paket => $item];
         })->toArray();
+
     
         return view('admin.ujian.uts.baak.jadwal.jadwal', compact('jadwal', 'resultArray'));
     }
-
-    // public function jadwal($id, Request $request)
-    // {
-    //     $pecah = explode(',', Crypt::decryptString($id));
-    //     $paket = $pecah[0];
-    
-    //     if ($request->ajax()) {
-    //         $query = DB::table('uts_soals')
-    //             ->join('ujian_berita_acaras', function($join) {
-    //                 $join->on('uts_soals.kel_ujian', '=', 'ujian_berita_acaras.kel_ujian')
-    //                      ->on('uts_soals.kd_mtk', '=', 'ujian_berita_acaras.kd_mtk');
-    //             })
-    //             ->select('ujian_berita_acaras.*', 'uts_soals.kd_dosen', 'uts_soals.kel_ujian', 'uts_soals.kd_mtk')
-    //             ->where('uts_soals.paket', $paket);
-    
-    //         return datatables()->of($query)
-    //             ->addColumn('action', function ($item) {
-    //                 return '<button class="btn btn-primary">Edit</button>';
-    //             })
-    //             ->rawColumns(['action'])
-    //             ->make(true);
-    //     }
-    //     $encryptedId = $id; 
-    //     // Fallback for non-AJAX request
-    //     $jadwal = Soal_ujian::where('paket', $paket)->get();
-
-    //     // dd($jadwal);
-    //     return view('admin.ujian.uts.baak.jadwal.jadwal', compact('jadwal','encryptedId'));
-    // }
-    
 
 
     public function search(Request $request)
@@ -206,12 +179,13 @@ class JadwalujianController extends Controller
         }
     
         $ujian->verifikasi           = $request->verifikasi;
-        $ujian->petugas             = Auth::user()->kode; 
-        $ujian->waktu_verifikasi    = Carbon::now(); 
+        $ujian->ot                   = $request->ot;
+        $ujian->petugas              = Auth::user()->kode; 
+        $ujian->waktu_verifikasi     = Carbon::now(); 
         $ujian->save(); 
     
         // Redirect back with a success message
-        return redirect()->back()->with('status', 'Status berhasil diperbarui.');
+        return redirect()->back()->with('success', 'Status berhasil diperbarui.');
     }
     
     

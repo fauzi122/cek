@@ -83,6 +83,7 @@ Route::controller(JadwalujianController::class)->group(function () {
     Route::get('/jadwal-uji-baak', 'index');
     Route::get('/baak/jadwal-ujian/{id}', 'jadwal');
     Route::get('/show/jadwal-uji-baak/{id}', 'show_uts');
+    Route::get('/baak/cari-jadwal-ujian', 'search');
     Route::get('/edit/jadwal-ujian/{id}', 'edit');
     Route::put('/update/jadwal-ujian/{id}', 'update');
     Route::post('/verifikasi-berita-acara', 'updateStatus')->name('verifikasi.status');

@@ -62,7 +62,8 @@ class AdmRekapMengawasController extends Controller
                         $join->on('uts_soals.kel_ujian', '=', 'ujian_berita_acaras.kel_ujian')
                              ->on('uts_soals.kd_mtk', '=', 'ujian_berita_acaras.kd_mtk');
                     })
-                    ->select('ujian_berita_acaras.*', 'uts_soals.kd_dosen', 'uts_soals.kel_ujian', 'uts_soals.kd_mtk', 'uts_soals.paket', 'ujian_berita_acaras.verifikasi')
+                    ->select('ujian_berita_acaras.*', 'uts_soals.kd_dosen', 'uts_soals.kel_ujian', 'uts_soals.kd_mtk', 'uts_soals.paket',
+                     'ujian_berita_acaras.verifikasi','ujian_berita_acaras.ot')
                     ->where(['uts_soals.paket' => $pecah[0]])
                     ->get();
     
