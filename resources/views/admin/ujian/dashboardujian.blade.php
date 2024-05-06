@@ -90,7 +90,7 @@
 						<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
 							<div class="card h-350">
 								<div class="card-header">
-									<div class="card-title">Jadwal Ujian Hari Ini</div>
+									<div class="card-title">Jadwal Ujian Semua kampus </div>
 								</div>
 								<div class="card-body">
 									<div class="table-container">
@@ -106,11 +106,13 @@
 													  <th>kd MTK</th>
 													  <th>Kelas</th>
 													  <th>Hari</th>
-													  <th>Waktu</th>
+													  <th>mulai</th>
+													  <th>selsai</th>
 													  <th>Ruang</th>
 													  <th>paket</th>
-													  <th>jml soal</th>
-													  <th>Aksi</th>
+													  <th>tanggal</th>
+													  {{-- <th>jml soal</th> --}}
+													  {{-- <th>Aksi</th> --}}
 													</tr>
 												</thead>
 												<tbody>
@@ -126,13 +128,15 @@
 													 <td>{{ $jadwal->kd_mtk }}</td>
 													 <td>{{ $jadwal->kd_lokal }}</td>
 													 <td>{{ $jadwal->hari_t }}</td>
-													 <td><h5>{{ $jadwal->jam_t }}</h5></td>
+													 <td><h5>{{ $jadwal->mulai }}</h5></td>
+													 <td><h5>{{ $jadwal->selesai }}</h5></td>
 													 <td>{{ $jadwal->no_ruang }}</td>
 													 <td>{{ $jadwal->paket }}</td>
-													 <td>{{ $jadwal->jml_soal }}</td>
-													 <td>
+													 <td>{{ $jadwal->tgl_ujian }}</td>
+													 {{-- <td>{{ $jadwal->jml_soal }}</td> --}}
+													 {{-- <td>
 														<a href="" class="btn btn-xs btn-info">show</a>
-													 </td>
+													 </td> --}}
 													</tr>
 													@endforeach
 												</tbody>

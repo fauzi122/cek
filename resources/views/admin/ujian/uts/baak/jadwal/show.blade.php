@@ -6,7 +6,7 @@
 	<div class="main-container">
 
 				<div class="content-wrapper">
-
+					
 					<!-- Row start -->
 					<div class="row gutters">
 						<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
@@ -68,16 +68,34 @@
 										@else
 											{{-- Tambahan kondisi lain atau pesan default jika diperlukan --}}
 										@endif
+
+										@if ($beritaAcara->ot == 1)
+											<span class='badge badge-pill badge-light'><h5>Staff Overtime</h5></span>
+									
+										@else
+											{{-- Tambahan kondisi lain atau pesan default jika diperlukan --}}
+										@endif
 										
 										@else
 											@endif                                                
 								
 											@if(is_null($beritaAcara->isi) || $beritaAcara->isi === '')
 											<pre><h4>Dosen belum isi berita acara</h4></pre>
+											@if (session('success'))
+					<div class="alert alert-info">
+						{{ session('success') }}
+					</div>
+					@endif
+	
+					@if (session('error'))
+					<div class="alert alert-info">
+						{{ session('error') }}
+					</div>
+					@endif
 										@endif
 											<!-- Modal Structure -->
 											<div class="modal fade" id="beritaAcaraModal" tabindex="-1" role="dialog" aria-labelledby="beritaAcaraModalLabel" aria-hidden="true">
-												<div class="modal-dialog" role="document" style="max-width: 70%;"> <!-- Inline CSS for wider modal -->
+												<div class="modal-dialog modal-dialog-centered modal-xl" role="document">
 													<div class="modal-content">
 														<div class="modal-header">
 															<h5 class="modal-title" id="beritaAcaraModalLabel">Verifikasi Berita Acara Mengawas</h5>
@@ -85,33 +103,43 @@
 																<span aria-hidden="true">&times;</span>
 															</button>
 														</div>
-														<div class="modal-body">
-															@if($beritaAcara)
-																
-																<pre>{{ htmlspecialchars($beritaAcara->isi) }}</pre>
-																
-																@endif
-														</div>
 														<form action="{{ route('verifikasi.status') }}" method="POST">
 															@csrf
 															<input type="hidden" name="id" value="{{ $beritaAcara->id }}">
+															<div class="modal-body">
+																@if($beritaAcara)
+																	<pre>{{ htmlspecialchars($beritaAcara->isi) }}</pre>
+																@endif
+																<br>
+																<p></p>
+																<hr>
+																
+																<div class="form-group">
+																	<label for="verifikasi">Status Ujian</label>
+																	<select name="verifikasi" id="verifikasi" class="form-control">
+																		<option value="">-- Pilih Status --</option>
+																		<option value="1" {{ $beritaAcara->verifikasi == 1 ? 'selected' : '' }}>Ujian Lancar</option>
+																		<option value="2" {{ $beritaAcara->verifikasi == 2 ? 'selected' : '' }}>Ujian Bermasalah</option>
+																	</select>
+																</div>
+																
+																<div class="form-group">
+																	<div class="form-group">
+																		<label for="ot">Overtime (Jika Pengawasnya Staff Dan Overtime) </label>
+																		<select name="ot" id="ot" class="form-control">
+																			<option value="0">-- Pilih Status --</option>
+																			<option value="1" {{ $beritaAcara->ot == 1 ? 'selected' : '' }}>YA</option>
+																		</select>
+																	</div>
+																</div>
+															</div>
 															<div class="modal-footer">
-																<select name="verifikasi" class="custom-select ket-dropdown">
-																	<option value="">-- Pilih Status --</option>
-																	<option value="1">Ujian Lancar</option>
-																	<option value="2">Ujian Bermasalah</option>
-																	<!-- Add more options as needed -->
-																</select>
 																<button type="submit" class="btn btn-info">Simpan</button>
 															</div>
 														</form>
-																											
-														
 													</div>
 												</div>
 											</div>
-
-
 
 												</td>
 											</tr>

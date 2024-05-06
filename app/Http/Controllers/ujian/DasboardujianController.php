@@ -29,9 +29,8 @@ class DasboardujianController extends Controller
         $jumat  = Uts_soal::where('hari_t', 'Jumat')->count();
         $sabtu  = Uts_soal::where('hari_t', 'Sabtu')->count();
 
-        $jadwal = Uts_soal::where([
-            'hari_t' => hari_ini()
-        ])->get();
+        $tgl_hari_ini = date('Y-m-d'); // Format tanggal: tahun-bulan-tanggal
+        $jadwal = Uts_soal::where('tgl_ujian', $tgl_hari_ini)->get();
 
         return view('admin.ujian.dashboardujian', compact('jadwal', 'senin', 'selasa', 'rabu', 'kamis', 'jumat', 'sabtu'));
     }

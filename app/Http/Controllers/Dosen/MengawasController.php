@@ -59,6 +59,8 @@ class MengawasController extends Controller
             'kel_ujian' => 'required',
             'hari'      => 'required',
             'paket'     => 'required',
+            'no_ruang'     => 'required',
+            'jam_t'     => 'required',
 
         ]);
 
@@ -74,6 +76,8 @@ class MengawasController extends Controller
             'kd_dosen'      => Auth::user()->kode,
             'hari'          => $request->input('hari'),
             'tgl_ujian'     => $request->input('tgl_ujian'),
+            'no_ruang'      => $request->input('no_ruang'),
+            'jam_t'         => $request->input('jam_t'),
 
         ];
 
