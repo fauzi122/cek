@@ -57,7 +57,7 @@
 												<td>{{ $log_mulai->ipaddress }}</td>
 											</tr>
 											<tr>
-												<td>Divace</td>
+												<td>Device</td>
 												<td>{{ $log_mulai->device }}</td>
 											</tr>
 											<tr>

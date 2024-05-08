@@ -50,23 +50,9 @@ class PesertaujianController extends Controller
 
         $peserta_upload = Distribusisoal_ujian_tmp::where('paket', $pecah[0])->get();
 
-        return view('admin.ujian.uts.baak.peserta.uts', compact('peserta', 'peserta_upload'));
+        return view('admin.ujian.uts.baak.peserta.uts', compact('peserta', 'peserta_upload','pecah'));
     }
     
-
-    // public function uas()
-    // {
-
-    //     $peserta = DB::table('ujian_distribusisoals')
-    //         ->when(request()->q, function ($peserta) {
-    //             $peserta = $peserta->where('nim', 'like', '%' . request()->q . '%');
-    //         })->where('paket', 'UAS')->paginate(10);
-
-    //     // dd($peserta);
-    //     $peserta_upload = Distribusisoal_ujian_tmp::where('paket', 'UAS')->get();
-
-    //     return view('admin.ujian.uts.baak.peserta.uas', compact('peserta', 'peserta_upload'));
-    // }
 
     public function storeData_Pesertaujian(Request $request)
     {
@@ -128,6 +114,10 @@ class PesertaujianController extends Controller
         if ($request->has('no_kel_ujn') && $request->no_kel_ujn != '') {
             $query->where('no_kel_ujn', $request->no_kel_ujn);
         }
+            // Pencarian berdasarkan no_kel_ujn
+        if ($request->has('paket') && $request->paket != '') {
+            $query->where('paket', $request->paket);
+            }
 
         $hasil = $query->get();
 

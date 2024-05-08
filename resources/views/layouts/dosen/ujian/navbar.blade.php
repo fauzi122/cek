@@ -155,6 +155,27 @@
 							<a class="dropdown-item" href="/pengganti-mengawas">Dosen Pengganti</a>
 						</li>
 					@endcan
+
+					{{-- @can('mhs_kurang_bayar') --}}
+					@can('ujian_mhs_kurang_bayar')
+
+						<li>
+							<a class="dropdown-item" href="/kurang-bayar">Mhs Kurang Bayar</a>
+						</li>
+					@endcan
+					@can('ujian_bap')
+
+						<li>
+							<a class="dropdown-item" href="/rekap-bap">Rekapitulasi BAP</a>
+						</li>
+					@endcan
+
+					@can('ujian_absen')
+
+						<li>
+							<a class="dropdown-item" href="">Rekapitulasi absen</a>
+						</li>
+					@endcan
 				</ul>
 			</li>
 			@endcan
