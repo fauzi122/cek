@@ -30,6 +30,7 @@
                                                         <th>NAMA</th>
                                                         <th>KELAS</th>
                                                         <th>KEL - UJIAN</th>
+                                                        <th>paket</th>
                                                         <th>kd_MTK</th>
                                                         <th>MTK</th>
 
@@ -44,6 +45,7 @@
                                                             <td>{{ $hasil->nm_mhs }}</td>
                                                             <td>{{ $hasil->id_kelas }}</td>
                                                             <td>{{ $hasil->no_kel_ujn }}</td>
+                                                            <td>{{ $hasil->paket }}</td>
                                                             <td>{{ $hasil->kd_mtk }}</td>
                                                             <td>{{ $hasil->nm_mtk }}</td>
                                                            

@@ -84,8 +84,9 @@ Route::controller(JadwalujianController::class)->group(function () {
     Route::get('/baak/jadwal-ujian/{id}', 'jadwal');
     Route::get('/show/jadwal-uji-baak/{id}', 'show_uts');
     Route::get('/baak/cari-jadwal-ujian', 'search');
+    Route::post('/update/jadwal-ujian', 'updateUtsSoal');
     Route::get('/edit/jadwal-ujian/{id}', 'edit');
-    Route::put('/update/jadwal-ujian/{id}', 'update');
+
     Route::post('/verifikasi-berita-acara', 'updateStatus')->name('verifikasi.status');
 });
 
@@ -94,6 +95,19 @@ Route::controller(PenggantiMengawasController::class)->group(function () {
     Route::get('/pengganti-mengawas', 'index');
     Route::post('/stor/pengganti-mengawas', 'store');
     Route::get('/ganti-pengawas/{id}', 'edit');
+    
+});
+
+// kurang bayar
+Route::controller(KurangbayarController::class)->group(function () {
+    Route::get('/kurang-bayar', 'index');
+    
+});
+
+// kurang bayar
+Route::controller(RekapBapController::class)->group(function () {
+    Route::get('/rekap-bap', 'index');
+    Route::get('/cari/rekap-bap', 'caribap');
     
 });
 
