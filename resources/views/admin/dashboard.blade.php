@@ -105,8 +105,11 @@
     <div class="content-wrapper">
         <div class="alert alert-info" role="alert">
             <h4 class="alert-heading">Selamat Datang</h4>
-            <p>Selamat datang di halaman pengawasan ujian, Ahmad Fauzi. Semoga sukses mengawasi ujian yang akan datang.</p>
+            <p>Selamat datang di halaman pengawasan ujian, {{ Auth::user()->name }}. Semoga sukses mengawasi ujian yang akan datang.</p>
         </div>
+
+
+        
         <div class="row gutters">
             <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12">
                 <div class="card h-100">
@@ -114,14 +117,14 @@
                     <div class="card-body">
                         <h5 class="user-name">{{ Auth::user()->name }}</h5>
                         <h6 class="user-email">{{ Auth::user()->email }}</h6>
-                        <a href="{{ Storage::url('public/Panduan MyBest Dosen.pdf') }}" target="_blank" class="btn">
-                            <i class="icon-file-text"></i> Panduan Penggunaan
+                        <a href="{{ Storage::url('public/panduan/Panduan_Panitia_Ujian.pdf') }}" target="_blank" class="btn">
+                            <i class="icon-file-text"></i> Panduan Panitia Ujian 
                         </a>
-                        <a href="{{ Storage::url('public/PANDUAN_UJIAN_ONLINE DOSEN UBSI.pdf') }}" target="_blank" class="btn">
-                            <i class="icon-filter_frames"></i> Panduan Ujian Online
+                        <a href="{{ Storage::url('public/panduan/Panduan_Dosen_Pengawas.pdf') }}" target="_blank" class="btn">
+                            <i class="icon-filter_frames"></i> Panduan Mengawas Ujian
                         </a>
-                        <a href="{{ Storage::url('public/Panduan Kuis MyBest Dosen.pdf') }}" target="_blank" class="btn">
-                            <i class="icon-edit"></i> Panduan Kuis Online
+                        <a href="{{ Storage::url('public/panduan/Panduan_Perizinan_Lokasi_Pada_Web_Ujian_Online.pdf') }}" target="_blank" class="btn">
+                            <i class="icon-edit"></i> Panduan Ujian Online Mhs
                         </a>
                     </div>
                 </div>
@@ -149,11 +152,19 @@
                                 <i class="icon-filter_frames exam-icon"></i>
                                 <h3><a href="/mengawas-uts/{{ $uas }}" class="exam-link">Ujian Akhir Semester (UAS)</a></h3>
                             </div>
+                            <div class="alert alert-danger" role="alert">
+                                <h4 class="alert-heading">Silahkan Cek Panduan Terbaru Untuk Pengawas <a href="{{ Storage::url('public/panduan/Panduan_Dosen_Pengawas.pdf') }}">disini</a> </h4>
+                                @can('examschedule.index') 
+                                <h4 class="alert-heading">Silahkan Cek Panduan Terbaru Untuk Panitia Ujian <a href="{{ Storage::url('public/panduan/Panduan_Panitia_Ujian.pdf') }}" target="_blnk">disini</a> </h4>
+                                @endcan 
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    
 </div>
+
 @endsection

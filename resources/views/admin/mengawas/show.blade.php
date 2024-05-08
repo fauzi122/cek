@@ -97,6 +97,8 @@
 																<input type="hidden" name="hari" value="{{ $soal->hari_t }}">
 																<input type="hidden" name="tgl_ujian" value="{{ $soal->tgl_ujian }}">
 																<input type="hidden" name="paket" value="{{ $soal->paket }}">
+																<input type="hidden" name="no_ruang" value="{{ $soal->no_ruang }}">
+																<input type="hidden" name="jam_t" value="{{ $soal->jam_t }}">
 																<button type="submit" class="btn btn-info">Mengawas Ujian</button>
 															</form>
 														{{-- @endif --}}

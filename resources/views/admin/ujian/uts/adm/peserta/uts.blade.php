@@ -52,7 +52,9 @@
 										<table class="table custom-table">
 											<tr>
 												<td>NIM</td>
-												<td><input type="text" name="nim" placeholder="Masukkan NIM Mahasiswa" class="nilai form-control"></td>
+												<td><input type="text" name="nim" placeholder="Masukkan NIM Mahasiswa" class="nilai form-control">
+													<input type="hidden" name="paket" value="{{ $pecah[0] }}">
+												</td>
 											</tr>
 											<tr>
 												<td>KELAS</td>

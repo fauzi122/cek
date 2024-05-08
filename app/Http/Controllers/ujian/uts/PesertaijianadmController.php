@@ -51,7 +51,7 @@ class PesertaijianadmController extends Controller
 
             $kampus = DB::table('kampus')->get();
 
-        return view('admin.ujian.uts.adm.peserta.uts', compact('peserta','kampus'));
+        return view('admin.ujian.uts.adm.peserta.uts', compact('peserta','kampus','pecah'));
     }
 
     public function show_cabang($kd_cabang)
@@ -92,6 +92,11 @@ class PesertaijianadmController extends Controller
         // Pencarian berdasarkan no_kel_ujn
         if ($request->has('no_kel_ujn') && $request->no_kel_ujn != '') {
             $query->where('no_kel_ujn', $request->no_kel_ujn);
+        }
+
+        // Pencarian berdasarkan no_kel_ujn
+        if ($request->has('paket') && $request->paket != '') {
+            $query->where('paket', $request->paket);
         }
 
         $hasil = $query->get();

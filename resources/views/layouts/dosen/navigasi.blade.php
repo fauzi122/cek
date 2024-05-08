@@ -9,22 +9,20 @@
                     <i class="icon-devices_other"></i>
                     <span class="menu-text">Dashboard</span>
 
-                </a>
-                  
+                </a>   
 		    </a>
-
 
                          <a href="{{ url('/master-soal') }}">
                             <i class="icon-folder"></i>
                             <span class="menu-text">Master Soal</span>
                         </a>
 
-                        {{-- @can('examschedule.index')  --}}
+                        @can('examschedule.index') 
                         <a href="{{ url('/dashboard-ujian') }}"target="_blank">
                             <i class="icon-bookmark1"></i>
                             <span class="menu-text">Panitia Ujian</span>
                         </a>
-                        {{-- @endcan  --}}
+                        @endcan 
                        
 
             </li>
@@ -67,7 +65,7 @@
                                               this.closest('form').submit();">
                         <i class="icon-log-out1"></i> <!-- Ikon logout ditambahkan di sini -->
                         
-                        <span class="menu-text">{{ __('Kembali ke Mybest') }}</span>
+                        <span class="menu-text">{{ __('Logout') }}</span>
                     </x-dropdown-link>
                 </form>
             </li>
