@@ -47,8 +47,8 @@ class RekapAbsenController extends Controller
         $data = collect();
     
         // Query dasar
-        $baseQuery = DB::table('el_ujian.uts_soals as us')
-            ->join('el_ujian.absen_ujians as au', function($join) {
+        $baseQuery = DB::table('uts_soals as us')
+            ->join('absen_ujians as au', function($join) {
                 $join->on('us.kd_mtk', '=', 'au.kd_mtk')
                      ->on('us.kel_ujian', '=', 'au.no_kel_ujn')
                      ->on('us.paket', '=', 'au.paket');
