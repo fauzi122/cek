@@ -14,7 +14,7 @@ class RekapAbsenController extends Controller
 {
     public function __construct()
     {
-       $this->middleware(['permission:ujian_bap']);
+       $this->middleware(['permission:ujian_absen']);
        if(!$this->middleware('auth:sanctum')){
         return redirect('/login');
     }
@@ -24,112 +24,64 @@ class RekapAbsenController extends Controller
     if (Auth::user()->utype == 'ADM') {
 
         $cabangs =Soal_ujian::groupBy('nm_kampus')->get();
+        $tgl =Soal_ujian::groupBy('tgl_ujian')->get();
 
-        $result = DB::table('el_ujian.uts_soals as us')
-        ->join('el_ujian.absen_ujians as au', function($join) {
-            $join->on('us.kd_mtk', '=', 'au.kd_mtk')
-                 ->on('us.kel_ujian', '=', 'au.no_kel_ujn')
-                 ->on('us.paket', '=', 'au.paket');
-        })
-        ->select(
-            'au.nim',
-            'au.nm_mhs',
-            'au.status',
-            'au.paket as paket_absen',
-            'au.kd_dosen as kd_dosen_absen',
-            'us.kd_lokal',
-            DB::raw('LEFT(us.kd_lokal, 2) as kd_jurusan'),   // Mengambil 2 karakter dari kiri untuk kd_jurusan
-            DB::raw('RIGHT(us.kd_lokal, 2) as kd_cabang'),  // Mengambil 2 karakter dari kanan untuk kd_cabang
-            'au.no_kel_ujn',
-            'us.hari_t',
-            'us.no_ruang',
-            'us.nm_mtk',
-            'us.kd_mtk',
-            'us.jam_t',
-            'us.nm_kampus',
-            'us.paket',
-            'us.tgl_ujian',
-            'au.kd_mtk as kd_mtk_absen',
-            'au.ket'
-        )
-        ->when(request()->tgl, function ($query) {
-            return $query->whereDate('us.tgl_ujian', '=', request()->tgl);
-        })
-        ->when(request()->ket, function ($query) {
-            return $query->whereNotNull('au.ket')
-                         ->where('au.ket', '<>', '');
-        })
-        ->when(request()->nm_kampus, function ($query) {
-            return $query->where('us.nm_kampus', '=', request()->nm_kampus);
-        }, function ($query) {
-            // Tidak menerapkan filter jika 'nm_kampus' tidak disediakan, menampilkan semua kampus
-            return $query;
-        })
-        ->where('au.kd_dosen', '<>', '')
-        ->whereNotNull('au.kd_dosen')
-        ->paginate(20);
-
-    
-        return view('admin.ujian.uts.adm.rekap_absen.index', compact('cabangs','result'));
+        return view('admin.ujian.uts.adm.rekap_absen.index', compact('cabangs','tgl'));
         } else {
             return redirect('/dashboard');
         }
     }
 
+   
     public function exportToExcel(Request $request)
     {
-        $query = DB::table('el_ujian.uts_soals as us')
+        // Validasi request
+        $request->validate([
+            'paket' => 'nullable|string',
+            'tgl_ujian' => 'nullable|date',
+            'bermasalah' => 'nullable|in:1,0',
+            'nm_kampus' => 'nullable|string'
+        ]);
+    
+        // Initialize data array
+        $data = collect();
+    
+        // Query dasar
+        $baseQuery = DB::table('el_ujian.uts_soals as us')
             ->join('el_ujian.absen_ujians as au', function($join) {
                 $join->on('us.kd_mtk', '=', 'au.kd_mtk')
                      ->on('us.kel_ujian', '=', 'au.no_kel_ujn')
                      ->on('us.paket', '=', 'au.paket');
             })
             ->select(
-                'au.nim',
-                'au.nm_mhs',
-                'au.status',
-                DB::raw('au.paket AS paket_absen'),
-                DB::raw('au.kd_dosen AS kd_dosen_absen'),
-                'us.kd_lokal',
-                DB::raw('LEFT(us.kd_lokal, 2) AS kd_jurusan'),
-                DB::raw('RIGHT(us.kd_lokal, 2) AS kd_cabang'),
-                'au.no_kel_ujn',
-                'us.hari_t',
-                'us.no_ruang',
-                'us.nm_mtk',
-                'us.kd_mtk',
-                'us.jam_t',
-                'us.nm_kampus',
-                'us.paket',
-                'us.tgl_ujian',
-                DB::raw('au.kd_mtk AS kd_mtk_absen'),
-                'au.ket'
-            )
-            ->where('au.kd_dosen', '<>', '')
-            ->whereNotNull('au.kd_dosen');
-        dd($query);
+                'au.nim', 'au.nm_mhs', 'au.status', DB::raw('au.paket AS paket_absen'),
+                DB::raw('au.kd_dosen AS kd_dosen_absen'), 'us.kd_lokal',
+                DB::raw('LEFT(us.kd_lokal, 2) AS kd_jurusan'), DB::raw('RIGHT(us.kd_lokal, 2) AS kd_cabang'),
+                'au.no_kel_ujn', 'us.hari_t', 'us.no_ruang', 'us.nm_mtk', 'us.kd_mtk',
+                'us.jam_t', 'us.nm_kampus', 'us.paket', 'us.tgl_ujian',
+                DB::raw('au.kd_mtk AS kd_mtk_absen'), 'au.ket'
+            );
     
-        // Filter berdasarkan status masalah
+        // Menambahkan filter
         if ($request->filled('bermasalah')) {
-            if ($request->bermasalah == '1') {
-                // Bermasalah: 'ket' harus memiliki isi
-                $query->whereNotNull('au.ket');
-            } elseif ($request->bermasalah == '0') {
-                // Tidak Bermasalah: 'ket' harus null
-                $query->whereNull('au.ket');
-            }
+            $baseQuery->where($request->bermasalah == '1' ? 'au.ket' : 'au.ket', $request->bermasalah == '1' ? '!=' : '=', null);
         }
-    
-        // Filter paket dan tanggal ujian
         if ($request->filled('paket')) {
-            $query->where('us.paket', $request->paket);
+            $baseQuery->where('us.paket', $request->paket);
         }
         if ($request->filled('tgl_ujian')) {
-            $query->whereDate('us.tgl_ujian', '=', $request->tgl_ujian);
+            $baseQuery->whereDate('us.tgl_ujian', '=', $request->tgl_ujian);
+        }
+        if ($request->filled('nm_kampus')) {
+            $baseQuery->where('us.nm_kampus', '=', $request->nm_kampus);
         }
     
-        $data = $query->get();
+        // Menggunakan cursor
+        foreach ($baseQuery->cursor() as $row) {
+            $data->push($row);
+        }
     
+        // Export to Excel
         return Excel::download(new RekapabsenExport($data), 'rekapabsen_data.xlsx');
     }
     
