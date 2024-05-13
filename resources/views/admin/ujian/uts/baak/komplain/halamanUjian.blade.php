@@ -11,7 +11,7 @@
         <div class="row gutters">
             <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                 <div class="card-header badge-info">
-                    <h4 class="m-b-0 text-white">Komplen Soal</h4>
+                    <h4 class="m-b-0 text-white">Komplen Ujian</h4>
                 </div>
                 <div class="table-container">
                     <div class="table-responsive">
@@ -29,7 +29,7 @@
                             </thead>
                             <tbody>
                                 {{-- Pastikan variable $jadwals di-pass dari controller dengan data yang sesuai --}}
-                                @foreach ($komplainSoal as $soal)
+                                @foreach ($komplainUjian as $soal)
                                 <tr>
                                     <td>{{ $soal->nim }}</td>
                                     <td>{{ $soal->kd_mtk }}</td>
@@ -38,7 +38,7 @@
                                     <td>{{ $soal->alasan }}</td>
                                     <td>
                                         {{-- Asumsi $soal->bukti menyimpan nama file gambar --}}
-                                        <img src="{{ asset('storage/bukti/' . $soal->bukti) }}" alt="bukti" width="100"> {{-- Sesuaikan path dan atribut sesuai kebutuhan --}}
+                                        {{-- <img src="{{ asset('storage/bukti/' . $soal->bukti) }}" alt="bukti" width="100"> Sesuaikan path dan atribut sesuai kebutuhan --}}
                                     </td>
                                 </tr>
                                 @endforeach

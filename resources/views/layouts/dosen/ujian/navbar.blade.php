@@ -92,7 +92,7 @@
 					</a>
 					<ul class="dropdown-menu" aria-labelledby="uiElementsDropdown">
 						<li>
-							<a class="dropdown-item" href="carousel.html">Komplain Ujian</a>
+							<a class="dropdown-item" href="/halaman-komplain-ujian">Komplain Ujian</a>
 						</li>
 						<li>
 							<a class="dropdown-item" href="/halaman-komplain-soal">Komplain Soal</a>
