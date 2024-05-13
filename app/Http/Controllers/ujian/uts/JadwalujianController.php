@@ -18,9 +18,10 @@ class JadwalujianController extends Controller
 {
     public function __construct()
     {
-        if (!$this->middleware('auth:sanctum')) {
-            return redirect('/login');
-        }
+       $this->middleware(['permission:jadwal_ujian']);
+       if(!$this->middleware('auth:sanctum')){
+        return redirect('/login');
+    }
     }
     public function index()
     {
@@ -89,6 +90,7 @@ class JadwalujianController extends Controller
     
     public function show_uts($id)
     {
+    if (Auth::user()->utype == 'ADM') {
         $pecah = explode(',', Crypt::decryptString($id));
         $soal = Soal_ujian::where([
             'kd_dosen'    => $pecah[0],
@@ -121,6 +123,9 @@ class JadwalujianController extends Controller
             });
 
         return view('admin.ujian.uts.baak.jadwal.show',compact('soal','id','beritaAcara','mhsujian'));
+    } else {
+        return redirect('/dashboard');
+    }
     }
 
     public function show_log($id)
@@ -208,6 +213,7 @@ class JadwalujianController extends Controller
 
     public function edit($id)
     {
+        if (Auth::user()->utype == 'ADM') {
         $pecah = explode(',', Crypt::decryptString($id));
         $jadwal = Soal_ujian::where([
             'kd_dosen'    => $pecah[0],
@@ -218,6 +224,9 @@ class JadwalujianController extends Controller
             ])->first();
         
         return view('admin.ujian.uts.baak.jadwal.edit',compact('jadwal'));
+    } else {
+        return redirect('/dashboard');
+    }
     }
 
     public function updateStatus(Request $request)

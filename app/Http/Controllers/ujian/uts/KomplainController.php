@@ -13,9 +13,10 @@ class KomplainController extends Controller
 {
     public function __construct()
     {
-        if (!$this->middleware('auth:sanctum')) {
-            return redirect('/login');
-        }
+       $this->middleware(['permission:ralat_soal']);
+       if(!$this->middleware('auth:sanctum')){
+        return redirect('/login');
+    }
     }
 
     public function halamanSoal()
@@ -33,5 +34,23 @@ class KomplainController extends Controller
             ->where('paket', Crypt::decryptString($paket))
             ->get();
         return view('admin.ujian.uts.baak.komplain.halamanSoal', compact('komplainSoal'));
+    }
+
+    public function halamanUjian()
+    {
+        $examTypes = Paket_ujian::distinct()->pluck('paket');
+
+        $encryptedExamTypes = $examTypes->mapWithKeys(function ($item) {
+            return [$item => Crypt::encryptString($item)];
+        });
+        return view('admin.ujian.uts.baak.komplain.indexUjian', compact('encryptedExamTypes'));
+    }
+    function komplainUjian($paket)
+    {
+        $komplainUjian = DB::table('ujian_komplains')
+            ->where('paket', Crypt::decryptString($paket))
+            ->get();
+     
+        return view('admin.ujian.uts.baak.komplain.halamanUjian', compact('komplainUjian'));
     }
 }

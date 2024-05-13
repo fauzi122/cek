@@ -180,5 +180,7 @@ Route::controller(PesertaijianadmController::class)->group(function () {
 Route::controller(KomplainController::class)->group(function () {
     Route::get('/halaman-komplain-soal', 'halamanSoal');
     Route::get('/komplain-soal/{paket}', 'komplainSoal');
+    Route::get('/halaman-komplain-ujian', 'halamanUjian');
+    Route::get('/komplain-ujian/{paket}', 'komplainUjian');
     Route::post('/api/save-location', 'lokasi');
 });
