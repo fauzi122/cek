@@ -83,6 +83,7 @@ Route::controller(JadwalujianController::class)->group(function () {
     Route::get('/jadwal-uji-baak', 'index');
     Route::get('/baak/jadwal-ujian/{id}', 'jadwal');
     Route::get('/show/jadwal-uji-baak/{id}', 'show_uts');
+    Route::get('/show/log-mhs/mengawas-uts/{id}', 'show_log');
     Route::get('/baak/cari-jadwal-ujian', 'search');
     Route::post('/update/jadwal-ujian', 'updateUtsSoal');
     Route::get('/edit/jadwal-ujian/{id}', 'edit');
@@ -104,10 +105,17 @@ Route::controller(KurangbayarController::class)->group(function () {
     
 });
 
-// kurang bayar
+// bap
 Route::controller(RekapBapController::class)->group(function () {
     Route::get('/rekap-bap', 'index');
     Route::get('/cari/rekap-bap', 'caribap');
+    
+});
+
+// rekap absen
+Route::controller(RekapAbsenController::class)->group(function () {
+    Route::get('/rekapitulasi-absen-ujian', 'index');
+    Route::get('/export-excel', 'exportToExcel')->name('export.excel');
     
 });
 

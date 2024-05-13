@@ -29,28 +29,28 @@ class MengawasController extends Controller
             ->where('paket', $id)
             ->where('kd_dosen', Auth::user()->kode)
             ->get();
-
-        // $groupedSoals = $allSoals->groupBy(function ($item) {
-        //     // Jika kd_gabung tidak null, gunakan sebagai kunci. Jika null, gunakan kombinasi kel_ujian dan kd_mtk
-        //     return $item->kd_gabung ?? $item->kel_ujian . '-' . $item->kd_mtk;
-        // })
-        // ->mapWithKeys(function ($group, $key) {
-        //     if (!is_null($group->first()->kd_gabung)) { // Cek apakah kd_gabung ada
-        //         $first = $group->first();
-        //         $first->kel_ujian = $group->pluck('kel_ujian')->join(', '); // Menggabungkan semua kel_ujian dalam satu string
-        //         return [$key => $first]; // Kembalikan sebagai item tunggal dengan kunci kd_gabung
-        //     } else { // Ini adalah kunci gabungan dari kel_ujian dan kd_mtk dari kd_gabung yang null
-        //         // Setiap item unik berdasarkan gabungan kel_ujian dan kd_mtk, kembalikan mereka sebagai individu
-        //         return $group->mapWithKeys(function ($item) {
-        //             return [$item->kel_ujian . '-' . $item->kd_mtk => $item]; // Menggunakan gabungan kel_ujian dan kd_mtk sebagai kunci
-        //         });
-        //     }
-        // })
-        // ->flatten(); // Meratakan array untuk memastikan tidak ada nesting yang tidak diinginkan
-
+    
+            // $groupedSoals = $allSoals->groupBy(function ($item) {
+            //     // Jika kd_gabung tidak null, gunakan sebagai kunci. Jika null, gunakan kombinasi kel_ujian dan kd_mtk
+            //     return $item->kd_gabung ?? $item->kel_ujian . '-' . $item->kd_mtk;
+            // })
+            // ->mapWithKeys(function ($group, $key) {
+            //     if (!is_null($group->first()->kd_gabung)) { // Cek apakah kd_gabung ada
+            //         $first = $group->first();
+            //         $first->kel_ujian = $group->pluck('kel_ujian')->join(', '); // Menggabungkan semua kel_ujian dalam satu string
+            //         return [$key => $first]; // Kembalikan sebagai item tunggal dengan kunci kd_gabung
+            //     } else { // Ini adalah kunci gabungan dari kel_ujian dan kd_mtk dari kd_gabung yang null
+            //         // Setiap item unik berdasarkan gabungan kel_ujian dan kd_mtk, kembalikan mereka sebagai individu
+            //         return $group->mapWithKeys(function ($item) {
+            //             return [$item->kel_ujian . '-' . $item->kd_mtk => $item]; // Menggunakan gabungan kel_ujian dan kd_mtk sebagai kunci
+            //         });
+            //     }
+            // })
+            // ->flatten(); // Meratakan array untuk memastikan tidak ada nesting yang tidak diinginkan
+    
         return view('admin.mengawas.uts', compact('groupedSoals'));
     }
-
+    
 
     public function store(Request $request)
     {
@@ -97,14 +97,14 @@ class MengawasController extends Controller
         try {
             // Dekripsi dan pecah string $id menjadi array
             $pecah = explode(',', Crypt::decryptString($id));
-
-            $soal = Soal_ujian::where([
-                'kd_dosen'  => $pecah[0],
-                'kd_mtk'    => $pecah[1],
-                'kel_ujian' => $pecah[2],
-                'paket'     => $pecah[3],
-                'tgl_ujian'    => $pecah[4]
-            ])->first();
+     
+                $soal = Soal_ujian::where([
+                    'kd_dosen'  => $pecah[0],
+                    'kd_mtk'    => $pecah[1],
+                    'kel_ujian' => $pecah[2],
+                    'paket'     => $pecah[3],
+                    'tgl_ujian'    => $pecah[4]
+                ])->first(); 
 
             // dd($soal);
 
@@ -119,7 +119,7 @@ class MengawasController extends Controller
             // Mengambil dan memproses data absen ujian
             $mhsujian = Absen_ujian::where([
                 'kd_mtk'    => $pecah[1],
-                'no_kel_ujn' => $pecah[2],
+                'no_kel_ujn'=> $pecah[2],
                 'paket'     => $pecah[3]
             ])->get()->map(function ($item) {
                 $item->isInHasilUjian = DB::table('ujian_hasilujians')
@@ -160,6 +160,7 @@ class MengawasController extends Controller
                 'kd_mtk'    => $pecah[2],
                 'paket'     => $pecah[3]
             ])->get();
+            // dd($pg);
 
             // essay
             $essay = DB::table('ujian_jawab_esays')->where([
@@ -167,7 +168,7 @@ class MengawasController extends Controller
                 'kel_ujian' => $pecah[1],
                 'kd_mtk'    => $pecah[2],
                 'paket'     => $pecah[3]
-            ])->orderBy('id', 'DESC')
+            ])
                 ->get();
 
             // Mengirim data ke view
@@ -178,13 +179,6 @@ class MengawasController extends Controller
         }
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
 
     public function updateBeritaAcara(Request $request)
     {
@@ -192,30 +186,42 @@ class MengawasController extends Controller
             'kd_mtk'    => 'required',
             'kel_ujian' => 'required',
             'paket'     => 'required',
-            'isi'       => 'required', // misalkan Anda memperbarui field 'isi' dari berita acara
+            'isi'       => 'required',
         ]);
-
-        // Mencari record yang sesuai
-        $beritaAcara = Ujian_berita_acara::where([
-            'kd_mtk'    => $request->kd_mtk,
-            'kel_ujian' => $request->kel_ujian,
-            'paket'     => $request->paket
-        ])->first();
-
-        if ($beritaAcara) {
-            // Memperbarui record yang ditemukan
-            $beritaAcara->isi = $request->isi; // asumsikan 'isi' adalah kolom yang ingin Anda perbarui
-            if ($beritaAcara->save()) {
-                return back()->with('status', 'Berita acara berhasil diperbarui.');
-            } else {
-                return back()->with('error', 'Gagal memperbarui berita acara.');
-            }
-        } else {
-            return back()->with('error', 'Berita acara tidak ditemukan.');
+    
+        DB::beginTransaction(); // Memulai transaksi
+    
+        try {
+            // Update berita acara
+            $beritaAcara = Ujian_berita_acara::where([
+                'kd_mtk'    => $request->kd_mtk,
+                'kel_ujian' => $request->kel_ujian,
+                'paket'     => $request->paket
+            ])->firstOrFail();
+    
+            $beritaAcara->isi = $request->isi;
+            $beritaAcara->save();
+    
+            // Update batch di Absen_ujian jika kd_dosen adalah kosong atau null
+            $kd_dosen = Auth::user()->kode;
+            Absen_ujian::where(function ($query) {
+                $query->where('kd_dosen', '')
+                      ->orWhereNull('kd_dosen');
+            })
+            ->where([
+                'kd_mtk'    => $request->kd_mtk,
+                'no_kel_ujn' => $request->kel_ujian,
+                'paket'     => $request->paket
+            ])->update(['kd_dosen' => $kd_dosen]);
+    
+            DB::commit(); // Commit transaksi
+            return back()->with('status', 'Berita acara ujian berhasil diperbarui.');
+        } catch (\Exception $e) {
+            DB::rollback(); // Rollback transaksi jika terjadi kesalahan
+            return back()->with('error', 'Gagal memperbarui berita acara ujian. Error: ' . $e->getMessage());
         }
     }
-
-
+    
     public function UpdateAbsenUjian(Request $request)
     {
         $id = $request->input('id');

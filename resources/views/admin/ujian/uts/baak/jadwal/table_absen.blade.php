@@ -96,7 +96,7 @@
         <!-- Tab Pane 2 -->
         <div class="tab-pane fade" id="profile3" role="tabpanel" aria-labelledby="profile-tab3">
             <div class="table-responsive">
-                <table id="myTable5" class="table custom-table">
+                <table id="copy-print-csv" class="table custom-table">
                         <thead>
                             <tr>
                                 <th>No</th>
