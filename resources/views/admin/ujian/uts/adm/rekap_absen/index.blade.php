@@ -53,7 +53,12 @@
                             </div>
                         </form>
 
-                       
+                       <br>
+                       <p>
+                        <h3>
+                            *Catatan : "status" absen pada hasil unduh artinya jika 1 itu hadir, selain itu tidak hadir
+                        </h3>
+                       </p>
                     </div>
                 </div>
             </div>
