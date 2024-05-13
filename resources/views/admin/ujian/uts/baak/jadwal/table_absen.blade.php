@@ -103,6 +103,7 @@
                                 <th>NIM</th>
                                 <th>Nama</th>
                                 <th>Status</th>
+                                <th>komentar</th>
                                 <th>Aksi</th>
                             
                             </tr>
@@ -121,6 +122,7 @@
                                         <b>Tidak Hdir</b>
                                     @endif
                                     </td>
+                                    <td>{{ $item->ket }}</td>
                                     <td>
                                         @php
                                             $id=Crypt::encryptString($item->nim.','.$item->no_kel_ujn.','.$item->kd_mtk.','.$item->paket);                                    
