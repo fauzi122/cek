@@ -60,7 +60,7 @@ class RekapAbsenController extends Controller
                 'au.no_kel_ujn', 'us.hari_t', 'us.no_ruang', 'us.nm_mtk', 'us.kd_mtk',
                 'us.jam_t', 'us.nm_kampus', 'us.paket', 'us.tgl_ujian',
                 DB::raw('au.kd_mtk AS kd_mtk_absen'), 'au.ket'
-            );
+            )->where('au.kd_dosen','<>','');
     
         // Menambahkan filter
         if ($request->filled('bermasalah')) {
