@@ -106,14 +106,61 @@ class JadwalujianController extends Controller
 
             // dd($beritaAcara);
 
-            $mhsujian = Absen_ujian::where([    
-                'kd_mtk'        => $pecah[1],
-                'no_kel_ujn'    => $pecah[2],
-                'paket'         => $pecah[3]
-               
-                ])->get(); 
+            $mhsujian = Absen_ujian::where([
+                'kd_mtk'    => $pecah[1],
+                'no_kel_ujn'=> $pecah[2],
+                'paket'     => $pecah[3]
+            ])->get()->map(function ($item) {
+                $item->isInHasilUjian = DB::table('ujian_hasilujians')
+                    ->where('nim', $item->nim)
+                    ->where('kd_mtk', $item->kd_mtk)
+                    ->where('kel_ujian', $item->no_kel_ujn)
+                    ->where('paket', $item->paket)
+                    ->exists();
+                return $item;
+            });
 
         return view('admin.ujian.uts.baak.jadwal.show',compact('soal','id','beritaAcara','mhsujian'));
+    }
+
+    public function show_log($id)
+    {
+        try {
+            // Dekripsi dan pecah string $id menjadi array
+            $pecah = explode(',', Crypt::decryptString($id));
+
+            // Mengambil data berita acara ujian
+            $log_mulai = DB::table('ujian_hasilujians')->where([
+                'nim'       => $pecah[0],
+                'kel_ujian' => $pecah[1],
+                'kd_mtk'    => $pecah[2],
+                'paket'     => $pecah[3]
+            ])->first();
+
+            // PG
+            $pg = DB::table('ujian_jawabs')->where([
+                'nim'       => $pecah[0],
+                'kel_ujian' => $pecah[1],
+                'kd_mtk'    => $pecah[2],
+                'paket'     => $pecah[3]
+            ])->get();
+            // dd($pg);
+
+            // essay
+            $essay = DB::table('ujian_jawab_esays')->where([
+                'nim'       => $pecah[0],
+                'kel_ujian' => $pecah[1],
+                'kd_mtk'    => $pecah[2],
+                'paket'     => $pecah[3]
+            ])
+                ->get();
+
+            // Mengirim data ke view
+            return view('admin.ujian.uts.baak.jadwal.log', compact('log_mulai', 'pg', 'essay'));
+        } catch (\Exception $e) {
+            // Tangani kesalahan yang mungkin terjadi saat proses dekripsi atau query
+            return back()->with('error', 'Terjadi kesalahan saat memproses data: ' . $e->getMessage());
+        }
     }
 
     public function updateUtsSoal(Request $request)

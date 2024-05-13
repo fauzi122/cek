@@ -49,16 +49,16 @@
                                                         {{-- {{ $item->id }} --}}
                                                         <select name="ket" class="custom-select ket-dropdown" data-id="{{ $item->id }}">
                                                             <option value="">-- Pilih Status --</option>
-                                                            <option value="koneksi_server_gagal" {{ $item->ket == 'koneksi_server_gagal' ? 'selected' : '' }}>Koneksi Server Gagal</option>
-                                                            <option value="jaringan_loading_terus" {{ $item->ket == 'jaringan_loading_terus' ? 'selected' : '' }}>Jaringan Loading Terus</option>
-                                                            <option value="jaringan_putus_saat_mengerjakan_soal" {{ $item->ket == 'jaringan_putus_saat_mengerjakan_soal' ? 'selected' : '' }}>Jaringan Putus saat Mengerjakan Soal</option>
-                                                            <option value="soal_ujian_selalu_berulang" {{ $item->ket == 'soal_ujian_selalu_berulang' ? 'selected' : '' }}>Soal Ujian Selalu Berulang</option>
-                                                            <option value="mati_lampu" {{ $item->ket == 'mati_lampu' ? 'selected' : '' }}>Mati Lampu</option>
-                                                            <option value="laptop_bermasalah" {{ $item->ket == 'laptop_bermasalah' ? 'selected' : '' }}>Laptop Bermasalah</option>
-                                                            <option value="mahasiswa_tidak_bisa_koneksi_wifi" {{ $item->ket == 'mahasiswa_tidak_bisa_koneksi_wifi' ? 'selected' : '' }}>Mahasiswa Tidak Bisa Koneksi WiFi</option>
-                                                            <option value="nilai_tidak_diproses_diluar_kelas" {{ $item->ket == 'nilai_tidak_diproses_diluar_kelas' ? 'selected' : '' }}>Nilai Tidak Diproses (Mahasiswa Mengerjakan di Luar Kelas)</option>
-                                                            <option value="nilai_tidak_diproses_menyontek" {{ $item->ket == 'nilai_tidak_diproses_menyontek' ? 'selected' : '' }}>Nilai Tidak Diproses (Mahasiswa Menyontek)</option>
-                                                            <option value="nilai_tidak_diproses_bekerja_sama" {{ $item->ket == 'nilai_tidak_diproses_bekerja_sama' ? 'selected' : '' }}>Nilai Tidak Diproses (Bekerja Sama Saat Mengerjakan Ujian)</option>
+                                                            <option value="koneksi server gagal" {{ $item->ket == 'koneksi server gagal' ? 'selected' : '' }}>Koneksi Server Gagal</option>
+                                                            <option value="jaringan loading terus" {{ $item->ket == 'jaringan loading terus' ? 'selected' : '' }}>Jaringan Loading Terus</option>
+                                                            <option value="jaringan putus saat mengerjakan soal" {{ $item->ket == 'jaringan putus saat mengerjakan soal' ? 'selected' : '' }}>Jaringan Putus saat Mengerjakan Soal</option>
+                                                            <option value="soal ujian selalu berulang" {{ $item->ket == 'soal ujian selalu berulang' ? 'selected' : '' }}>Soal Ujian Selalu Berulang</option>
+                                                            <option value="mati lampu" {{ $item->ket == 'mati lampu' ? 'selected' : '' }}>Mati Lampu</option>
+                                                            <option value="laptop bermasalah" {{ $item->ket == 'laptop bermasalah' ? 'selected' : '' }}>Laptop Bermasalah</option>
+                                                            <option value="mahasiswa tidak bisa koneksi wifi" {{ $item->ket == 'mahasiswa tidak bisa koneksi wifi' ? 'selected' : '' }}>Mahasiswa Tidak Bisa Koneksi WiFi</option>
+                                                            <option value="nilai tidak diproses diluar kelas" {{ $item->ket == 'nilai tidak diproses diluar kelas' ? 'selected' : '' }}>Nilai Tidak Diproses (Mahasiswa Mengerjakan di Luar Kelas)</option>
+                                                            <option value="nilai tidak diproses menyontek" {{ $item->ket == 'nilai tidak diproses menyontek' ? 'selected' : '' }}>Nilai Tidak Diproses (Mahasiswa Menyontek)</option>
+                                                            <option value="nilai tidak diproses bekerja sama" {{ $item->ket == 'nilai tidak diproses bekerja sama' ? 'selected' : '' }}>Nilai Tidak Diproses (Bekerja Sama Saat Mengerjakan Ujian)</option>
                                                         </select>
                                                     </td> <!-- Assuming each item has an 'id' -->                                                  
                                                     <td>  
@@ -103,7 +103,9 @@
                                 <th>NIM</th>
                                 <th>Nama</th>
                                 <th>Status</th>
+                                <th>KOMENTAR</th>
                                 <th>Aksi</th>
+                                <th>Updated_at</th>
                             
                             </tr>
                         </thead>
@@ -121,6 +123,7 @@
                                         <b>Tidak Hdir</b>
                                     @endif
                                     </td>
+                                    <td>{{ $item->ket }}</td>
                                     <td>
                                         @php
                                             $id=Crypt::encryptString($item->nim.','.$item->no_kel_ujn.','.$item->kd_mtk.','.$item->paket);                                    
@@ -137,7 +140,7 @@
                                          
                                     
                                     </td> <!-- Assuming each item has an 'id' -->
-                            
+                                    <td>{{ $item->updated_at }}</td>
                                 </tr>
                             @empty
                                 <tr>

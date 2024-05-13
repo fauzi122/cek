@@ -23,8 +23,8 @@
 
 										<tbody>
 											<tr>
-												<td>Nama Dosen</td>
-												<td>{{ Auth::user()->name }} <b>({{ $soal->kd_dosen }}) </b></td>
+												<td>Dosen</td>
+												<td>{{ $soal->nip }} <b>({{ $soal->kd_dosen }}) </b></td>
 											</tr>
 											<tr>
 												<td>Kelompok Ujian</td>
@@ -162,7 +162,6 @@
 				</div>
 				<!-- Content wrapper end -->
 
-
 			</div>
 
 			<div class="modal fade" id="basicModal" tabindex="-1" role="dialog" aria-labelledby="basicModalLabel" aria-hidden="true">
@@ -190,7 +189,7 @@
 				</div>
 			</div>
 
-			{{-- <script>
+			<script>
 				$(document).ready(function() {
 					$('.ket-dropdown').change(function() {
 						var selectedValue = $(this).val();
@@ -214,9 +213,9 @@
 						});
 					});
 				});
-			</script> --}}
+			</script>
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-	{{-- <script>
+	<script>
 		$(document).ready(function () {
 			$('.status-checkbox').on('change', function () {
 				const id = $(this).data('id');
@@ -239,7 +238,7 @@
 				});
 			});
 		});
-	</script> --}}
+	</script>
 
 					
 @endsection

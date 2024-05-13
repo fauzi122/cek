@@ -29,28 +29,28 @@ class MengawasController extends Controller
             ->where('paket', $id)
             ->where('kd_dosen', Auth::user()->kode)
             ->get();
-
-        // $groupedSoals = $allSoals->groupBy(function ($item) {
-        //     // Jika kd_gabung tidak null, gunakan sebagai kunci. Jika null, gunakan kombinasi kel_ujian dan kd_mtk
-        //     return $item->kd_gabung ?? $item->kel_ujian . '-' . $item->kd_mtk;
-        // })
-        // ->mapWithKeys(function ($group, $key) {
-        //     if (!is_null($group->first()->kd_gabung)) { // Cek apakah kd_gabung ada
-        //         $first = $group->first();
-        //         $first->kel_ujian = $group->pluck('kel_ujian')->join(', '); // Menggabungkan semua kel_ujian dalam satu string
-        //         return [$key => $first]; // Kembalikan sebagai item tunggal dengan kunci kd_gabung
-        //     } else { // Ini adalah kunci gabungan dari kel_ujian dan kd_mtk dari kd_gabung yang null
-        //         // Setiap item unik berdasarkan gabungan kel_ujian dan kd_mtk, kembalikan mereka sebagai individu
-        //         return $group->mapWithKeys(function ($item) {
-        //             return [$item->kel_ujian . '-' . $item->kd_mtk => $item]; // Menggunakan gabungan kel_ujian dan kd_mtk sebagai kunci
-        //         });
-        //     }
-        // })
-        // ->flatten(); // Meratakan array untuk memastikan tidak ada nesting yang tidak diinginkan
-
+    
+            // $groupedSoals = $allSoals->groupBy(function ($item) {
+            //     // Jika kd_gabung tidak null, gunakan sebagai kunci. Jika null, gunakan kombinasi kel_ujian dan kd_mtk
+            //     return $item->kd_gabung ?? $item->kel_ujian . '-' . $item->kd_mtk;
+            // })
+            // ->mapWithKeys(function ($group, $key) {
+            //     if (!is_null($group->first()->kd_gabung)) { // Cek apakah kd_gabung ada
+            //         $first = $group->first();
+            //         $first->kel_ujian = $group->pluck('kel_ujian')->join(', '); // Menggabungkan semua kel_ujian dalam satu string
+            //         return [$key => $first]; // Kembalikan sebagai item tunggal dengan kunci kd_gabung
+            //     } else { // Ini adalah kunci gabungan dari kel_ujian dan kd_mtk dari kd_gabung yang null
+            //         // Setiap item unik berdasarkan gabungan kel_ujian dan kd_mtk, kembalikan mereka sebagai individu
+            //         return $group->mapWithKeys(function ($item) {
+            //             return [$item->kel_ujian . '-' . $item->kd_mtk => $item]; // Menggunakan gabungan kel_ujian dan kd_mtk sebagai kunci
+            //         });
+            //     }
+            // })
+            // ->flatten(); // Meratakan array untuk memastikan tidak ada nesting yang tidak diinginkan
+    
         return view('admin.mengawas.uts', compact('groupedSoals'));
     }
-
+    
 
     public function store(Request $request)
     {
@@ -97,14 +97,14 @@ class MengawasController extends Controller
         try {
             // Dekripsi dan pecah string $id menjadi array
             $pecah = explode(',', Crypt::decryptString($id));
-
-            $soal = Soal_ujian::where([
-                'kd_dosen'  => $pecah[0],
-                'kd_mtk'    => $pecah[1],
-                'kel_ujian' => $pecah[2],
-                'paket'     => $pecah[3],
-                'tgl_ujian'    => $pecah[4]
-            ])->first();
+     
+                $soal = Soal_ujian::where([
+                    'kd_dosen'  => $pecah[0],
+                    'kd_mtk'    => $pecah[1],
+                    'kel_ujian' => $pecah[2],
+                    'paket'     => $pecah[3],
+                    'tgl_ujian'    => $pecah[4]
+                ])->first(); 
 
             // dd($soal);
 
@@ -119,7 +119,7 @@ class MengawasController extends Controller
             // Mengambil dan memproses data absen ujian
             $mhsujian = Absen_ujian::where([
                 'kd_mtk'    => $pecah[1],
-                'no_kel_ujn' => $pecah[2],
+                'no_kel_ujn'=> $pecah[2],
                 'paket'     => $pecah[3]
             ])->get()->map(function ($item) {
                 $item->isInHasilUjian = DB::table('ujian_hasilujians')
@@ -160,6 +160,7 @@ class MengawasController extends Controller
                 'kd_mtk'    => $pecah[2],
                 'paket'     => $pecah[3]
             ])->get();
+            // dd($pg);
 
             // essay
             $essay = DB::table('ujian_jawab_esays')->where([
@@ -167,7 +168,7 @@ class MengawasController extends Controller
                 'kel_ujian' => $pecah[1],
                 'kd_mtk'    => $pecah[2],
                 'paket'     => $pecah[3]
-            ])->orderBy('id', 'DESC')
+            ])
                 ->get();
 
             // Mengirim data ke view
@@ -221,9 +222,6 @@ class MengawasController extends Controller
         }
     }
     
-     
-
-
     public function UpdateAbsenUjian(Request $request)
     {
         $id = $request->input('id');

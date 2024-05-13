@@ -173,7 +173,7 @@
 					@can('ujian_absen')
 
 						<li>
-							<a class="dropdown-item" href="">Rekapitulasi absen</a>
+							<a class="dropdown-item" href="/rekapitulasi-absen-ujian">Rekapitulasi absen</a>
 						</li>
 					@endcan
 				</ul>
