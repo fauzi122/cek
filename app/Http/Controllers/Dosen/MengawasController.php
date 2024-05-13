@@ -178,13 +178,6 @@ class MengawasController extends Controller
         }
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
 
     public function updateBeritaAcara(Request $request)
     {
@@ -192,28 +185,43 @@ class MengawasController extends Controller
             'kd_mtk'    => 'required',
             'kel_ujian' => 'required',
             'paket'     => 'required',
-            'isi'       => 'required', // misalkan Anda memperbarui field 'isi' dari berita acara
+            'isi'       => 'required',
         ]);
-
-        // Mencari record yang sesuai
-        $beritaAcara = Ujian_berita_acara::where([
-            'kd_mtk'    => $request->kd_mtk,
-            'kel_ujian' => $request->kel_ujian,
-            'paket'     => $request->paket
-        ])->first();
-
-        if ($beritaAcara) {
-            // Memperbarui record yang ditemukan
-            $beritaAcara->isi = $request->isi; // asumsikan 'isi' adalah kolom yang ingin Anda perbarui
-            if ($beritaAcara->save()) {
-                return back()->with('status', 'Berita acara berhasil diperbarui.');
-            } else {
-                return back()->with('error', 'Gagal memperbarui berita acara.');
-            }
-        } else {
-            return back()->with('error', 'Berita acara tidak ditemukan.');
+    
+        DB::beginTransaction(); // Memulai transaksi
+    
+        try {
+            // Update berita acara
+            $beritaAcara = Ujian_berita_acara::where([
+                'kd_mtk'    => $request->kd_mtk,
+                'kel_ujian' => $request->kel_ujian,
+                'paket'     => $request->paket
+            ])->firstOrFail();
+    
+            $beritaAcara->isi = $request->isi;
+            $beritaAcara->save();
+    
+            // Update batch di Absen_ujian jika kd_dosen adalah kosong atau null
+            $kd_dosen = Auth::user()->kode;
+            Absen_ujian::where(function ($query) {
+                $query->where('kd_dosen', '')
+                      ->orWhereNull('kd_dosen');
+            })
+            ->where([
+                'kd_mtk'    => $request->kd_mtk,
+                'no_kel_ujn' => $request->kel_ujian,
+                'paket'     => $request->paket
+            ])->update(['kd_dosen' => $kd_dosen]);
+    
+            DB::commit(); // Commit transaksi
+            return back()->with('status', 'Berita acara ujian berhasil diperbarui.');
+        } catch (\Exception $e) {
+            DB::rollback(); // Rollback transaksi jika terjadi kesalahan
+            return back()->with('error', 'Gagal memperbarui berita acara ujian. Error: ' . $e->getMessage());
         }
     }
+    
+     
 
 
     public function UpdateAbsenUjian(Request $request)
