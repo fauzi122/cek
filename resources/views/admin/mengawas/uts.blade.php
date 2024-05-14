@@ -47,10 +47,7 @@
 									@php
 									$id = Crypt::encryptString($jadwal->kd_dosen.','.$jadwal->kd_mtk.','.$jadwal->kel_ujian.','.$jadwal->paket.','.$jadwal->tgl_ujian);
 									@endphp
-
 									<a href="/show/mengawas-uts/{{ $id }}" class="btn btn-sm btn-info">Show</a>
-									<a href="/nilai-essay/{{ $id }}" class="btn btn-sm btn-info">Nilai Essay</a>
-
 								</td>
 							</tr>
 							@endforeach

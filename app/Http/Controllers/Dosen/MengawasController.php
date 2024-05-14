@@ -129,10 +129,18 @@ class MengawasController extends Controller
                     ->where('kel_ujian', $item->no_kel_ujn)
                     ->where('paket', $item->paket)
                     ->first();
+                // Tambahkan jawaban esay
+                $item->isInJawabEssay = DB::table('ujian_jawab_esays')
+                    ->where('nim', $item->nim)
+                    ->where('kd_mtk', $item->kd_mtk)
+                    ->where('kel_ujian', $item->no_kel_ujn)
+                    ->where('paket', $item->paket)
+                    ->first();
+
                 return $item;
             });
             // foreach ($mhsujian as $item) {
-            //     dump($item->isInHasilUjian);
+            //     dump($item->isInJawabEssay);
             // }
             // die;
             return view('admin.mengawas.show', compact('soal', 'id', 'beritaAcara', 'mhsujian'));
