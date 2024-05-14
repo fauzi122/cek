@@ -20,11 +20,15 @@
                 <i class="icon-download-cloud"></i> Download Rekap Hadir Mahasiswa
             </a>
         </li>
+       
         <li class="nav-item">
             <a class="nav-link" id="nilai-tab" data-toggle="tab" href="#nilai-essay" role="tab" aria-controls="nilai-essay" aria-selected="false">
                 <i class="icon-download-cloud"></i> Nilai Essay Mahasiswa
             </a>
         </li>
+  
+
+
     </ul>
 
     <!-- Tab Content -->
@@ -168,6 +172,11 @@
                 </table>
             </div>
         </div>
+
+
+{{-- essay --}}
+    @if ($soal->jml_soal_essay > 0)
+
         <div class="tab-pane fade" id="nilai-essay" role="tabpanel" aria-labelledby="nilai-tab">
             <div class="table-responsive">
                 <table id="myTable5" class="table custom-table">
@@ -198,11 +207,12 @@
                                 @endif
                             </td>
                             <td>
-                                @if($item->isInJawabEssay->score)
-                                {{$item->isInJawabEssay->score}}
+                                @if(isset($item->isInJawabEssay) && isset($item->isInJawabEssay->score))
+                                    {{$item->isInJawabEssay->score}}
                                 @else
-                                <b>0</b>
+                                    <b>0</b>
                                 @endif
+                               
                             </td>
                             <td>
                                 @php
@@ -232,6 +242,8 @@
                 </table>
             </div>
         </div>
+    @endif
+
     </div>
 </div>
 <!-- Nilai Essay Modal -->

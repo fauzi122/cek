@@ -25,19 +25,7 @@
 											<tr>
 												<td>Nama Dosen</td>
 												<td>{{ Auth::user()->name }} <b>({{ $soal->kd_dosen }}) </b></td>
-											</tr>
-											{{-- @if(!empty($soal->kd_gabung))
-											<tr>
-												<td>Kelompok Ujian</td>
-												<td><b> Kode Gabung :{{ $soal->kd_gabung }} </b>
-													<br>
-													<br>
-													@foreach($kelUjianArray1 as $kelas)
-													{{ trim($kelas) }}
-												@endforeach
-												</td>
-											</tr>
-											@else --}}
+											
 											<tr>
 												<td>Kelompok Ujian</td>
 												<td>{{ $soal->kel_ujian }}</td>
@@ -62,89 +50,27 @@
 											</tr>
 
 											<tr>
-
-
-												<td>Berita Acara</td>
-												<td>
-													@php
-														$tanggalSekarang = \Carbon\Carbon::now()->startOfDay();
-														$tanggalUjian = \Carbon\Carbon::createFromFormat('Y-m-d', $soal->tgl_ujian)->startOfDay();
-														// Periksa apakah tanggal saat ini sama dengan atau setelah tanggal ujian
-														$isTanggalSesuai = $tanggalSekarang->gte($tanggalUjian);
-														$isBeritaAcaraTersedia = $beritaAcara != null;
-													@endphp
-													{{-- {{ $isTanggalSesuai }} --}}
-													@if($isTanggalSesuai && !$isBeritaAcaraTersedia)
-														<!-- Jika sudah waktunya atau lewat waktu ujian dan belum ada berita acara, tampilkan tombol mengawas ujian -->
-														{{-- @if(!empty($soal->kd_gabung))
-															<!-- Gabung -->
-															<form method="POST" action="{{ route('store-mengawas-ujian-gabung') }}">
-																@csrf
-																<input type="hidden" name="kd_mtk" value="{{ $soal->kd_mtk }}">
-																@foreach($kelUjianArray1 as $kelas)
-																	<input type="hidden" name="kel_ujian[]" value="{{ trim($kelas) }}">
-																@endforeach
-																<input type="hidden" name="hari" value="{{ $soal->hari_t }}">
-																<input type="hidden" name="tgl_ujian" value="{{ $soal->tgl_ujian }}">
-																<input type="hidden" name="paket" value="{{ $soal->paket }}">
-																<input type="hidden" name="kd_gabung" value="{{ $soal->kd_gabung }}">
-																<button type="submit" class="btn btn-info">Mengawas Ujian</button>
-															</form>
-														@else --}}
-															<!-- Reguler -->
-															<form method="POST" action="{{ route('store-mengawas-ujian') }}">
-																@csrf
-																<input type="hidden" name="kd_mtk" value="{{ $soal->kd_mtk }}">
-																<input type="hidden" name="kel_ujian" value="{{ $soal->kel_ujian }}">
-																<input type="hidden" name="hari" value="{{ $soal->hari_t }}">
-																<input type="hidden" name="tgl_ujian" value="{{ $soal->tgl_ujian }}">
-																<input type="hidden" name="paket" value="{{ $soal->paket }}">
-																<input type="hidden" name="no_ruang" value="{{ $soal->no_ruang }}">
-																<input type="hidden" name="jam_t" value="{{ $soal->jam_t }}">
-																<button type="submit" class="btn btn-info">Mengawas Ujian</button>
-															</form>
-														{{-- @endif --}}
-													@else
-														<!-- Jika berita acara sudah ada atau belum waktunya, tampilkan informasi sesuai -->
-														@if($isBeritaAcaraTersedia)
-															<button class="btn btn-secondary" disabled>
-																Anda sudah absen mengawas, {{ formatDate($soal->created_at) }}
-															</button>
-														@else
-															<button class="btn btn-danger" disabled>
-																Belum waktunya mengawas ujian
-															</button>
-														@endif
-													@endif
-													
-
-								@if($beritaAcara && is_null($beritaAcara->field_yang_diperiksa))
-									<!-- Tombol isi berita acara ditampilkan jika $beritaAcara ada dan field tertentu null -->
-									<button type="button" class="btn btn-info" data-toggle="modal" data-target="#basicModal">
-										Berita Acara
-									</button>
-								@endif
-						
-												</td>
+												
 											<button onclick="window.location.reload();" class="btn btn-danger">Refresh Data</button>
 
 											</tr>
 											<tr>
 												<td colspan="2"> <div class="container mt-3">
-													<div style="padding: 10px; background: linear-gradient(to right, #6a11cb, #2575fc); color: white; text-align: center;">
-														<h4>*Catatan: Klik 'Mengawas Ujian' untuk memulai sesi pengawasan.</h4>
+													<div style="padding: 10px; background: linear-gradient(to right, #cba311, #5b749f); color: white; text-align: center;">
+														<h4><p><strong>Catatan:</strong> Klik tombol 'Nilai Essay' untuk memulai sesi penilaian. Pastikan Anda memperhatikan setiap halaman dengan seksama selama proses penilaian.</p>
+														</h4>
 													</div>
 													
 														
 												</div>
 											</td>
-										
+											
 											</tr>
 										</tbody>
 									</table>
 								</div>
 
-								@include('admin.mengawas.table_absen')
+								@include('admin.mengawas.nilai_essay.table_absen')
 
 								</div>
 							</div>
@@ -159,7 +85,7 @@
 
 			</div>
 
-	@include('admin.mengawas.modal_acara')
+	{{-- @include('admin.mengawas.modal_acara') --}}
 			
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 	<script>

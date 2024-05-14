@@ -30,25 +30,13 @@ class MengawasController extends Controller
             ->where('kd_dosen', Auth::user()->kode)
             ->get();
 
-        // $groupedSoals = $allSoals->groupBy(function ($item) {
-        //     // Jika kd_gabung tidak null, gunakan sebagai kunci. Jika null, gunakan kombinasi kel_ujian dan kd_mtk
-        //     return $item->kd_gabung ?? $item->kel_ujian . '-' . $item->kd_mtk;
-        // })
-        // ->mapWithKeys(function ($group, $key) {
-        //     if (!is_null($group->first()->kd_gabung)) { // Cek apakah kd_gabung ada
-        //         $first = $group->first();
-        //         $first->kel_ujian = $group->pluck('kel_ujian')->join(', '); // Menggabungkan semua kel_ujian dalam satu string
-        //         return [$key => $first]; // Kembalikan sebagai item tunggal dengan kunci kd_gabung
-        //     } else { // Ini adalah kunci gabungan dari kel_ujian dan kd_mtk dari kd_gabung yang null
-        //         // Setiap item unik berdasarkan gabungan kel_ujian dan kd_mtk, kembalikan mereka sebagai individu
-        //         return $group->mapWithKeys(function ($item) {
-        //             return [$item->kel_ujian . '-' . $item->kd_mtk => $item]; // Menggunakan gabungan kel_ujian dan kd_mtk sebagai kunci
-        //         });
-        //     }
-        // })
-        // ->flatten(); // Meratakan array untuk memastikan tidak ada nesting yang tidak diinginkan
+        $essay =  DB::table('uts_soal_kusus_essay')->join('mtk_ujians', 'uts_soal_kusus_essay.kd_mtk', '=', 'mtk_ujians.kd_mtk')
+            ->where('uts_soal_kusus_essay.paket', $id)
+            ->where('mtk_ujians.jenis_mtk', 'ESSAY ONLINE')
+            ->where('uts_soal_kusus_essay.kd_dosen', Auth::user()->kode)
+            ->get();
 
-        return view('admin.mengawas.uts', compact('groupedSoals'));
+        return view('admin.mengawas.uts', compact('groupedSoals','essay'));
     }
 
 
@@ -103,32 +91,35 @@ class MengawasController extends Controller
                 'kd_mtk'    => $pecah[1],
                 'kel_ujian' => $pecah[2],
                 'paket'     => $pecah[3],
-                'tgl_ujian'    => $pecah[4]
+                'tgl_ujian' => $pecah[4]
             ])->first();
 
             // dd($soal);
 
             // Mengambil data berita acara ujian
             $beritaAcara = Ujian_berita_acara::where([
-                'kd_dosen'  => $pecah[0],
-                'kd_mtk'    => $pecah[1],
-                'kel_ujian' => $pecah[2],
-                'paket'     => $pecah[3]
-            ])->first();
-            // dd($beritaAcara);
+                    'kd_dosen'  => $pecah[0],
+                    'kd_mtk'    => $pecah[1],
+                    'kel_ujian' => $pecah[2],
+                    'paket'     => $pecah[3]
+                    ])->first();
+
+
             // Mengambil dan memproses data absen ujian
             $mhsujian = Absen_ujian::where([
-                'kd_mtk'    => $pecah[1],
-                'no_kel_ujn' => $pecah[2],
-                'paket'     => $pecah[3]
-            ])->get()->map(function ($item) {
-                // dd($item->nim . '-' . $item->kd_mtk . '-' . $item->no_kel_ujn . '-' . $item->paket);
+                    'kd_mtk'    => $pecah[1],
+                    'no_kel_ujn' => $pecah[2],
+                    'paket'     => $pecah[3]
+                ])->get()->map(function ($item) {
+               
+
                 $item->isInHasilUjian = DB::table('ujian_hasilujians')
                     ->where('nim', $item->nim)
                     ->where('kd_mtk', $item->kd_mtk)
                     ->where('kel_ujian', $item->no_kel_ujn)
                     ->where('paket', $item->paket)
                     ->exists();
+
                 // Tambahkan jawaban esay
                 $item->isInJawabEssay = DB::table('ujian_jawab_esays')
                     ->where('nim', $item->nim)
@@ -144,6 +135,55 @@ class MengawasController extends Controller
             // }
             // die;
             return view('admin.mengawas.show', compact('soal', 'id', 'beritaAcara', 'mhsujian'));
+        } catch (\Exception $e) {
+            // Tangani kesalahan yang mungkin terjadi saat proses dekripsi atau query
+            return back()->with('error', 'Terjadi kesalahan saat memproses data: ' . $e->getMessage());
+        }
+    }
+
+    public function show_nilai_essay($id)
+    {
+        try {
+            // Dekripsi dan pecah string $id menjadi array
+            $pecah = explode(',', Crypt::decryptString($id));
+
+            $soal = Soal_ujian::where([
+                'kd_dosen'  => $pecah[0],
+                'kd_mtk'    => $pecah[1],
+                'kel_ujian' => $pecah[2],
+                'paket'     => $pecah[3],
+                'tgl_ujian' => $pecah[4]
+            ])->first();
+
+            // dd($soal);
+
+            // Mengambil dan memproses data absen ujian
+            $mhsujian = Absen_ujian::where([
+                    'kd_mtk'    => $pecah[1],
+                    'no_kel_ujn' => $pecah[2],
+                    'paket'     => $pecah[3]
+                ])->get()->map(function ($item) {
+               
+
+                $item->isInHasilUjian = DB::table('ujian_hasilujians')
+                    ->where('nim', $item->nim)
+                    ->where('kd_mtk', $item->kd_mtk)
+                    ->where('kel_ujian', $item->no_kel_ujn)
+                    ->where('paket', $item->paket)
+                    ->exists();
+
+                // Tambahkan jawaban esay
+                $item->isInJawabEssay = DB::table('ujian_jawab_esays')
+                    ->where('nim', $item->nim)
+                    ->where('kd_mtk', $item->kd_mtk)
+                    ->where('kel_ujian', $item->no_kel_ujn)
+                    ->where('paket', $item->paket)
+                    ->first();
+
+                return $item;
+            });
+
+            return view('admin.mengawas.nilai_essay.show_essay', compact('soal', 'id', 'mhsujian'));
         } catch (\Exception $e) {
             // Tangani kesalahan yang mungkin terjadi saat proses dekripsi atau query
             return back()->with('error', 'Terjadi kesalahan saat memproses data: ' . $e->getMessage());

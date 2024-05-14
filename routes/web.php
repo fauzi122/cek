@@ -99,6 +99,7 @@ Route::middleware('auth')->group(function () {
                 Route::get('/mengawas-ujian', 'index');
                 Route::get('/mengawas-uts/{id}', 'm_uts');
                 Route::get('/show/mengawas-uts/{id}', 'show_uts');
+                Route::get('/show/nilai-essay/{id}', 'show_nilai_essay');
                 Route::get('/show/log-mhs/mengawas-uts/{id}', 'show_log');
                 Route::get('/mengawas-uas', 'm_uas');
                 Route::post('/store/mengawas-uts/', 'store')->name('store-mengawas-ujian');
