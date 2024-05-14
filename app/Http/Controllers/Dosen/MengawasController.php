@@ -128,7 +128,7 @@ class MengawasController extends Controller
                     ->where('kd_mtk', $item->kd_mtk)
                     ->where('kel_ujian', $item->no_kel_ujn)
                     ->where('paket', $item->paket)
-                    ->first();
+                    ->exists();
                 // Tambahkan jawaban esay
                 $item->isInJawabEssay = DB::table('ujian_jawab_esays')
                     ->where('nim', $item->nim)
