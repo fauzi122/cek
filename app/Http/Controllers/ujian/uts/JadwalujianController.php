@@ -18,7 +18,7 @@ class JadwalujianController extends Controller
 {
     public function __construct()
     {
-       $this->middleware(['permission:jadwal_ujian']);
+    //    $this->middleware(['permission:jadwal_ujian']);
        if(!$this->middleware('auth:sanctum')){
         return redirect('/login');
     }
