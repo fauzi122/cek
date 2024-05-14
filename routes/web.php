@@ -105,6 +105,8 @@ Route::middleware('auth')->group(function () {
                 Route::post('/store/berita-mengawas-uts/', 'updateBeritaAcara')->name('store-berita-mengaws-ujian');
                 Route::post('/update-attendance', 'UpdateAbsenUjian')->name('update_attendance');
                 Route::post('/update-ket-ujian', 'updateKeterangan')->name('update.ket-ujian-uts');
+                Route::get('/get-nilai-essay/{id}', 'getnilaiEssay');
+                Route::post('/update-nilai-essay', 'updateNilai');
             });
             Route::controller(MengawasGabungController::class)->group(function () {
 
