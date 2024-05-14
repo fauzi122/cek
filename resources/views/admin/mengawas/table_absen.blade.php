@@ -177,6 +177,7 @@
                             <th>NIM</th>
                             <th>Nama</th>
                             <th>Status</th>
+                            <th>Nilai</th>
                             <th>Aksi</th>
                             <th>Updated_at</th>
 
@@ -194,6 +195,13 @@
                                 <b>Hadir</b>
                                 @else
                                 <b>Tidak Hdir</b>
+                                @endif
+                            </td>
+                            <td>
+                                @if($item->isInJawabEssay->score)
+                                {{$item->isInJawabEssay->score}}
+                                @else
+                                <b>0</b>
                                 @endif
                             </td>
                             <td>
