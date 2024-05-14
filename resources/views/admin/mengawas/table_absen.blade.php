@@ -21,12 +21,12 @@
             </a>
         </li>
        
-        <li class="nav-item">
+        {{-- <li class="nav-item">
             <a class="nav-link" id="nilai-tab" data-toggle="tab" href="#nilai-essay" role="tab" aria-controls="nilai-essay" aria-selected="false">
                 <i class="icon-download-cloud"></i> Nilai Essay Mahasiswa
             </a>
         </li>
-  
+   --}}
 
 
     </ul>
@@ -175,99 +175,13 @@
 
 
 {{-- essay --}}
-    @if ($soal->jml_soal_essay > 0)
-
-        <div class="tab-pane fade" id="nilai-essay" role="tabpanel" aria-labelledby="nilai-tab">
-            <div class="table-responsive">
-                <table id="myTable5" class="table custom-table">
-                    <thead>
-                        <tr>
-                            <th>No</th>
-                            <th>NIM</th>
-                            <th>Nama</th>
-                            <th>Status</th>
-                            <th>Nilai</th>
-                            <th>Aksi</th>
-                            <th>Updated_at</th>
-
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @forelse ($mhsujian as $item)
-                        <tr>
-                            <td>{{ $loop->iteration }}</td>
-                            <td>{{ $item->nim }}</td>
-                            <td>{{ $item->nm_mhs }}</td>
-                            <td>
-                                @if($item->status==1)
-
-                                <b>Hadir</b>
-                                @else
-                                <b>Tidak Hdir</b>
-                                @endif
-                            </td>
-                            <td>
-                                @if(isset($item->isInJawabEssay) && isset($item->isInJawabEssay->score))
-                                    {{$item->isInJawabEssay->score}}
-                                @else
-                                    <b>0</b>
-                                @endif
-                               
-                            </td>
-                            <td>
-                                @php
-                                $id=Crypt::encryptString($item->nim.','.$item->no_kel_ujn.','.$item->kd_mtk.','.$item->paket);
-                                @endphp
-                                @if($item->isInHasilUjian<>false)
-                                    <a href="#" class="btn btn-info" data-toggle="modal" data-target="#nilaiEssayModal" data-id="{{ $id }}">
-                                        Nilai Essay
-                                    </a>
-                                    @else
-                                    <span class="badge badge-danger">Belum Mulai Ujian</span>
-                                    @endif
-
-
-                            </td> <!-- Assuming each item has an 'id' -->
-                            <td>{{ $item->updated_at }}</td>
-                        </tr>
-                        @empty
-                        <tr>
-                            <td colspan="5">No data available</td>
-                        </tr>
-                        @endforelse
-                    </tbody>
-                </table>
-
-                </tbody>
-                </table>
-            </div>
-        </div>
-    @endif
+    
 
     </div>
 </div>
 <!-- Nilai Essay Modal -->
 <!-- Nilai Essay Modal -->
-<div class="modal fade" id="nilaiEssayModal" tabindex="-1" role="dialog" aria-labelledby="nilaiEssayModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="nilaiEssayModalLabel">Detail Essay Mahasiswa</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <div id="essayDetails"></div> <!-- Container untuk menampilkan detail essay -->
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
-                <button type="button" class="btn btn-primary" id="saveChanges">Simpan Perubahan</button>
-            </div>
 
-        </div>
-    </div>
-</div>
 
 @push('scripts')
 <script>
