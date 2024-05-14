@@ -32,7 +32,7 @@
                                     <th>No</th>
                                     <th>NIM</th>
                                     <th>Nama</th>
-                                    <th>Status</th>
+                                   
                                     <th>Nilai</th>
                                     <th>Aksi</th>
                                     <th>Updated_at</th>
@@ -45,14 +45,7 @@
                                     <td>{{ $loop->iteration }}</td>
                                     <td>{{ $item->nim }}</td>
                                     <td>{{ $item->nm_mhs }}</td>
-                                    <td>
-                                        @if($item->status==1)
-        
-                                        <b>Hadir</b>
-                                        @else
-                                        <b>Tidak Hdir</b>
-                                        @endif
-                                    </td>
+                                    
                                     <td>
                                         @if(isset($item->isInJawabEssay) && isset($item->isInJawabEssay->score))
                                             {{$item->isInJawabEssay->score}}
