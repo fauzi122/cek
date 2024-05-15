@@ -14,7 +14,7 @@ class RekapnilaiEssayController extends Controller
 {
     public function __construct()
     {
-    //    $this->middleware(['permission:']);
+       $this->middleware(['permission:laporan_ujian|rekap_mengawas_ujian']);
        if(!$this->middleware('auth:sanctum')){
         return redirect('/login');
     }
