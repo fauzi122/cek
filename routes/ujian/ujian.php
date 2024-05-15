@@ -99,6 +99,14 @@ Route::controller(PenggantiMengawasController::class)->group(function () {
     
 });
 
+// pengganti mengawas
+Route::controller(RekapnilaiEssayController::class)->group(function () {
+    Route::get('/pilih-rekap-nilai/essay', 'index');
+    Route::get('/nilai-essay/{id}', 'essay');
+   
+    
+});
+
 // kurang bayar
 Route::controller(KurangbayarController::class)->group(function () {
     Route::get('/kurang-bayar', 'index');
