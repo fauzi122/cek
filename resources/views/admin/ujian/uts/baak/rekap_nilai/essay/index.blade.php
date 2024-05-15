@@ -19,7 +19,7 @@
 							
 								<h4 class="m-b-0 text-white">
 									
-									List Mahasiswa Kurang Bayar Kuliah</h4>
+									List Nilai Essay Online</h4>
 							</div>
 							@if (session('success'))
 							<div class="alert alert-info">
