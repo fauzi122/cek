@@ -111,7 +111,7 @@
 					<ul class="dropdown-menu" aria-labelledby="uiElementsDropdown">
 						@can('rekap_mengawas_ujian')
 						<li>
-							<a class="dropdown-item" href="carousel.html">Rekap Mengawas Ujian</a>
+							<a class="dropdown-item" href="/pilih-rekap-nilai/essay">Rekap Nilai Essay Online</a>
 						</li>
 						@endcan
 						@can('rekap_nilai_ujian')
