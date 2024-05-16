@@ -75,17 +75,17 @@
         const user = this.getAttribute('data-id');
 
         fetch(apiUrl)
-            // .then(response => {
-            //     if (!response.ok) {
-            //         // Jika status respons adalah 404, lempar error khusus
-            //         if (response.status === 404) {
-            //             throw new Error('File not found (404)');
-            //         }
-            //         // Untuk semua jenis error lainnya, lempar error umum
-            //         throw new Error('Network response was not ok. Status: ' + response.status);
-            //     }
-            //     return response.blob();
-            // })
+            .then(response => {
+                if (!response.ok) {
+                    // Jika status respons adalah 404, lempar error khusus
+                    if (response.status === 404) {
+                        throw new Error('File not found (404)');
+                    }
+                    // Untuk semua jenis error lainnya, lempar error umum
+                    throw new Error('Network response was not ok. Status: ' + response.status);
+                }
+                return response.blob();
+            })
             .then(blob => {
                 const url = window.URL.createObjectURL(blob);
                 const a = document.createElement('a');
