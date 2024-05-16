@@ -10,9 +10,20 @@
                         <span class="type">Info</span>
                         <div class="alert-notify-title">
                             <h4>Rekap Mengawas Ujian</h4>
+                            [INFO: BATAS AKHIR PERUBAHAN BAP DAN ABSEN SAMAPI TANGGAL 19 MEI 20224 JAM 12:00 WIB]
                         </div>
                        
-                        
+                        @if (session('success'))
+							<div class="alert alert-info">
+								{{ session('success') }}
+							</div>
+							@endif
+			
+							@if (session('error'))
+							<div class="alert alert-info">
+								{{ session('error') }}
+							</div>
+							@endif
                     </div>
                 </div>
                 <div class="card">
@@ -38,6 +49,7 @@
                                                         <th>Ruang</th>
                                                         <th>paket</th>
                                                         <th>Kampus</th>
+                                                        <th><span class="icon-edit1" title="petugas ganti pengawas"></span></th>
                                                         <th>status</th>
                                                         <th>ot</th>
 
@@ -68,6 +80,7 @@
 											 <td>{{ $jadwal->paket }}</td>
 											
 											 <td>{{ $jadwal->nm_kampus }}</td>
+											 <td><b>{{ $jadwal->petugas_edit_pengawas }}</b></td>
 											 <td>
                                                  {{-- Key definition for lookup in resultArray --}}
                                                  @php

@@ -65,15 +65,18 @@ class PenggantiMengawasController extends Controller
                 'nip'      => $request->input('nip_dosen_pengganti'),
                 'petugas_edit_pengawas' => Auth::user()->kode  // Menambahkan petugas edit pengawas
             ]);
+
+            $gabung = Crypt::encryptString($request->input('paket'));
     
             if ($updateSoalUjian) {
-                return redirect('/pengganti-mengawas')->with('success', 'Data Berhasil di Update dan Soal Ujian Diperbarui');
+                return redirect('/adm/rekap-mengawas/' . $gabung)->with('success', 'Data Berhasil di Update');
+            
             } else {
-                return redirect('/pengganti-mengawas')->with('error', 'Data Berhasil di Update tetapi Gagal Memperbarui Soal Ujian');
+                return redirect('/adm/rekap-mengawas/' . $gabung)->with('error', 'Data Berhasil di Update tetapi Gagal ');
             }
         } else {
             // Jika tidak ada perubahan pada data Ganti_pengawas_ujian, kembalikan pesan error
-            return redirect('/pengganti-mengawas')->with('error', 'Tidak ada perubahan pada data, Soal Ujian tidak diperbarui');
+            return redirect('/adm/rekap-mengawas/' . $gabung)->with('error', 'Tidak ada perubahan pada data');
         }
     }
     
