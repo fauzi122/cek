@@ -8,9 +8,18 @@
                     <div class="alert-notify-body">
                         <span class="type">Info</span>
                         <span class="type">Info</span>
-                        <div class="alert-notify-title">
-                            <h4>Rekap Mengawas Ujian</h4>
-                            [INFO: BATAS AKHIR PERUBAHAN BAP DAN ABSEN SAMAPI TANGGAL 19 MEI 20224 JAM 12:00 WIB]
+                        <div class="alert-notify">
+                            <div class="alert-notify-title">
+                                <h4>Rekap Mengawas Ujian</h4>
+                            </div>
+                            <div class="alert-notify-info">
+                                <p class="info-item">
+                                    <strong>INFO:</strong> Batas Akhir Perubahan BAP dan Absen sampai tanggal <strong>19 Mei 2024</strong> jam <strong>12:00 WIB</strong>
+                                </p>
+                                <p class="info-item">
+                                    <strong>INFO:</strong> Batas Akhir Perubahan Status dari Panitia sampai tanggal <strong>19 Mei 2024</strong> jam <strong>17:00 WIB</strong>
+                                </p>
+                            </div>
                         </div>
                        
                         @if (session('success'))
