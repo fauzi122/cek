@@ -37,8 +37,13 @@ class RekapnilaiEssayController extends Controller
     {
         $pecah = explode(',', Crypt::decryptString($id));
 
-        $essay = JawabEsay::where([
-            'paket'    => $pecah[0]
+        $essay = JawabEsay::join('uts_soals', function($join) {
+            $join->on('ujian_jawab_esays.kel_ujian', '=', 'uts_soals.kel_ujian')
+                 ->on('ujian_jawab_esays.kd_mtk', '=', 'uts_soals.kd_mtk');
+        })
+        ->select('ujian_jawab_esays.*', 'uts_soals.kd_dosen', 'uts_soals.nip')
+        ->where([
+            'ujian_jawab_esays.paket'    => $pecah[0]
             ])->get();
         return view('admin.ujian.uts.baak.rekap_nilai.essay.index', compact('essay'));
     }
