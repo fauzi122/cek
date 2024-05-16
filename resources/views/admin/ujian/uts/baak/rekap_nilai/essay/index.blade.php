@@ -40,6 +40,8 @@
 											  
                                                 <th>no</th>
                                                 <th>nim</th>
+                                                <th>kd_dosen</th>
+                                                <th>nip</th>
                                                 <th>kel_ujian</th>
                                                 <th>mtk</th>
                                                 <th>paket</th>
@@ -57,6 +59,8 @@
 										
 											 <td>{{ $loop->iteration}}</td>
 											 <td>{{ $jadwal->nim }}</td>
+											 <td>{{ $jadwal->kd_dosen }}</td>
+											 <td>{{ $jadwal->nip }}</td>
 											 <td>{{ $jadwal->kel_ujian }}</td>
                                              <td>{{ $jadwal->kd_mtk }}</td>
 											 <td>{{ $jadwal->paket }}</td>
