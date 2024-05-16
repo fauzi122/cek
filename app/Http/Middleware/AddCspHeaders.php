@@ -38,15 +38,15 @@ class AddCspHeaders
         $response->headers->set(
             'Content-Security-Policy',
             "default-src 'self';" .
-            "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://code.jquery.com https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://ajax.googleapis.com http://localhost:5173;" . // Menambahkan ajax.googleapis.com
-            "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com https://cdn.jsdelivr.net http://localhost:5173;" .
-            "img-src 'self' https://ytimg.com http://localhost:5173;" .
-            "font-src 'self' https://fonts.gstatic.com https://fonts.bunny.net;" .
-            "frame-src 'self' https://www.youtube.com https://youtube.com;" .
-            "connect-src 'self' ws://localhost:5173;"
+                "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://code.jquery.com https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://ajax.googleapis.com http://localhost:5173;" . // Menambahkan ajax.googleapis.com
+                "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com https://cdn.jsdelivr.net http://localhost:5173;" .
+                "img-src 'self' https://ytimg.com http://localhost:5173;" .
+                "font-src 'self' https://fonts.gstatic.com https://fonts.bunny.net;" .
+                "frame-src 'self' https://www.youtube.com https://youtube.com;" .
+                "connect-src 'self' ws://localhost:5173 http://127.0.0.1:8001 https://ujiankampusa.bsi.ac.id;"
         );
-        
-        
+
+
 
         return $response;
     }

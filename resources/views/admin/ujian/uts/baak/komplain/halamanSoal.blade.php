@@ -37,8 +37,8 @@
                                     <td>{{ $soal->kel_ujian }}</td>
                                     <td>{{ $soal->alasan }}</td>
                                     <td>
-                                        {{-- Asumsi $soal->bukti menyimpan nama file gambar --}}
-                                        <img src="{{ asset('storage/bukti/' . $soal->bukti) }}" alt="bukti" width="100"> {{-- Sesuaikan path dan atribut sesuai kebutuhan --}}
+                                        <button id="downloadButton" data-url="{{$soal->bukti}}" data-id="{{$soal->nim.$soal->kd_mtk.$soal->paket}}">Download PDF</button>
+
                                     </td>
                                 </tr>
                                 @endforeach
@@ -67,6 +67,41 @@
             ],
             responsive: true
         });
+    });
+</script>
+<script>
+    document.getElementById('downloadButton').addEventListener('click', function() {
+        const apiUrl = 'http://127.0.0.1:8001/api/bukti-soal/' + this.getAttribute('data-url');
+        const user = this.getAttribute('data-id');
+
+        fetch(apiUrl)
+            .then(response => {
+                if (!response.ok) {
+                    // Jika status respons adalah 404, lempar error khusus
+                    if (response.status === 404) {
+                        throw new Error('File not found (404)');
+                    }
+                    // Untuk semua jenis error lainnya, lempar error umum
+                    throw new Error('Network response was not ok. Status: ' + response.status);
+                }
+                return response.blob();
+            })
+            .then(blob => {
+                const url = window.URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.style.display = 'none';
+                a.href = url;
+                a.download = 'bukti-soal' + user + '.pdf';
+                document.body.appendChild(a);
+                a.click();
+                window.URL.revokeObjectURL(url);
+                a.remove();
+            })
+            .catch(err => {
+                console.error('Error downloading the file:', err);
+                // Memberikan feedback ke pengguna melalui alert atau elemen UI lainnya
+                alert('Error: ' + err.message);
+            });
     });
 </script>
 @endpush
