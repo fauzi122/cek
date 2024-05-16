@@ -71,7 +71,7 @@
 </script>
 <script>
     document.getElementById('downloadButton').addEventListener('click', function() {
-        const apiUrl = 'http://127.0.0.1:8001/api/bukti-soal/' + this.getAttribute('data-url');
+        const apiUrl = 'https://ujiankampusa.bsi.ac.id/api/bukti-soal/' + this.getAttribute('data-url');
         const user = this.getAttribute('data-id');
 
         fetch(apiUrl)
