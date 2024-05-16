@@ -329,8 +329,8 @@
 			   $('#myTable5').DataTable({
 				dom: 'Blfrtip',
 							lengthMenu: [
-								[ 10, 25, 50, 10000 ],
-								[ '10', '25', '50', 'Show All' ]
+								[ 50, 10000 ],
+								[ '50', 'Show All' ]
 							],
 							buttons: [
 								'copy', 'csv', 'excel', 'pdf', 'print'

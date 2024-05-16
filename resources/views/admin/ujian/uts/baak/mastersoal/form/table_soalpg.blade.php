@@ -51,7 +51,8 @@
                                                 <th style="text-align: center;">Status</th>
                                                 <th style="text-align: center;">Updated</th>
                                                 <th style="text-align: center;">Dosen</th>
-                                                <th style="text-align: center; width: 100px">Aksi</th>
+                                                <th style="text-align: center;">id_soal</th>
+                                                <th style="text-align: center; width: 100px">Aksi.</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -81,6 +82,7 @@
                                                 </td>
                                                 <td style="text-align: center;">{{ $soal->updated_at }}</td>
                                                 <td style="text-align: center;">{{ $soal->id_user }}</td>
+                                                <td style="text-align: center;"><b>{{ $soal->id }}</b></td>
                                                 <td>
                                                     <center>
                                                         <div class="btn-group" role="group">
