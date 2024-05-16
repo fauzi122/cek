@@ -153,10 +153,11 @@
                                 <h3><a href="/mengawas-uts/{{ $uas }}" class="exam-link">Ujian Akhir Semester (UAS)</a></h3>
                             </div>
                             <div class="alert alert-danger" role="alert">
-                                <h4 class="alert-heading">Silahkan Cek Panduan Terbaru Untuk Pengawas <a href="{{ Storage::url('public/panduan/Panduan_Dosen_Pengawas.pdf') }}">disini</a> </h4>
+                                <h4 class="alert-heading"><strong>INFO:</strong> Jika ada Perubahan BAP dan Absen hanya dapat di lakukan sampai tanggal <strong>19 Mei 2024</strong> jam <strong>12:00 WIB</strong> </h4>
+                                {{-- <h4 class="alert-heading">Silahkan Cek Panduan Terbaru Untuk Pengawas <a href="{{ Storage::url('public/panduan/Panduan_Dosen_Pengawas.pdf') }}">disini</a> </h4>
                                 @can('examschedule.index') 
                                 <h4 class="alert-heading">Silahkan Cek Panduan Terbaru Untuk Panitia Ujian <a href="{{ Storage::url('public/panduan/Panduan_Panitia_Ujian.pdf') }}" target="_blnk">disini</a> </h4>
-                                @endcan 
+                                @endcan  --}}
                             </div>
                         </div>
                     </div>

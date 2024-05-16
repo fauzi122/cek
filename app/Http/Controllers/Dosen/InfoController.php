@@ -23,21 +23,21 @@ class InfoController extends Controller
         //     return redirect('/profile')->with('info', ' Update Password Anda dan Pastikan Email Anda Aktif.');
         // }
 
-        $info=DB::table('infos')->orderBy('id', 'DESC')->get();
+        // $info=DB::table('infos')->orderBy('id', 'DESC')->get();
         
-        return view('admin.dashboard',compact('info'));
+        return view('admin.dashboard');
     }
 
-    public function download_file_info(Request $request)
-    {
-        $files = public_path() . '/storage/info/' . $request->file;//Mencari file dari model yang sudah dicari
-        if(file_exists($files)){
-            return response()->download($files, $request->file);
-        }else{
-            echo"kosong";
-        }
+    // public function download_file_info(Request $request)
+    // {
+    //     $files = public_path() . '/storage/info/' . $request->file;//Mencari file dari model yang sudah dicari
+    //     if(file_exists($files)){
+    //         return response()->download($files, $request->file);
+    //     }else{
+    //         echo"kosong";
+    //     }
         
-    }
+    // }
     /**
      * Show the form for creating a new resource.
      *
