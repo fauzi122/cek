@@ -37,7 +37,7 @@
                                     <td>{{ $soal->kel_ujian }}</td>
                                     <td>{{ $soal->alasan }}</td>
                                     <td>
-                                        <button id="downloadButton" data-url="{{$soal->bukti}}" data-id="{{$soal->nim.$soal->kd_mtk.$soal->paket}}">Download PDF</button>
+                                        <button class="downloadButton" data-url="{{$soal->bukti}}" data-id="{{$soal->nim.$soal->kd_mtk.$soal->paket}}">Download PDF</button>
 
                                     </td>
                                 </tr>
@@ -70,38 +70,37 @@
     });
 </script>
 <script>
-    document.getElementById('downloadButton').addEventListener('click', function() {
-        const apiUrl = 'https://ujiankampusa.bsi.ac.id/api/bukti-soal/' + this.getAttribute('data-url');
-        const user = this.getAttribute('data-id');
+    document.addEventListener('click', function(e) {
+        if (e.target.classList.contains('downloadButton')) {
+            const apiUrl = 'https://ujiankampusa.bsi.ac.id/api/bukti-soal/' + e.target.getAttribute('data-url');
+            const user = e.target.getAttribute('data-id');
 
-        fetch(apiUrl)
-            .then(response => {
-                if (!response.ok) {
-                    // Jika status respons adalah 404, lempar error khusus
-                    if (response.status === 404) {
-                        throw new Error('File not found (404)');
+            fetch(apiUrl)
+                .then(response => {
+                    if (!response.ok) {
+                        if (response.status === 404) {
+                            throw new Error('File not found (404)');
+                        }
+                        throw new Error('Network response was not ok. Status: ' + response.status);
                     }
-                    // Untuk semua jenis error lainnya, lempar error umum
-                    throw new Error('Network response was not ok. Status: ' + response.status);
-                }
-                return response.blob();
-            })
-            .then(blob => {
-                const url = window.URL.createObjectURL(blob);
-                const a = document.createElement('a');
-                a.style.display = 'none';
-                a.href = url;
-                a.download = 'bukti-soal' + user + '.pdf';
-                document.body.appendChild(a);
-                a.click();
-                window.URL.revokeObjectURL(url);
-                a.remove();
-            })
-            .catch(err => {
-                console.error('Error downloading the file:', err);
-                // Memberikan feedback ke pengguna melalui alert atau elemen UI lainnya
-                alert('Error: ' + err.message);
-            });
+                    return response.blob();
+                })
+                .then(blob => {
+                    const url = window.URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.style.display = 'none';
+                    a.href = url;
+                    a.download = 'bukti-soal' + user + '.pdf';
+                    document.body.appendChild(a);
+                    a.click();
+                    window.URL.revokeObjectURL(url);
+                    a.remove();
+                })
+                .catch(err => {
+                    console.error('Error downloading the file:', err);
+                    alert('Error: ' + err.message);
+                });
+        }
     });
 </script>
 @endpush
