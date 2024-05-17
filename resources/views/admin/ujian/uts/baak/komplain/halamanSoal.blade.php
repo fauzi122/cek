@@ -37,7 +37,7 @@
                                     <td>{{ $soal->kel_ujian }}</td>
                                     <td>{{ $soal->alasan }}</td>
                                     <td>
-                                        <button class="downloadButton" data-url="{{$soal->bukti}}" data-id="{{$soal->nim.$soal->kd_mtk.$soal->paket}}">Download PDF</button>
+                                        <button class="downloadButton" data-url="{{$soal->bukti}}" data-id="{{$soal->nim.$soal->kd_mtk.$soal->paket}}">Download Bukti PDF</button>
 
                                     </td>
                                 </tr>
