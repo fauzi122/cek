@@ -20,7 +20,9 @@
 								<br>
 								<div class="table-responsive">
 									<table class="custom-table">
-
+										@php
+											$sekarang = now();
+										@endphp
 										<tbody>
 											<tr>
 												<td>Nama Dosen</td>
@@ -131,9 +133,16 @@
 											</tr>
 											<tr>
 												<td colspan="2"> <div class="container mt-3">
+													@if ($setting && $sekarang->between($setting->mulai, $setting->selsai))
+
 													<div style="padding: 10px; background: linear-gradient(to right, #6a11cb, #2575fc); color: white; text-align: center;">
 														<h4>*Catatan: Klik 'Mengawas Ujian' untuk memulai sesi pengawasan.</h4>
 													</div>
+													@else
+													<div style="padding: 10px; background: linear-gradient(to right, #cb1111, #fcc325); color: white; text-align: center;">
+														<h4>*Catatan: Bukan periode aktivitas. Anda tidak dapat merubah BAP,komentar dan absen mahasiswa</h4>
+													</div>
+														@endif
 													
 														
 												</div>

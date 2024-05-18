@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Crypt;
 use App\Models\Ujian_berita_acara;
+use App\Models\SettingUjian;
 use Illuminate\Http\Request;
 use App\Models\Soal_ujian;
 use App\Models\Absen_ujian;
@@ -37,6 +38,17 @@ class MengawasController extends Controller
             ->get();
 
         return view('admin.mengawas.uts', compact('groupedSoals','essay'));
+    }
+
+    public function nilai_essay($id)
+    {
+        $essay =  DB::table('uts_soal_kusus_essay')->join('mtk_ujians', 'uts_soal_kusus_essay.kd_mtk', '=', 'mtk_ujians.kd_mtk')
+            ->where('uts_soal_kusus_essay.paket', $id)
+            ->where('mtk_ujians.jenis_mtk', 'ESSAY ONLINE')
+            ->where('uts_soal_kusus_essay.kd_dosen', Auth::user()->kode)
+            ->get();
+
+        return view('admin.mengawas.nilai_essay.index', compact('essay'));
     }
 
 
@@ -86,6 +98,10 @@ class MengawasController extends Controller
             // Dekripsi dan pecah string $id menjadi array
             $pecah = explode(',', Crypt::decryptString($id));
 
+            // dd($pecah);
+            $setting = SettingUjian::where(['paket' => $pecah[3]])->first();
+
+            // dd($setting);
             $soal = Soal_ujian::where([
                 'kd_dosen'  => $pecah[0],
                 'kd_mtk'    => $pecah[1],
@@ -93,8 +109,6 @@ class MengawasController extends Controller
                 'paket'     => $pecah[3],
                 'tgl_ujian' => $pecah[4]
             ])->first();
-
-            // dd($soal);
 
             // Mengambil data berita acara ujian
             $beritaAcara = Ujian_berita_acara::where([
@@ -110,8 +124,7 @@ class MengawasController extends Controller
                     'kd_mtk'    => $pecah[1],
                     'no_kel_ujn' => $pecah[2],
                     'paket'     => $pecah[3]
-                ])->get()->map(function ($item) {
-               
+                ])->get()->map(function ($item) {  
 
                 $item->isInHasilUjian = DB::table('ujian_hasilujians')
                     ->where('nim', $item->nim)
@@ -130,11 +143,8 @@ class MengawasController extends Controller
 
                 return $item;
             });
-            // foreach ($mhsujian as $item) {
-            //     dump($item->isInJawabEssay);
-            // }
-            // die;
-            return view('admin.mengawas.show', compact('soal', 'id', 'beritaAcara', 'mhsujian'));
+
+            return view('admin.mengawas.show', compact('soal', 'id', 'beritaAcara', 'mhsujian','setting'));
         } catch (\Exception $e) {
             // Tangani kesalahan yang mungkin terjadi saat proses dekripsi atau query
             return back()->with('error', 'Terjadi kesalahan saat memproses data: ' . $e->getMessage());
