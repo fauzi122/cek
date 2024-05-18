@@ -25,6 +25,7 @@ use App\Models\Detailsoal_ujian;
 use App\Models\ujian_aprov_essay;
 use App\Models\perakit_bahan_ajar;
 use App\Models\DetailSoalEssay_ujian;
+use App\Models\SettingPerakitSoal;
 use App\Exports\DetailsoalExport;
 
 class UjianController extends Controller
@@ -390,7 +391,7 @@ class UjianController extends Controller
                 'kd_dosen_perakit' => Auth::user()->kode
             ])->first();
 
-            $setting = SettingUjian::where([
+            $setting = SettingPerakitSoal::where([
                 'paket' => $pecah[1],
             ])->first();
 

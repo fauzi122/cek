@@ -35,9 +35,16 @@
                             <label for="isi">Berita Acara:</label>
                             <textarea class="form-control" id="isi" name="isi" rows="7">{{ $beritaAcara->isi ?? '' }}</textarea>
                         </div>
+                        @php
+                            $sekarang = now();
+                        @endphp
+                       @if ($setting && $sekarang->between($setting->mulai, $setting->selsai))
                         <button type="submit" class="btn btn-primary">
                             Kirim Data
                         </button> 
+                        @else
+                        @endif
+
                     </form>
                 {{-- @endif --}}
                 <hr>

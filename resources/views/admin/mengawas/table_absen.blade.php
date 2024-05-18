@@ -10,25 +10,19 @@
 <div class="nav-tabs-container">
     <!-- Navigation Tabs -->
     <ul class="nav nav-tabs" id="myTab3" role="tablist">
+
         <li class="nav-item">
             <a class="nav-link active" id="home-tab3" data-toggle="tab" href="#home3" role="tab" aria-controls="home3" aria-selected="true">
                 <i class="icon-edit1"></i> Rekap Hadir Mahasiswa Ujian
             </a>
         </li>
+
         <li class="nav-item">
             <a class="nav-link" id="profile-tab3" data-toggle="tab" href="#profile3" role="tab" aria-controls="profile3" aria-selected="false">
                 <i class="icon-download-cloud"></i> Download Rekap Hadir Mahasiswa
             </a>
         </li>
        
-        {{-- <li class="nav-item">
-            <a class="nav-link" id="nilai-tab" data-toggle="tab" href="#nilai-essay" role="tab" aria-controls="nilai-essay" aria-selected="false">
-                <i class="icon-download-cloud"></i> Nilai Essay Mahasiswa
-            </a>
-        </li>
-   --}}
-
-
     </ul>
 
     <!-- Tab Content -->
@@ -37,7 +31,9 @@
         <div class="tab-pane fade show active" id="home3" role="tabpanel" aria-labelledby="home-tab3">
             <div class="row gutters">
                 <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-
+                    @php
+                        $sekarang = now();
+                    @endphp
                     <div class="table-responsive">
                         <table class="custom-table">
                             <thead>
@@ -46,10 +42,15 @@
                                     <th>NIM</th>
                                     <th>Nama</th>
                                     <th>Kel-Ujian</th>
+
+                                    {{-- cek bap dan tutup bap --}}
                                     @if($beritaAcara && is_null($beritaAcara->field_yang_diperiksa))
+                                    @if ($setting && $sekarang->between($setting->mulai, $setting->selsai))
                                     <th>Komentar</th>
                                     <th>Status Hadir</th>
                                     @endif
+                                    @endif
+                                    
                                     <th>Status Mulai Ujian</th>
                                 </tr>
                             </thead>
@@ -61,7 +62,9 @@
                                     <td>{{ $item->nm_mhs }}</td>
                                     <td>{{ $item->no_kel_ujn }}</td>
 
-                                    @if($beritaAcara && is_null($beritaAcara->field_yang_diperiksa))
+                                {{-- cek bap dan tgl tutup bap --}}
+                                @if($beritaAcara && is_null($beritaAcara->field_yang_diperiksa))
+                                @if ($setting && $sekarang->between($setting->mulai, $setting->selsai))
                                     <td>
 
                                         {{-- {{ $item->id }} --}}
@@ -85,7 +88,11 @@
                                             <span class="slider round"></span>
                                         </label>
                                     </td>
-                                    @endif
+
+                                {{-- cek bap dan tgl tutup bap --}}
+                                @endif
+                                @endif
+
                                     <td>
                                         @if($item->isInHasilUjian)
                                         <span class="badge badge-info">Sudah Mulai Ujian</span>
@@ -174,14 +181,11 @@
         </div>
 
 
-{{-- essay --}}
+
     
 
     </div>
 </div>
-<!-- Nilai Essay Modal -->
-<!-- Nilai Essay Modal -->
-
 
 @push('scripts')
 <script>

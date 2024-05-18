@@ -137,10 +137,18 @@
                                 <i class="icon-new_releases"></i> Mengawas Ujian
                             </a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="home1-tab" data-toggle="tab" href="#home1" role="tab" aria-controls="home1" aria-selected="false">
+                                <i class="icon-new_releases"></i> Nilai Essay Online Kusus UTS/UAS Pengganti & HER
+                            </a>
+                        </li>
                     </ul>
                     @php
                     $uts='UTS';
                     $uas='UAS';
+                    $uts_ganti='UTS PENGGANTI';
+                    $uas_ganti='UAS PENGGANTI';
+                    $her='HER';
                     @endphp
                     <div class="tab-content" id="myTabContent">
                         <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
@@ -153,16 +161,33 @@
                                 <h3><a href="/mengawas-uts/{{ $uas }}" class="exam-link">Ujian Akhir Semester (UAS)</a></h3>
                             </div>
                             <div class="alert alert-danger" role="alert">
-                                <h4 class="alert-heading"><strong>INFO:</strong> Jika ada Perubahan BAP dan Absen hanya dapat di lakukan sampai tanggal <strong>19 Mei 2024</strong> jam <strong>12:00 WIB</strong> </h4>
-                                {{-- <h4 class="alert-heading">Silahkan Cek Panduan Terbaru Untuk Pengawas <a href="{{ Storage::url('public/panduan/Panduan_Dosen_Pengawas.pdf') }}">disini</a> </h4>
-                                @can('examschedule.index') 
-                                <h4 class="alert-heading">Silahkan Cek Panduan Terbaru Untuk Panitia Ujian <a href="{{ Storage::url('public/panduan/Panduan_Panitia_Ujian.pdf') }}" target="_blnk">disini</a> </h4>
-                                @endcan  --}}
+                                <h4 class="alert-heading"><strong>INFO:</strong> Jika ada Perubahan BAP dan Absen hanya dapat di lakukan sampai tanggal <strong>19 Mei 2024</strong> jam <strong>12:00 WIB</strong></h4>
                             </div>
+                        </div>
+                        <div class="tab-pane fade" id="home1" role="tabpanel" aria-labelledby="home1-tab">
+                            <!-- Konten untuk tab kedua dapat ditambahkan di sini -->
+                            <div class="exam-tile">
+                                <i class="icon-activity exam-icon"></i>
+                                <h3><a href="/nilai-essay-online/{{ $uts_ganti }}" class="exam-link">Nilai Essay Online (UTS) Pengganti</a></h3>
+                            </div>
+                            <div class="exam-tile">
+                                <i class="icon-filter_frames exam-icon"></i>
+                                <h3><a href="/nilai-essay-online/{{ $uas_ganti }}" class="exam-link">Nilai Essay Online (UAS) Pengganti</a></h3>
+                            </div>
+
+                            <div class="exam-tile">
+                                <i class="icon-filter_frames exam-icon"></i>
+                                <h3><a href="/nilai-essay-online/{{ $her }}" class="exam-link">Nilai Essay Online (HER)</a></h3>
+                            </div>
+
+                            {{-- <div class="alert alert-warning" role="alert">
+                                <h4 class="alert-heading"><strong>Peringatan:</strong> Informasi penting untuk tab kedua.</h4>
+                            </div> --}}
                         </div>
                     </div>
                 </div>
             </div>
+            
         </div>
     </div>
     
