@@ -161,6 +161,6 @@ class PerakitSoalController extends Controller
     public function destroy($id)
     {
         Perakit_soal::find($id)->delete();
-        return redirect('/perakit-soal')->with('status', 'Data Berhasil Dihapus');
+        return redirect()->back()->with('status', 'Data Berhasil Dihapus');
     }
 }
