@@ -17,6 +17,7 @@ class PerakitSoalController extends Controller
 {
     public function __construct()
     {
+        $this->middleware(['permission:perakit_ujian|add_perakit_ujian|destroy_perakit_ujian']);
         if (!$this->middleware('auth:sanctum')) {
             return redirect('/login');
         }
