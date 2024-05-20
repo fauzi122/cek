@@ -25,8 +25,11 @@
 									</a>Data Perakit Soal Ujian</h4>
 							</div>
 
+                           
 							<div class="table-container">
-
+                                <button type="button" class="btn btn-info" data-toggle="modal" data-target="#basicModal">
+                                    Import Perakit Soal
+                                  </button>
 								<div class="table-responsive">
 									<table id="copy-print-csv" class="table custom-table">
 										<thead>
@@ -104,7 +107,7 @@
 
 
 			</div>
-
+@include('admin.ujian.uts.baak.perakit_soal.modal_perakit')
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 	<script>
 		$(document).ready(function () {

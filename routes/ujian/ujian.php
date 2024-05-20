@@ -158,11 +158,13 @@ Route::controller(PanitiaujianController::class)->group(function () {
 });
 
 Route::controller(PerakitSoalController::class)->group(function () {
-    Route::get('/perakit-soal', 'index');
+    Route::get('/pilih/perakit-soal', 'utama');
+    Route::get('/perakit-soal/{id}', 'index');
     Route::get('/perakit-soal-create', 'create');
     Route::get('/adm-perakit-soal', 'index_adm');
     Route::get('/adm-perakit-soal-create', 'create_adm');
     Route::post('/adm-perakit-soal', 'store');
+    Route::post('/adm/upload-perakit-soal', 'storeData_Perakit');
     Route::post('/update-stsperakit', 'updateStatus')->name('update-stsperakit');
     Route::delete('/adm-perakit-soal/{id}/destroy', 'destroy');
 });
