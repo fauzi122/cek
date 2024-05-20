@@ -1,17 +1,24 @@
 @extends('layouts.dosen.ujian.main')
 
 @section('content')
-<div class="main-container">
+	<div class="main-container">
 
-	<div class="content-wrapper">
 
-		<!-- Row start -->
-		<div class="row gutters">
-			<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+				<!-- Page header start -->
+				
+				<!-- Page header end -->
+
+
+				<!-- Content wrapper start -->
+				<div class="content-wrapper">
+
+					<!-- Row start -->
+					<div class="row gutters">
+						<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
 							
 							 <div class="card-header badge-secondary">
 							
-                                <h4 class="m-b-0 text-white">Setting Waktu Ujian </h4>
+                                <h4 class="m-b-0 text-white">Setting Waktu Perakit Soal Ujian </h4>
                             </div>
   					@if (session('success'))
                             <div class="alert alert-info">
@@ -35,7 +42,6 @@
 											  <th>Tanggal Mulai</th>
 											  <th>Tanggal Selesai</th>
 											  <th>Paket Ujian</th>
-											  <th> <center>Kondisi </center></th>
 											  <th>Petugas</th>
 											  <th>Aksi</th>
 											
@@ -44,30 +50,13 @@
 										<tbody>
 											@foreach ($setting as $no => $p)
 											<tr>
-											
-											
 											 <td>{{ ++$no }}</td>
 											 <td>{{ $p->mulai }}</td>
 											 <td>{{ $p->selsai }}</td>
 											 <td>{{ $p->paket }}</td>
-											 <td>{{ $p->kondisi }}</td>
-											 
 											 <td>{{ $p->petugas }}</td>
 											 <td>
-                                       <a href="{{ route('setting_ujian.edit', $p->id) }}" class="btn btn-primary">edit</a>
-									   
-									   @php
-										$id = Crypt::encryptString($p->paket);
-									@endphp
-
-									   @if ($p->paket == 'UTS' || $p->paket == 'UAS'|| $p->paket == 'LATIHAN')
-									   <a href="/detail-time-setting/{{$id}}" class="btn btn-info">detail</a>
-								   @else
-									   <!-- Code for the else condition goes here, if needed -->
-								   @endif
-								   
-                                       
-
+												<a href="{{ route('perakit_soal.edit', $p->id) }}" class="btn btn-primary">Edit</a>
                                              </td>
 											
 											</tr>
