@@ -11,7 +11,7 @@
                 <form action="/adm/upload-perakit-soal" method="post" enctype="multipart/form-data">
                     @csrf
                     <label for="file">File (.xls, .xlsx)
-                        <a href="{{ Storage::url('public/formatfile/soalpg.xlsx') }}" class="btn btn-info btn-sm">
+                        <a href="{{ Storage::url('public/panduan/perakit.xlsx') }}" class="btn btn-info btn-sm">
                             Unduh Format File
                         </a>
                     </label>

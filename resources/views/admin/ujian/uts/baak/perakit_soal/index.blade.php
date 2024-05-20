@@ -27,9 +27,11 @@
 
                            
 							<div class="table-container">
+                                @can('add_perakit_ujian')
                                 <button type="button" class="btn btn-info" data-toggle="modal" data-target="#basicModal">
                                     Import Perakit Soal
                                   </button>
+                                  @endcan
 								<div class="table-responsive">
 									<table id="copy-print-csv" class="table custom-table">
 										<thead>
@@ -73,6 +75,7 @@
 											 <td>{{ $panitia->updated_at }}</td>
 										
 											<td>
+                                                @can('destroy_perakit_ujian')
                                                 <center>
 													<form method="POST" class="d-inline"
 													 onsubmit="return confirm('Masukan ke tempat sampah?')" 
@@ -83,7 +86,8 @@
 													 <i class="fas fa-trash"></i> Hapus </button>
 											   </form>
 																   
-																	   </center>
+												</center>
+                                                @endcan
 										</td>
                         
 
