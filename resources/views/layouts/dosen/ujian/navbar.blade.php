@@ -56,7 +56,7 @@
 						@endcan
 						@can('perakit_ujian')
 						<li>
-							<a class="dropdown-item" href="/perakit-soal">Perakit Soal </a>
+							<a class="dropdown-item" href="/pilih/perakit-soal">Perakit Soal </a>
 						</li>
 						@endcan
 
