@@ -49,7 +49,7 @@
                                                         <i class="icon-activity"></i>
                                                     </div>
                                                     <div class="stats-detail">
-                                                        <h3><a href="/time-setting">Informasi Master Soal</a></h3>
+                                                        <h3><a href="/time-setting-perakit">Setting Waktu Perakitan Soal</a></h3>
                                                     </div>
                                                 </div>
                                             </div>

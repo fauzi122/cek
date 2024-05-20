@@ -10,12 +10,23 @@ Route::controller(DasboardujianController::class)->group(function () {
     Route::get('/dashboard-ujian', 'index');
 });
 
+// waktu ujian
 Route::controller(SettingtimeUjianController::class)->group(function () {
     Route::get('/time-setting', 'index')->name('time-setting');
     Route::get('/detail-time-setting/{id}', 'show');
+    Route::get('/setting-time/{id}/edit', 'edit_waktu')->name('setting_ujian.edit');
     Route::get('/edit-time-setting/{id}', 'edit');
+    Route::put('/setting-ujian/{id}', 'update_waktu')->name('setting_ujian.update');
     Route::put('/update-time-setting/{id}', 'update');
     Route::delete('/delete-time-setting/{id}', 'destroy');
+});
+
+// waktu perakit
+Route::controller(SettingtimePerakitController::class)->group(function () {
+    Route::get('/time-setting-perakit', 'index')->name('perakit_soal.index');
+    Route::get('/perakit_soal/{id}/edit', 'edit')->name('perakit_soal.edit');
+    Route::put('/perakit_soal/{id}', 'update')->name('perakit_soal.update');
+
 });
 
 // UJIAN master soal
