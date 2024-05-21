@@ -20,7 +20,7 @@
                                 </ul>
                             </div>
                         @endif
-                        <form action="{{ route('perakit_soal.update', $setting->id) }}" method="POST">
+                        <form action="{{ route('nilai-essay-online.update', $setting->id) }}" method="POST">
                             @csrf
                             @method('PUT')
                             <div class="form-group">
