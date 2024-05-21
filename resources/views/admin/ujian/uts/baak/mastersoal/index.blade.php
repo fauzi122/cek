@@ -65,6 +65,30 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        <div class="row gutters">
+                                           
+                                            <div class="col-xl-6 col-lg-4 col-md-4 col-sm-4 col-12">
+                                                <div class="info-tiles">
+                                                    <div class="info-icon">
+                                                        <i class="icon-activity"></i>
+                                                    </div>
+                                                    <div class="stats-detail">
+                                                        <h3><a href="">Pengumuman (coming soon)</a></h3>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="col-xl-6 col-lg-4 col-md-4 col-sm-4 col-12">
+                                                <div class="info-tiles">
+                                                    <div class="info-icon">
+                                                        <i class="icon-filter_frames"></i>
+                                                    </div>
+                                                    <div class="stats-detail">
+                                                        <h3><a href="/time-setting-nilai/essay">Setting Waktu  Input Nilai Essay Online</a></h3>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                         @endcan
                                     </div>
                                 </div>

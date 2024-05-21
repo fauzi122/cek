@@ -12,7 +12,7 @@ use Illuminate\Http\Request;
 use App\Models\Soal_ujian;
 use App\Models\Absen_ujian;
 use App\Models\JawabEsay;
-
+use App\Models\SettingEssayOnline;
 
 class MengawasController extends Controller
 {
@@ -156,6 +156,7 @@ class MengawasController extends Controller
         try {
             // Dekripsi dan pecah string $id menjadi array
             $pecah = explode(',', Crypt::decryptString($id));
+            $setting = SettingEssayOnline::where(['paket' => $pecah[3]])->first();
 
             $soal = Soal_ujian::where([
                 'kd_dosen'  => $pecah[0],
@@ -193,7 +194,7 @@ class MengawasController extends Controller
                 return $item;
             });
 
-            return view('admin.mengawas.nilai_essay.show_essay', compact('soal', 'id', 'mhsujian'));
+            return view('admin.mengawas.nilai_essay.show_essay', compact('soal', 'id', 'mhsujian','setting'));
         } catch (\Exception $e) {
             // Tangani kesalahan yang mungkin terjadi saat proses dekripsi atau query
             return back()->with('error', 'Terjadi kesalahan saat memproses data: ' . $e->getMessage());
