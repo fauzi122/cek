@@ -55,9 +55,13 @@
                                        
                                     </td>
                                     <td>
+
                                         @php
+                                        $sekarang = now();
                                         $id=Crypt::encryptString($item->nim.','.$item->no_kel_ujn.','.$item->kd_mtk.','.$item->paket);
                                         @endphp
+
+                                @if ($setting && $sekarang->between($setting->mulai, $setting->selsai))
                                         @if($item->isInHasilUjian<>false)
                                             <a href="#" class="btn btn-info" data-toggle="modal" data-target="#nilaiEssayModal" data-id="{{ $id }}">
                                                 Nilai Essay
@@ -65,6 +69,9 @@
                                             @else
                                             <span class="badge badge-danger">Belum Mulai Ujian</span>
                                             @endif
+                                        @else
+                                        <span class="badge badge-danger">Waktu Input Nilai Sudah Habis</span>
+                                    @endif
         
         
                                     </td> <!-- Assuming each item has an 'id' -->

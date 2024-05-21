@@ -29,6 +29,14 @@ Route::controller(SettingtimePerakitController::class)->group(function () {
 
 });
 
+// waktu essay online
+Route::controller(SettingtimenilEssayController::class)->group(function () {
+    Route::get('/time-setting-nilai/essay', 'index')->name('nilai-essay-online.index');
+    Route::get('/nilai-essay-online/{id}/edit', 'edit')->name('nilai-essay-online.edit');
+    Route::put('/nilai-essay-online/{id}', 'update')->name('nilai-essay-online.update');
+
+});
+
 // UJIAN master soal
 Route::controller(UjianController::class)->group(function () {
     Route::get('/master-soal', 'index')->name('master-soal');
