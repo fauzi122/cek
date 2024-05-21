@@ -80,7 +80,7 @@ class SettingtimeUjianController extends Controller
             'selsai.after_or_equal' => 'Tanggal selesai harus setelah atau sama dengan tanggal mulai.'
         ]);
     
-        $setting = SettingPerakitSoal::findOrFail($id);
+        $setting = SettingUjian::findOrFail($id);
         $setting->update([
             'mulai' => $request->mulai,
             'selsai' => $request->selsai,
