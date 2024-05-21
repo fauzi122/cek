@@ -56,7 +56,7 @@
 											 <td>{{ $p->paket }}</td>
 											 <td>{{ $p->petugas }}</td>
 											 <td>
-												<a href="{{ route('perakit_soal.edit', $p->id) }}" class="btn btn-primary">Edit</a>
+												<a href="{{ route('nilai-essay-online.edit', $p->id) }}" class="btn btn-primary">Edit</a>
                                              </td>
 											
 											</tr>
