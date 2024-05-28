@@ -115,13 +115,14 @@
 													@php
 													   $key = $jadwal->kd_dosen . '_' . $jadwal->kel_ujian . '_' . $jadwal->kd_mtk. '_' . $jadwal->paket;
 												   @endphp
+												 
 											   @php
 												   $verifikasi = $resultArray[$key]->verifikasi ?? 0; // Menetapkan default sebagai 0 jika tidak ditemukan
 											   @endphp
    
 											   @if($verifikasi == 1)
 												   {{-- Jika verifikasi 1, tampilkan emoji ceklis dengan title "Ujian Lancar" --}}
-												   <span title="Ujian Lancar" style="font-size: 24px;">✔️</span>
+												   <span title="Ujian Lancar" style="font-size: 24px;">✔️ {{ $key  }}</span>
 											   @elseif($verifikasi == 2)
 												   {{-- Jika verifikasi 2, tampilkan emoji silang dengan title "Ujian Bermasalah" --}}
 												   <span title="Ujian Bermasalah" style="font-size: 24px;">❌</span>
