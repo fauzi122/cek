@@ -40,7 +40,7 @@ class JadwalujianController extends Controller
     {
         
         $pecah = explode(',', Crypt::decryptString($id));
-    
+    // dd($pecah);
         $jadwal = Soal_ujian::where([
                     'paket' => $pecah[0]
                 ])
@@ -56,6 +56,7 @@ class JadwalujianController extends Controller
                     ->select('ujian_berita_acaras.*', 'uts_soals.kd_dosen', 'uts_soals.kel_ujian', 'uts_soals.kd_mtk', 'uts_soals.paket',
                      'ujian_berita_acaras.verifikasi','ujian_berita_acaras.ot')
                     ->where(['uts_soals.paket' => $pecah[0]])
+                    ->where(['ujian_berita_acaras.paket' => $pecah[0]])
                     ->get();
     
         // Membuat array untuk pencocokan data dengan menyertakan 'paket' dalam kunci

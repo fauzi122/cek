@@ -42,12 +42,14 @@ class MengawasController extends Controller
 
     public function nilai_essay($id)
     {
+        // dd($id);
         $essay =  DB::table('uts_soal_kusus_essay')->join('mtk_ujians', 'uts_soal_kusus_essay.kd_mtk', '=', 'mtk_ujians.kd_mtk')
             ->where('uts_soal_kusus_essay.paket', $id)
+            ->where('mtk_ujians.paket', $id)
             ->where('mtk_ujians.jenis_mtk', 'ESSAY ONLINE')
             ->where('uts_soal_kusus_essay.kd_dosen', Auth::user()->kode)
             ->get();
-
+            // dd($essay);
         return view('admin.mengawas.nilai_essay.index', compact('essay'));
     }
 
