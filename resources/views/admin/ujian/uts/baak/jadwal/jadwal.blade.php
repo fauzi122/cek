@@ -122,7 +122,7 @@
    
 											   @if($verifikasi == 1)
 												   {{-- Jika verifikasi 1, tampilkan emoji ceklis dengan title "Ujian Lancar" --}}
-												   <span title="Ujian Lancar" style="font-size: 24px;">✔️ {{ $key  }}</span>
+												   <span title="Ujian Lancar" style="font-size: 24px;">✔️</span>
 											   @elseif($verifikasi == 2)
 												   {{-- Jika verifikasi 2, tampilkan emoji silang dengan title "Ujian Bermasalah" --}}
 												   <span title="Ujian Bermasalah" style="font-size: 24px;">❌</span>

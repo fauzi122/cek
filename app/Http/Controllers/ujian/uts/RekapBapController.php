@@ -38,37 +38,49 @@ class RekapBapController extends Controller
 
 
     public function caribap(Request $request)
-    {
-        $query = Ujian_berita_acara::query();
-    
-        // Join dengan tabel kampus berdasarkan dua digit terakhir no ruang
-        $query->join('kampus', function($join) {
-            $join->on(DB::raw('RIGHT(ujian_berita_acara.no_ruang, 2)'), '=', 'kampus.kd_kampus');
-        });
-    
-        // Pencarian berdasarkan kode dosen
-        if ($request->has('kd_dosen') && !empty($request->kd_dosen)) {
-            $query->where('ujian_berita_acara.kd_dosen', $request->kd_dosen);
-        }
-    
-        // Pencarian berdasarkan kelompok ujian
-        if ($request->has('kel_ujian') && !empty($request->kel_ujian)) {
-            $query->where('ujian_berita_acara.kel_ujian', $request->kel_ujian);
-        }
-    
-        // Pencarian berdasarkan dua digit terakhir no ruang
-        if ($request->has('no_ruang') && !empty($request->no_ruang)) {
-            $query->whereRaw('RIGHT(ujian_berita_acara.no_ruang, 2) = ?', [$request->no_ruang]);
-        }
-    
-        // Pencarian berdasarkan tanggal ujian
-        if ($request->has('tgl_ujian') && !empty($request->tgl_ujian)) {
-            $query->whereDate('ujian_berita_acara.tgl_ujian', $request->tgl_ujian);
-        }
-    
-        $peserta = $query->get();
-    
-        return view('admin.ujian.uts.adm.rekap_bap.index', compact('peserta'));
+{
+    // Validasi input paket
+    $request->validate([
+        'paket' => 'required|in:UTS,UAS'
+    ]);
+
+    // Inisialisasi query
+    $query = Ujian_berita_acara::query();
+
+    // Join dengan tabel kampus berdasarkan dua digit terakhir no ruang
+    $query->join('kampus', function($join) {
+        $join->on(DB::raw('RIGHT(ujian_berita_acaras.no_ruang, 2)'), '=', 'kampus.kd_kampus');
+    });
+
+    // Pencarian berdasarkan paket
+    if ($request->filled('paket')) {
+        $query->where('ujian_berita_acaras.paket', $request->paket);
+    }
+
+    // Pencarian berdasarkan kode dosen
+    if ($request->filled('kd_dosen')) {
+        $query->where('ujian_berita_acaras.kd_dosen', $request->kd_dosen);
+    }
+
+    // Pencarian berdasarkan kelompok ujian
+    if ($request->filled('kel_ujian')) {
+        $query->where('ujian_berita_acaras.kel_ujian', $request->kel_ujian);
+    }
+
+    // Pencarian berdasarkan dua digit terakhir no ruang
+    if ($request->filled('no_ruang')) {
+        $query->whereRaw('RIGHT(ujian_berita_acaras.no_ruang, 2) = ?', [$request->no_ruang]);
+    }
+
+    // Pencarian berdasarkan tanggal ujian
+    if ($request->filled('tgl_ujian')) {
+        $query->whereDate('ujian_berita_acaras.tgl_ujian', $request->tgl_ujian);
+    }
+
+    // Ambil hasil query
+    $peserta = $query->get(['ujian_berita_acaras.*', 'kampus.nm_kampus']);
+        // Kirim data ke view
+        return view('admin.ujian.uts.adm.rekap_bap.cari', compact('peserta'));
     }
     
 
