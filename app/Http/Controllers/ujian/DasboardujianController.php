@@ -22,16 +22,21 @@ class DasboardujianController extends Controller
 
     public function index()
     {
-        $senin  = Uts_soal::where('hari_t', 'Senin')->count();
-        $selasa = Uts_soal::where('hari_t', 'Selasa')->count();
-        $rabu   = Uts_soal::where('hari_t', 'Rabu')->count();
-        $kamis  = Uts_soal::where('hari_t', 'Kamis')->count();
-        $jumat  = Uts_soal::where('hari_t', 'Jumat')->count();
-        $sabtu  = Uts_soal::where('hari_t', 'Sabtu')->count();
+        $utsData = Uts_soal::where('paket', 'UTS')
+        ->selectRaw('tgl_ujian, COUNT(*) as jumlah')
+        ->groupBy('tgl_ujian')
+        ->orderBy('tgl_ujian')
+        ->get();
+
+        $uasData = Uts_soal::where('paket', 'UAS')
+        ->selectRaw('tgl_ujian, COUNT(*) as jumlah')
+        ->groupBy('tgl_ujian')
+        ->orderBy('tgl_ujian')
+        ->get();
 
         $tgl_hari_ini = date('Y-m-d'); // Format tanggal: tahun-bulan-tanggal
         $jadwal = Uts_soal::where('tgl_ujian', $tgl_hari_ini)->get();
 
-        return view('admin.ujian.dashboardujian', compact('jadwal', 'senin', 'selasa', 'rabu', 'kamis', 'jumat', 'sabtu'));
+        return view('admin.ujian.dashboardujian', compact('jadwal','utsData','uasData'));
     }
 }
