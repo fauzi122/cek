@@ -27,7 +27,7 @@ class MastersoalController extends Controller
 {
     public function __construct()
     {
-       $this->middleware(['permission:master_soal_ujian|master_soal_ujian.index|master_soal_ujian.edit']);
+       $this->middleware(['permission:master_soal_ujian|master_soal_ujian.index|master_soal_ujian.edit|hapus_acc']);
        if(!$this->middleware('auth:sanctum')){
         return redirect('/login');
     }
@@ -540,4 +540,30 @@ class MastersoalController extends Controller
     {
         //
     }
+
+
+    public function destroy($id)
+    {
+        
+        try {
+            // Decrypt the ID
+            $decryptedId = Crypt::decryptString($id);
+            // dd($decryptedId);
+            // Split the decrypted string into an array
+            list($kd_mtk, $paket) = explode(',', $decryptedId);
+
+            // Find the record by kd_mtk and paket and delete it
+            $record = ujian_aprov::where('kd_mtk', $kd_mtk)->where('paket', $paket)->first();
+
+            if ($record) {
+                $record->delete();
+                return redirect()->back()->with('success', 'Record deleted successfully');
+            } else {
+                return redirect()->back()->with('error', 'Record not found');
+            }
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Invalid ID or decryption error');
+        }
+    }
+
 }

@@ -88,6 +88,8 @@ Route::controller(MastersoalController::class)->group(function () {
     // Route::post('/baak/singkron-mtkuji', 'singmtkuji');
     Route::post('/baak/upload-soalpg-ujian', 'storeData_SoalPg');
     Route::post('/baak/upload-soalessay-ujian', 'storeData_SoalEssay');
+    Route::delete('/baak/uts-soal-destroy/{id}', 'destroy')->name('uts-soal-destroy');
+
 });
 
 Route::controller(ApproveController::class)->group(function () {
@@ -122,7 +124,12 @@ Route::controller(PenggantiMengawasController::class)->group(function () {
 Route::controller(RekapnilaiEssayController::class)->group(function () {
     Route::get('/pilih-rekap-nilai/essay', 'index');
     Route::get('/nilai-essay/{id}', 'essay');
-   
+    
+});
+
+// Rekap sks dosen
+Route::controller(HitungsksController::class)->group(function () {
+    Route::get('/rekap-sks-mengawas', 'index');
     
 });
 

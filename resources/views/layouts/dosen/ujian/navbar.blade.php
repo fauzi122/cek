@@ -114,9 +114,14 @@
 							<a class="dropdown-item" href="/pilih-rekap-nilai/essay">Rekap Nilai Essay Online</a>
 						</li>
 						@endcan
-						@can('rekap_nilai_ujian')
+						{{-- @can('rekap_nilai_ujian')
 						<li>
 							<a class="dropdown-item" href="modals.html">Rekap Nilai Ujian </a>
+						</li>
+						@endcan --}}
+						@can('rekap_nilai_ujian')
+						<li>
+							<a class="dropdown-item" href="/rekap-sks-mengawas">Rekap SKS Mengawas </a>
 						</li>
 						@endcan
 				</li>
