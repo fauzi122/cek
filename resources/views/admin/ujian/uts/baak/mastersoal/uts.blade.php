@@ -64,7 +64,8 @@
                 <th>Perakit</th>        
                 <th>Kaprodi</th>        
                 <th>Baak</th>        
-                <th>Aksi</th>
+                <th><center>Aksi</center></th>
+               
               </tr>
             </thead>
             <tbody>
@@ -94,28 +95,45 @@
                         </b>
                     </td>
                     <td class="status-cell {{ isset($aprov[$soal->kd_mtk]) && $aprov[$soal->kd_mtk]->acc_kaprodi == 1 ? 'ok' : 'none' }}">
-                      <b>
-                          @if(isset($aprov[$soal->kd_mtk]) && $aprov[$soal->kd_mtk]->acc_kaprodi == 1)
-                              <span class="check-green">✔️</span>
-                          @elseif (isset($aprov[$soal->kd_mtk]) && $aprov[$soal->kd_mtk]->acc_kaprodi_essay == 1)
-                              <span class="check-green">✔️</span>
-                          @else
-                              <span class="check-transparent"></span>
-                          @endif
-                      </b>
-                  </td>
-                  <td class="status-cell {{ isset($aprov[$soal->kd_mtk]) && $aprov[$soal->kd_mtk]->acc_baak == 1 ? 'ok' : 'none' }}">
-                    <b>
-                        @if(isset($aprov[$soal->kd_mtk]) && $aprov[$soal->kd_mtk]->acc_baak == 1)
-                            <span class="check-green">✔️</span>
-                        @elseif (isset($aprov[$soal->kd_mtk]) && $aprov[$soal->kd_mtk]->acc_baak_essay == 1)
-                            <span class="check-green">✔️</span>
-                        @else
-                            <span class="check-transparent"></span>
-                        @endif
-                    </b>
-                </td> 
-                      <td><a href="/baak/uts-soal-show/{{ $id }}" class="btn btn-info">SOAL</a></td>
+                        <b>
+                            @if(isset($aprov[$soal->kd_mtk]) && $aprov[$soal->kd_mtk]->acc_kaprodi == 1)
+                                <span class="check-green">✔️</span>
+                            @elseif (isset($aprov[$soal->kd_mtk]) && $aprov[$soal->kd_mtk]->acc_kaprodi_essay == 1)
+                                <span class="check-green">✔️</span>
+                            @else
+                                <span class="check-transparent"></span>
+                            @endif
+                        </b>
+                    </td>
+                    <td class="status-cell {{ isset($aprov[$soal->kd_mtk]) && $aprov[$soal->kd_mtk]->acc_baak == 1 ? 'ok' : 'none' }}">
+                        <b>
+                            @if(isset($aprov[$soal->kd_mtk]) && $aprov[$soal->kd_mtk]->acc_baak == 1)
+                                <span class="check-green">✔️</span>
+                            @elseif (isset($aprov[$soal->kd_mtk]) && $aprov[$soal->kd_mtk]->acc_baak_essay == 1)
+                                <span class="check-green">✔️</span>
+                            @else
+                                <span class="check-transparent"></span>
+                            @endif
+                        </b>
+                    </td>
+                    
+                      <td>
+                        <div class="actions">
+                          <a href="/baak/uts-soal-show/{{ $id }}" class="btn btn-info">SOAL</a>
+                          @can('hapus_acc_ujian')
+                          <form action="{{ url('/baak/uts-soal-destroy', $id) }}" method="POST" class="inline-form" onsubmit="return confirmDeletion()">
+                              @csrf
+                              @method('DELETE')
+                              <button type="submit" class="btn btn-danger" title="hapus semua acc">Hapus</button>
+                          </form>
+                          <script>
+                            function confirmDeletion() {
+                                return confirm('Yakin ingin menghapus acc/kiriman perakit?');
+                            }
+                        </script>
+                        @endcan
+                      </div>
+                      </td>
                   </tr>
               @endforeach
           </tbody>
@@ -172,60 +190,101 @@
   </script>
 @endsection
 <style>
-  .custom-table {
+.custom-table {
     width: 100%;
     border-collapse: collapse;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
     overflow: hidden;
-  }
-  
-  .custom-table th, .custom-table td {
+}
+
+.custom-table th, .custom-table td {
     padding: 10px;
     text-align: left;
-  }
-  
-  .custom-table th {
+    border: 1px solid #dddddd; /* Ensure border is always visible */
+}
+
+.custom-table th {
     background-color: #007bff;
     color: white;
-  }
-  
-  .custom-table tr:nth-child(even) {
+}
+
+.custom-table tr:nth-child(even) {
     background-color: #f2f2f2;
-  }
-  
-  .custom-table tr:hover {
+}
+
+.custom-table tr:hover {
     background-color: #e8f4fd;
-  }
-  
-  .custom-table td {
+}
+
+.custom-table td {
     border-bottom: 1px solid #dddddd;
-  }
-  
-  .btn-info {
+}
+
+.status-cell {
+    text-align: center;
+}
+
+.status-cell.ok {
+    background-color: #dff0d8; /* Light green for positive status */
+}
+
+.status-cell.none {
+    background-color: #f2f2f2; /* Light grey for neutral or no status */
+}
+
+.btn-info, .btn-danger {
     background-color: #17a2b8;
     color: white;
     padding: 5px 10px;
     border: none;
     border-radius: 5px;
     text-decoration: none;
-  }
-  
-  .btn-info:hover {
-    background-color: #1391b5;
-    cursor: pointer;
-  }
-  
-  .status-cell {
+    display: inline-block;
     text-align: center;
-  }
-  
-  .status-cell.ok {
-    background-color: #dff0d8; /* light green for positive status */
-  }
-  
-  .status-cell.none {
-    background-color: #f2f2f2; /* light grey for neutral or no status */
-  }
+    vertical-align: middle;
+}
+
+.btn-info {
+    background-color: #17a2b8;
+}
+
+.btn-info:hover {
+    background-color: #1391b5;
+}
+
+.btn-danger {
+    background-color: #dc3545;
+}
+
+.btn-danger:hover {
+    background-color: #c82333;
+}
+
+.actions {
+    display: flex;
+    justify-content: space-between; /* Space between the two elements */
+    align-items: center;
+    gap: 10px; /* Adjust gap as needed */
+    width: 100%; /* Ensure the container takes the full width */
+}
+
+.inline-form {
+    display: inline;
+    margin: 0; /* Remove any default margin */
+}
+
+.btn {
+    display: inline-block;
+    padding: 0.375rem 0.75rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    border-radius: 0.25rem;
+    text-align: center;
+    text-decoration: none;
+    vertical-align: middle;
+    cursor: pointer;
+}
+
   </style>
   
