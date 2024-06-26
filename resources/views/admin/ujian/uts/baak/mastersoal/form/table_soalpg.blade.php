@@ -47,12 +47,12 @@
                                             <tr>
                                                 <th><input type="checkbox" id="checkAll"></th>
                                                 <th>Soal</th>
-                                                <th style="text-align: center;">Kunci</th>
-                                                <th style="text-align: center;">Status</th>
-                                                <th style="text-align: center;">Updated</th>
+
+                                                <th style="text-align: center;">updated_at</th>
+                                               
                                                 <th style="text-align: center;">Dosen</th>
-                                                <th style="text-align: center;">id_soal</th>
-                                                <th style="text-align: center; width: 100px">Aksi.</th>
+                                                <th style="text-align: center;">id</th>
+                                                <th style="text-align: center; width: 100px">Aksi</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -61,25 +61,32 @@
                                                 <td>
                                                     <input type="checkbox" class="soal-checkbox" name="soal_ids[]" value="{{ $soal->id }}">
                                                 </td>
-                                                <td>{{ strip_tags($soal->soal) }}</td>
-                                                <td style="text-align: center;">{{ $soal->kunci }}</td>
-                                                <td>
-                                                    @php
-                                                        $detail = Crypt::encryptString($soal->id);
-                                                    @endphp
-                                                    <center>
-                                                        @if ($soal->status == 'Y')
-                                                            <span class='badge badge-pill badge-light'>Tampil</span>
-                                                        @else
-                                                            <span class='badge badge-pill badge-secondary'>Tidak tampil</span>
-                                                        @endif
-                                                    </center>
-                                                    @if ($soal->file != '')
-                                                        <center>
-                                                            <a href="/baak/detail/soal-show-uts/{{$detail}}"><span class='badge badge-pill badge-info'>cek gambar</span></a>
-                                                        </center>
+
+                                            <td>
+                                                {{ strip_tags($soal->soal) }}
+                                                   <p></p>
+                                                   @if ($soal->file!=null)
+                                                   <img src="{{ Storage::url('public/soal/'.$soal->file) }}" class="img-thumbnail" height="150" width="200"/>
                                                     @endif
-                                                </td>
+                                              <br><B> Kunci : {{ $soal->kunci }}</B>
+                                              <br> A. {{ $soal->pila }}
+                                              <br> B. {{ $soal->pilb }}
+                                              <br> C. {{ $soal->pilc }}
+                                              <br> D. {{ $soal->pild }}
+                                              <br> E. {{ $soal->pile }}
+                                              <p></p> Status :
+                                              @php
+                                                $detail = Crypt::encryptString($soal->id);
+                                            @endphp
+                                           
+                                                @if ($soal->status == 'Y')
+                                                    <span class='badge badge-pill badge-light'>Tampil</span>
+                                                @else
+                                                    <span class='badge badge-pill badge-secondary'>Tidak tampil</span>
+                                                @endif
+                                        
+                                                  
+                                            </td>
                                                 <td style="text-align: center;">{{ $soal->updated_at }}</td>
                                                 <td style="text-align: center;">{{ $soal->id_user }}</td>
                                                 <td style="text-align: center;"><b>{{ $soal->id }}</b></td>

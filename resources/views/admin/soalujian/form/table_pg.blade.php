@@ -47,6 +47,7 @@
                                                                                 {{-- <th>NO</th> --}}
                                                                                 <th>Soal</th>
                                                                                 <th style="text-align: center;">Kunci</th>
+
                                                                                 <th style="text-align: center;">Gambar</th>
                                                                                 <th style="text-align: center;">Diperbarui</th>
                                                                                 <th style="text-align: center;">Aksi</th>
@@ -63,6 +64,7 @@
                                                                                 {{-- <td>{{ ++$no }}</td> --}}
                                                                                 <td>{!! ($soals->soal) !!}</td>
                                                                                 <td style="text-align: center;">{{ $soals->kunci }}</td>
+
                                                                                 <td style="text-align: center;">
                                                                                     @if ($soals->file != '')
                                                                                         <a href="/edit-detail/soal-uts/{{ Crypt::encryptString($soals->id) }}"><span class='badge badge-pill badge-info'>gambar</span></a>
