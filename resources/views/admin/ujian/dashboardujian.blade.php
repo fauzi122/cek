@@ -115,7 +115,7 @@
             data: {
                 labels: utsLabels,
                 datasets: [{
-                    label: 'Jumlah Soal UTS',
+                    label: 'Jumlah Sesi UTS',
                     data: utsCounts,
                     backgroundColor: utsColors,
                     borderColor: utsColors,
@@ -130,7 +130,7 @@
                     },
                     title: {
                         display: true,
-                        text: 'Jumlah Soal UTS per Tanggal'
+                        text: 'Jumlah Sesi UTS per Tanggal'
                     }
                 },
                 scales: {
@@ -147,7 +147,7 @@
             data: {
                 labels: uasLabels,
                 datasets: [{
-                    label: 'Jumlah Soal UAS',
+                    label: 'Jumlah Sesi UAS',
                     data: uasCounts,
                     backgroundColor: uasColors,
                     borderColor: uasColors,
@@ -162,7 +162,7 @@
                     },
                     title: {
                         display: true,
-                        text: 'Jumlah Soal UAS per Tanggal'
+                        text: 'Jumlah Sesi UAS per Tanggal'
                     }
                 },
                 scales: {
