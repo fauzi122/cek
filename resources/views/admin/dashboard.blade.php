@@ -160,9 +160,9 @@
                                 <i class="icon-filter_frames exam-icon"></i>
                                 <h3><a href="/mengawas-uts/{{ $uas }}" class="exam-link">Ujian Akhir Semester (UAS)</a></h3>
                             </div>
-                            <div class="alert alert-danger" role="alert">
+                            {{-- <div class="alert alert-danger" role="alert">
                                 <h4 class="alert-heading"><strong>INFO:</strong> Jika ada Perubahan BAP dan Absen hanya dapat di lakukan sampai tanggal <strong>19 Mei 2024</strong> jam <strong>12:00 WIB</strong></h4>
-                            </div>
+                            </div> --}}
                         </div>
                         <div class="tab-pane fade" id="home1" role="tabpanel" aria-labelledby="home1-tab">
                             <!-- Konten untuk tab kedua dapat ditambahkan di sini -->
