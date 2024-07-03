@@ -14,10 +14,10 @@
                             </div>
                             <div class="alert-notify-info">
                                 <p class="info-item">
-                                    <strong>INFO:</strong> Batas Akhir Perubahan BAP dan Absen sampai tanggal <strong>19 Mei 2024</strong> jam <strong>12:00 WIB</strong>
+                                    {{-- <strong>INFO:</strong> Batas Akhir Perubahan BAP dan Absen sampai tanggal <strong>19 Mei 2024</strong> jam <strong>12:00 WIB</strong> --}}
                                 </p>
                                 <p class="info-item">
-                                    <strong>INFO:</strong> Batas Akhir Perubahan Status dari Panitia sampai tanggal <strong>19 Mei 2024</strong> jam <strong>17:00 WIB</strong>
+                                    {{-- <strong>INFO:</strong> Batas Akhir Perubahan Status dari Panitia sampai tanggal <strong>19 Mei 2024</strong> jam <strong>17:00 WIB</strong> --}}
                                 </p>
                             </div>
                         </div>
