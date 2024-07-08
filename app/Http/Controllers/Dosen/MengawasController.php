@@ -25,6 +25,7 @@ class MengawasController extends Controller
 
     public function m_uts($id)
     {
+       
         // Mengambil semua soal ujian yang memenuhi kriteria
         $groupedSoals = Soal_ujian::where('no_ruang', 'not like', 'E%')
             ->where('paket', $id)
@@ -33,6 +34,7 @@ class MengawasController extends Controller
 
         $essay =  DB::table('uts_soal_kusus_essay')->join('mtk_ujians', 'uts_soal_kusus_essay.kd_mtk', '=', 'mtk_ujians.kd_mtk')
             ->where('uts_soal_kusus_essay.paket', $id)
+            ->where('mtk_ujians.paket', $id)
             ->where('mtk_ujians.jenis_mtk', 'ESSAY ONLINE')
             ->where('uts_soal_kusus_essay.kd_dosen', Auth::user()->kode)
             ->get();
