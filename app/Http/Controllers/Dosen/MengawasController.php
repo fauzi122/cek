@@ -160,9 +160,12 @@ class MengawasController extends Controller
         try {
             // Dekripsi dan pecah string $id menjadi array
             $pecah = explode(',', Crypt::decryptString($id));
+
+            // dd($pecah);
+            
             $setting = SettingEssayOnline::where(['paket' => $pecah[3]])->first();
 
-            $soal = Soal_ujian::where([
+            $soal = DB::table('uts_soal_kusus_essay')->where([
                 'kd_dosen'  => $pecah[0],
                 'kd_mtk'    => $pecah[1],
                 'kel_ujian' => $pecah[2],
@@ -178,7 +181,7 @@ class MengawasController extends Controller
                     'no_kel_ujn' => $pecah[2],
                     'paket'     => $pecah[3]
                 ])->get()->map(function ($item) {
-               
+                   
 
                 $item->isInHasilUjian = DB::table('ujian_hasilujians')
                     ->where('nim', $item->nim)
@@ -194,7 +197,7 @@ class MengawasController extends Controller
                     ->where('kel_ujian', $item->no_kel_ujn)
                     ->where('paket', $item->paket)
                     ->first();
-
+                    // dd($item);
                 return $item;
             });
 
