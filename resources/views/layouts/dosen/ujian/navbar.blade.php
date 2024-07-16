@@ -121,7 +121,11 @@
 						@endcan --}}
 						@can('rekap_nilai_ujian')
 						<li>
-							<a class="dropdown-item" href="/rekap-sks-mengawas">Rekap SKS Mengawas </a>
+							<a class="dropdown-item" href="/rekap-sks-mengawas-uas">Rekap Mengawas UAS</a>
+						</li>
+
+						<li>
+							<a class="dropdown-item" href="/rekap-sks-mengawas-uts">Rekap Mengawas UTS</a>
 						</li>
 						@endcan
 				</li>

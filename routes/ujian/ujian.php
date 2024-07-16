@@ -129,7 +129,8 @@ Route::controller(RekapnilaiEssayController::class)->group(function () {
 
 // Rekap sks dosen
 Route::controller(HitungsksController::class)->group(function () {
-    Route::get('/rekap-sks-mengawas', 'index');
+    Route::get('/rekap-sks-mengawas-uas', 'index_uas');
+    Route::get('/rekap-sks-mengawas-uts', 'index_uts');
     
 });
 
