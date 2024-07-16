@@ -8,7 +8,7 @@
             <div class="row gutters">
                 <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                     <div class="card-header badge-info">
-                        <h4 class="m-b-0 text-white">Rekapitulasi SKS Mengawas Ujian UAS</h4>
+                        <h4 class="m-b-0 text-white">Rekapitulasi SKS Mengawas Ujian UTS</h4>
                     </div>
 
                     <div class="table-container">
