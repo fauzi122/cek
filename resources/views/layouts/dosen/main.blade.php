@@ -9,9 +9,9 @@
 		<meta name="description" content="Responsive Bootstrap4 Dashboard Template">
 		<meta name="author" content="ParkerThemes">
 		<meta name="csrf-token" content="{{ csrf_token() }}">
-		<link rel="shortcut icon" href="{{ asset('assets/img/icon1.jfif') }}" />
+		<link rel="shortcut icon" href="{{ asset('assets/img/logo.jpeg') }}" />
 		<!-- Title -->
-		<title>My Best</title>
+		<title>BESTI</title>
 
 
 		<!-- *************
