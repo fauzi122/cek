@@ -104,12 +104,14 @@
 <div class="main-container">
     <div class="content-wrapper">
         <div class="alert alert-info" role="alert">
-            <h4 class="alert-heading">Selamat Datang</h4>
-            <p>Selamat datang di halaman pengawasan ujian, {{ Auth::user()->name }}. Semoga sukses mengawasi ujian yang akan datang.</p>
+            <h4 class="alert-heading">"BESTIE - BSI EVALUATION SYSTEM ONLINE"</h4>
+            <p>
+               
+                Selamat datang di halaman pengawasan ujian, {{ Auth::user()->name }}. Semoga sukses mengawasi ujian yang akan datang.
+            </p>
         </div>
-
-
         
+ 
         <div class="row gutters">
             <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12">
                 <div class="card h-100">
@@ -117,6 +119,8 @@
                     <div class="card-body">
                         <h5 class="user-name">{{ Auth::user()->name }}</h5>
                         <h6 class="user-email">{{ Auth::user()->email }}</h6>
+                       
+                        <img src="{{ asset('assets/img/bestie_02.png') }}" alt="Deskripsi Gambar" style="width:250px; height:auto;">
                         <a href="{{ Storage::url('public/panduan/Panduan_Panitia_Ujian.pdf') }}" target="_blank" class="btn">
                             <i class="icon-file-text"></i> Panduan Panitia Ujian 
                         </a>
@@ -130,7 +134,8 @@
                 </div>
             </div>
             <div class="col-xl-9 col-lg-9 col-md-12 col-sm-12 col-12">
-                <div class="nav-tabs-container">
+                
+                <div class="nav-tabs-container h-100">
                     <ul class="nav nav-tabs" role="tablist">
                         <li class="nav-item">
                             <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">
@@ -160,9 +165,12 @@
                                 <i class="icon-filter_frames exam-icon"></i>
                                 <h3><a href="/mengawas-uts/{{ $uas }}" class="exam-link">Ujian Akhir Semester (UAS)</a></h3>
                             </div>
-                            {{-- <div class="alert alert-danger" role="alert">
-                                <h4 class="alert-heading"><strong>INFO:</strong> Jika ada Perubahan BAP dan Absen hanya dapat di lakukan sampai tanggal <strong>19 Mei 2024</strong> jam <strong>12:00 WIB</strong></h4>
-                            </div> --}}
+                            <br>
+                            <br>
+                            <div class="alert alert-danger" role="alert">
+                                <h4 class="alert-heading"><strong>INFO:</strong> Batas Waktu Perakitan Soal HER 
+                                    <br> Mulai Dari Tanggal <strong>08 Juli 2024 </strong> -<strong>02 Agustus 2024</strong></h4>
+                            </div>
                         </div>
                         <div class="tab-pane fade" id="home1" role="tabpanel" aria-labelledby="home1-tab">
                             <!-- Konten untuk tab kedua dapat ditambahkan di sini -->
