@@ -79,6 +79,7 @@ class UjianController extends Controller
                 // Ini akan dijalankan jika 'paket' bukan 'LATIHAN', tanpa memperdulikan keberadaan di perakit_bahan_ajar
                 $soals = Mtk_ujian::join('perakit_soals', 'mtk_ujians.kd_mtk', '=', 'perakit_soals.kd_mtk')
                     ->where('mtk_ujians.paket', $pecah[0])
+                    ->where('perakit_soals.paket', $pecah[0])
                     ->where('perakit_soals.kd_dosen', Auth::user()->kode)
                     ->select('mtk_ujians.*', 'perakit_soals.kd_dosen')
                     ->groupBy('kd_mtk')
