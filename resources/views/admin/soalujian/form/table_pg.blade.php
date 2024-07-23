@@ -46,9 +46,7 @@
                                                                                 <th><input type="checkbox" id="selectAll"></th>
                                                                                 {{-- <th>NO</th> --}}
                                                                                 <th>Soal</th>
-                                                                                <th style="text-align: center;">Kunci</th>
 
-                                                                                <th style="text-align: center;">Gambar</th>
                                                                                 <th style="text-align: center;">Diperbarui</th>
                                                                                 <th style="text-align: center;">Aksi</th>
                                                                             </tr>
@@ -62,14 +60,29 @@
                                                                                 
                                                                                 </td>
                                                                                 {{-- <td>{{ ++$no }}</td> --}}
-                                                                                <td>{!! ($soals->soal) !!}</td>
-                                                                                <td style="text-align: center;">{{ $soals->kunci }}</td>
+                                                                                <td>
+                                                                                  {{ strip_tags($soals->soal) }}
+                                                                                     <p></p>
+                                                                                     @if ($soals->file!=null)
+                                                                                     <img src="{{ Storage::url('public/soal/'.$soals->file) }}" class="img-thumbnail" height="150" width="200"/>
+                                                                                      @endif
+                                                                                <br><B> Kunci : {{ $soals->kunci }}</B>
+                                                                                <br> A. {{ $soals->pila }}
+                                                                                <br> B. {{ $soals->pilb }}
+                                                                                <br> C. {{ $soals->pilc }}
+                                                                                <br> D. {{ $soals->pild }}
+                                                                                <br> E. {{ $soals->pile }}
+                                                                                
+                                                                                @php
+                                                                                  $detail = Crypt::encryptString($soals->id);
+                                                                              @endphp
+                                                                             
+                                                                                 
+                                                                          
+                                                                                    
+                                                                              </td>
 
-                                                                                <td style="text-align: center;">
-                                                                                    @if ($soals->file != '')
-                                                                                        <a href="/edit-detail/soal-uts/{{ Crypt::encryptString($soals->id) }}"><span class='badge badge-pill badge-info'>gambar</span></a>
-                                                                                    @endif
-                                                                                </td>
+                                                                                
                                                                                 <td style="text-align: center;">{{ $soals->updated_at }}</td>
                                                                                 <td style="text-align: center;">
                                                                                   @if (!$aprov)
