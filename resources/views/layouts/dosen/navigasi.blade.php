@@ -28,7 +28,7 @@
             </li>
 
 
-            {{-- <li class="sidebar-dropdown">
+            <li class="sidebar-dropdown">
                 @can('users.index') 
                 <a href="#">
                     <i class="icon-settings1"></i>
@@ -56,7 +56,7 @@
                     </ul>
                 </div>
                 @endcan 
-            </li> --}}
+            </li>
             <li class="sidebar">
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf
