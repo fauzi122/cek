@@ -96,6 +96,7 @@ Route::middleware('auth')->group(function () {
              Route::get('/mengawas-ujian', 'index');
              Route::get('/mengawas-uts/{id}', 'm_uts');              // -->di dalam fusngsi ini ada juga buat nilai
              Route::get('/nilai-essay-online/{id}', 'nilai_essay');  //--> di sini kusus pengganti dan her
+             Route::get('/nilai-essay-online-her/{id}', 'nilai_essay_her');  //--> di sini kusus pengganti dan her
 
              Route::get('/show/mengawas-uts/{id}', 'show_uts');
              Route::get('/show/nilai-essay/{id}', 'show_nilai_essay');

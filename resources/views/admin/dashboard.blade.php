@@ -185,7 +185,7 @@
 
                             <div class="exam-tile">
                                 <i class="icon-filter_frames exam-icon"></i>
-                                <h3><a href="/nilai-essay-online/{{ $her }}" class="exam-link">Nilai Essay Online (HER)</a></h3>
+                                <h3><a href="/nilai-essay-online-her/{{ $her }}" class="exam-link">Nilai Essay Online (HER)</a></h3>
                             </div>
 
                             {{-- <div class="alert alert-warning" role="alert">
