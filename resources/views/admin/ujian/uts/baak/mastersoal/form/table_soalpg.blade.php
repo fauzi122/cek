@@ -1,8 +1,13 @@
+<br>
 @can('master_soal_ujian.add_soal') 
-    <a href="/baak/uts-create-pilih/{{$id}}" class="btn btn-success">Input Soal Pilihan Ganda</a>
+    <a href="/baak/uts-create-pilih/{{$id}}" class="btn btn-success">
+        <i class="icon-input"></i>Input Soal Pilihan Ganda</a>
 									
                                     <button type="button" class="btn btn-info" data-toggle="modal" data-target="#basicModal">
-                                      Import Excel Soal Pilihan Ganda
+                                        <i class="icon-share1"></i> Import Excel Soal Pilihan Ganda
+                                    </button>
+                                    <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#basicModal2">
+                                        <i class="icon-edit1"></i> Edit Perakit
                                     </button>
                                     @endcan                       
                                   <p>
@@ -162,5 +167,52 @@
         });
     });
 </script>
+
+<style>
+    .btn {
+    padding: 6px 12px;
+    font-size: 14px;
+    font-weight: 600;
+    text-transform: uppercase;
+    border-radius: 4px; /* Square corners */
+    transition: all 0.2s ease-in-out;
+    display: inline-block;
+    border: 1px solid transparent; /* Subtle border for definition */
+}
+
+.btn-success {
+    background-color: #28a745;
+    color: white;
+    border-color: #28a745;
+}
+
+.btn-info {
+    background-color: #17a2b8;
+    color: white;
+    border-color: #17a2b8;
+}
+
+.btn-secondary {
+    background-color: #6c757d;
+    color: white;
+    border-color: #6c757d;
+}
+
+.btn i {
+    margin-right: 6px;
+}
+
+.btn:hover {
+    background-color: #218838; /* Darken color on hover */
+    border-color: #218838;
+    transform: translateY(-2px);
+}
+
+.btn:active {
+    transform: translateY(0);
+    box-shadow: none;
+}
+
+</style>
                                 
                                 

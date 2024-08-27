@@ -53,6 +53,7 @@
             @include('admin.ujian.uts.baak.mastersoal.form.info')
         </div>
         @include('admin.ujian.uts.baak.mastersoal.form.modal_soal')
+        @include('admin.ujian.uts.baak.mastersoal.form.modal_perakit')
     </div>
 </div>
 

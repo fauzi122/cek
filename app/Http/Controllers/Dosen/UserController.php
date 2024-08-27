@@ -22,7 +22,15 @@ class UserController extends Controller
     public function index()
     {
         $users = User::where('utype', 'ADM')->get();
-        return view('admin.user.index', compact('users'));
+    
+        // Tab 1: Users without roles
+    $usersWithoutRoles = User::doesntHave('roles')->get();
+
+        // Tab 2: Users with "administrasi" role
+    $usersAdministrasi = User::whereHas('roles', function($query) {
+        $query->where('name', 'administrasi');
+    })->get();
+        return view('admin.user.index', compact('users','usersWithoutRoles','usersWithoutRoles'));
         
         //return view('admin.user.index');
       
