@@ -16,52 +16,25 @@ class CheckForMaliciousUploads
      * @return mixed
      */
     public function handle(Request $request, Closure $next)
-{
-    $maliciousExtensions = [
-        'php',     // PHP script
-        'php3',    // PHP script version 3
-        'php4',    // PHP script version 4
-        'php5',    // PHP script version 5
-        'phtml',   // PHP HTML embedded script
-        'py',      // Python script
-        'go',      // Go script
-        'alfa',    // Custom/unknown script
-        'pl',      // Perl script
-        'cgi',     // Common Gateway Interface script
-        'sh',      // Shell script
-        'bash',    // Bash script
-        'ps1',     // PowerShell script
-        'rb',      // Ruby script
-        'asp',     // ASP.NET script
-        'aspx',    // ASP.NET webform
-        'jsp',     // Java Server Pages
-        'jspx',    // Java Server Pages XML
-        'do',      // Java Web Action (Struts)
-        'js',      // JavaScript (Node.js)
-        'exe',     // Windows executable
-        'bat',     // Batch file (Windows)
-        'cmd',     // Command file (Windows)
-        'com',     // Command file (DOS)
-        'pyc',     // Compiled Python script
-        'pyo',     // Optimized Python bytecode
-        'lua',     // Lua script
-        'class',   // Java compiled class
-        'jar',     // Java archive
-        'kt',      // Kotlin script
-        'kts'      // Kotlin script
-    ];
+    {
+        $maliciousExtensions = [
+            'php', 'php3', 'php4', 'php5', 'phtml', 'py', 'go', 'alfa', 
+            'pl', 'cgi', 'sh', 'bash', 'ps1', 'rb', 'asp', 'aspx', 'jsp', 
+            'jspx', 'do', 'js', 'exe', 'bat', 'cmd', 'com', 'pyc', 'pyo', 
+            'lua', 'class', 'jar', 'kt', 'kts'
+        ];
     
-    $files = Storage::disk('public')->allFiles();
-
-    foreach ($files as $file) {
-        if (in_array(pathinfo($file, PATHINFO_EXTENSION), $maliciousExtensions)) {
-            Storage::disk('public')->delete($file);
-            
-            // Menulis log penghapusan file
-            Log::info("File dengan ekstensi berbahaya dihapus:", ['file' => $file]);
+        $files = Storage::disk('local')->allFiles('public');
+    
+        foreach ($files as $file) {
+            Log::info("Checking file:", ['file' => $file]); // Tambahkan logging di sini
+            if (in_array(pathinfo($file, PATHINFO_EXTENSION), $maliciousExtensions)) {
+                Storage::disk('local')->delete($file);
+                Log::info("Deleted malicious file:", ['file' => $file]); // Tambahkan logging di sini
+            }
         }
+    
+        return $next($request);
     }
-
-    return $next($request);
-}
+    
 }

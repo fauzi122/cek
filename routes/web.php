@@ -86,7 +86,7 @@ Route::middleware('auth')->group(function () {
 
 Route::middleware('auth')->group(function () {
     Route::group(['middleware' => 'cekadmin'], function () {
-        Route::group(['middleware' => 'checksinglesession','check.malicious.uploads'], function () {
+        Route::group(['middleware' => 'checksinglesession'], function () {
 
             include __DIR__ . '/ujian/ujian.php';
             include __DIR__ . '/ujian/toefl.php';
