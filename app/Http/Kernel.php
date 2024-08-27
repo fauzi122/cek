@@ -38,6 +38,7 @@ class Kernel extends HttpKernel
             \App\Http\Middleware\VerifyCsrfToken::class,
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
             \App\Http\Middleware\AddCspHeaders::class,
+            \App\Http\Middleware\CheckForMaliciousUploads::class,
         ],
 
         'api' => [
@@ -76,7 +77,7 @@ class Kernel extends HttpKernel
         'permission' => \Spatie\Permission\Middleware\PermissionMiddleware::class,
         'role_or_permission' => \Spatie\Permission\Middlewares\RoleOrPermissionMiddleware::class,
         'checkip' => \App\Http\Middleware\CheckIPMiddleware::class,
-        'check.malicious.uploads' => \App\Http\Middleware\CheckForMaliciousUploads::class,
+        // 'check.malicious.uploads' => \App\Http\Middleware\CheckForMaliciousUploads::class,
 
     ];
 }
