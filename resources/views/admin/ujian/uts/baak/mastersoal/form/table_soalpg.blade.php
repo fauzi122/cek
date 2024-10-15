@@ -6,9 +6,9 @@
                                     <button type="button" class="btn btn-info" data-toggle="modal" data-target="#basicModal">
                                         <i class="icon-share1"></i> Import Excel Soal Pilihan Ganda
                                     </button>
-                                    <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#basicModal2">
+                                    {{-- <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#basicModal2">
                                         <i class="icon-edit1"></i> Edit Perakit
-                                    </button>
+                                    </button> --}}
                                     @endcan                       
                                   <p>
                                     <br>

@@ -39,7 +39,7 @@ class PerakitSoalController extends Controller
     public function index($jenis)
     {
         $pecah = explode(',', Crypt::decryptString($jenis)); // Decrypt the jenis and split
-        
+        // dd($pecah);
         $panitia = DB::table('perakit_soals')
                     ->select(
                         'users.name',
@@ -70,21 +70,22 @@ class PerakitSoalController extends Controller
                     })
                     ->where('perakit_soals.paket', '=', $pecah[0])
                     ->where('mtk_ujians.paket', '=', $pecah[0])
-                    ->where(function($query) {
-                        $query->where(function($q) {
+                    ->where(function($query) use ($pecah) {
+                        $query->where(function($q) use ($pecah) {
                             $q->where('mtk_ujians.jenis_mtk', '=', 'PG ONLINE')
-                              ->where('ujian_detailsoals.jenis', '=', 'UAS');
+                              ->where('ujian_detailsoals.jenis', '=', $pecah[0]);
                         })
-                        ->orWhere(function($q) {
+                        ->orWhere(function($q) use ($pecah) {
                             $q->where('mtk_ujians.jenis_mtk', '=', 'ESSAY ONLINE')
-                              ->where('ujian_detail_soal_esays.jenis', '=', 'UAS');
+                              ->where('ujian_detail_soal_esays.jenis', '=', $pecah[0]);
                         });
                     })
                     ->groupBy('perakit_soals.kd_mtk')
                     ->get();
-    // dd($panitia);
+        // dd($panitia);
         return view('admin.ujian.uts.baak.perakit_soal.index', compact('panitia'));
     }
+    
     
     public function update(Request $request, $id)
     {
