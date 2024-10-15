@@ -35,21 +35,75 @@ class PerakitSoalController extends Controller
         return view('admin.ujian.uts.baak.perakit_soal.utama', compact('encryptedExamTypes', 'paketUjian'));
        
     }
-    public function index($id)
+
+    public function index($jenis)
     {
-        $pecah = explode(',', Crypt::decryptString($id));
-    
-        $panitia = Perakit_soal::join('users', 'perakit_soals.kd_dosen', '=', 'users.kode')
-            ->select('users.name', 'users.id', 'users.username', 'perakit_soals.*')
-            ->where([
-                'perakit_soals.paket' => $pecah[0]
-            ])->get();
-    
-        return view('admin.ujian.uts.baak.perakit_soal.index')
-            ->with('panitia', $panitia)
-            ->with('pecah', $pecah);
+        $pecah = explode(',', Crypt::decryptString($jenis)); // Decrypt the jenis and split
+        
+        $panitia = DB::table('perakit_soals')
+                    ->select(
+                        'users.name',
+                        'users.id',
+                        'users.username',
+                        'perakit_soals.*',
+                        DB::raw("CASE 
+                                    WHEN mtk_ujians.jenis_mtk = 'PG ONLINE' THEN ujian_detailsoals.id_user
+                                    WHEN mtk_ujians.jenis_mtk = 'ESSAY ONLINE' THEN ujian_detail_soal_esays.id_user
+                                 END AS id_user"),
+                        DB::raw("CASE 
+                                    WHEN mtk_ujians.jenis_mtk = 'PG ONLINE' THEN ujian_detailsoals.kd_mtk
+                                    WHEN mtk_ujians.jenis_mtk = 'ESSAY ONLINE' THEN ujian_detail_soal_esays.kd_mtk
+                                 END AS kd_mtk"),
+                        'mtk_ujians.jenis_mtk'
+                    )
+                    ->join('users', 'perakit_soals.kd_dosen', '=', 'users.kode')
+                    ->join('mtk_ujians', 'perakit_soals.kd_mtk', '=', 'mtk_ujians.kd_mtk')
+                    ->leftJoin('ujian_detailsoals', function ($join) use ($pecah) {
+                        $join->on('perakit_soals.kd_mtk', '=', 'ujian_detailsoals.kd_mtk')
+                             ->where('perakit_soals.paket', '=', $pecah[0])
+                             ->where('ujian_detailsoals.jenis', '=', $pecah[0]);
+                    })
+                    ->leftJoin('ujian_detail_soal_esays', function ($join) use ($pecah) {
+                        $join->on('perakit_soals.kd_mtk', '=', 'ujian_detail_soal_esays.kd_mtk')
+                             ->where('perakit_soals.paket', '=', $pecah[0])
+                             ->where('ujian_detail_soal_esays.jenis', '=', $pecah[0]);
+                    })
+                    ->where('perakit_soals.paket', '=', $pecah[0])
+                    ->where('mtk_ujians.paket', '=', $pecah[0])
+                    ->where(function($query) {
+                        $query->where(function($q) {
+                            $q->where('mtk_ujians.jenis_mtk', '=', 'PG ONLINE')
+                              ->where('ujian_detailsoals.jenis', '=', 'UAS');
+                        })
+                        ->orWhere(function($q) {
+                            $q->where('mtk_ujians.jenis_mtk', '=', 'ESSAY ONLINE')
+                              ->where('ujian_detail_soal_esays.jenis', '=', 'UAS');
+                        });
+                    })
+                    ->groupBy('perakit_soals.kd_mtk')
+                    ->get();
+    // dd($panitia);
+        return view('admin.ujian.uts.baak.perakit_soal.index', compact('panitia'));
     }
     
+    public function update(Request $request, $id)
+    {
+        // dd($request->jenis);
+        // Validasi data yang diterima
+        $request->validate([
+            'perakit_new' => 'required',
+            'kd_mtk' => 'required',
+            'jenis' => 'required'
+        ]);
+
+        DB::table('ujian_detailsoals')
+        ->where('kd_mtk', $request->kd_mtk)
+        ->where('jenis', $request->jenis) // Sesuaikan dengan kolom yang tepat
+        ->update(['id_user' => $request->perakit_new]);
+
+        // Redirect setelah sukses
+        return redirect()->back()->with('success', 'Data berhasil diperbarui.');
+    }
 
 
     public function create()
@@ -154,10 +208,6 @@ class PerakitSoalController extends Controller
         //
     }
 
-    public function update(Request $request, $id)
-    {
-        //
-    }
 
     public function destroy($id)
     {

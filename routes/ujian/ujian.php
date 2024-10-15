@@ -191,6 +191,7 @@ Route::controller(PerakitSoalController::class)->group(function () {
     Route::get('/adm-perakit-soal', 'index_adm');
     Route::get('/adm-perakit-soal-create', 'create_adm');
     Route::post('/adm-perakit-soal', 'store');
+    Route::put('/update-perakit/{id}','update')->name('perakit.update');
     Route::post('/adm/upload-perakit-soal', 'storeData_Perakit');
     Route::post('/update-stsperakit', 'updateStatus')->name('update-stsperakit');
     Route::delete('/adm-perakit-soal/{id}/destroy', 'destroy');

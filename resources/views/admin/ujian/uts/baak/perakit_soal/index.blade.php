@@ -41,7 +41,10 @@
 											  <th>Nama</th>
 											
 											  <th>MTK</th>
+                                              <th>Perakit old</th>
+                                              <th>jenis ujian</th>
 											  <th>paket</th>
+											  
 											  <th>Petugas</th>
 											  <th>ACC</th>
 											
@@ -63,7 +66,10 @@
 											 <td>{{ $panitia->username }}-{{ $panitia->name }}</td>
 
 											 <td>{{ $panitia->kd_mtk }}</td>
+                                             <td>{{ $panitia->id_user }}</td>
+                                             <td>{{ $panitia->jenis_mtk }}</td>
 											 <td>{{ $panitia->paket }}</td>
+											 
 											 <td>{{ $panitia->petugas }}</td>
 											 <td>
 												<label class="switch">
@@ -75,7 +81,23 @@
 											 <td>{{ $panitia->updated_at }}</td>
 										
 											<td>
-                                                @can('destroy_perakit_ujian')
+                                                
+                                                @if ($panitia->kd_dosen !== $panitia->id_user)
+                                            <form action="{{ route('perakit.update', $panitia->id) }}" method="POST">
+                                                @csrf
+                                                @method('PUT')
+                                                <input type="hidden" name="jenis_mtk" value="{{ $panitia->jenis_mtk }}">
+                                                <input type="hidden" name="perakit_new" value="{{ $panitia->kd_dosen }}">
+                                                <input type="hidden" name="kd_mtk" value="{{ $panitia->kd_mtk }}">
+                                                <input type="hidden" name="jenis" value="{{ $panitia->paket }}">
+                                                <button type="submit" class="btn btn-xs btn-info">Ubah Perakit</button>
+                                            </form>
+                                        @else
+                                            {{-- <p>Data tidak dapat diubah karena kd_dosen dan id_user sama.</p> --}}
+                                        @endif
+
+                                                
+                                        @can('destroy_perakit_ujian')   
                                                 <center>
 													<form method="POST" class="d-inline"
 													 onsubmit="return confirm('Masukan ke tempat sampah?')" 
