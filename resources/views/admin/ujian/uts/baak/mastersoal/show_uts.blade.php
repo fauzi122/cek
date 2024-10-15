@@ -7,7 +7,7 @@
         <div class="row gutters">
             <div class="col-xl-9 col-lg-9 col-md-9 col-sm-12 col-12">
                 <div class="card-header badge-info">
-                    <h4 class="m-b-0 text-white">Master Soal</h4>
+                    <h4 class="m-b-0 text-white">Master Soal.</h4>
                 </div>
                 <div class="card">
                     <div class="card-body p-0">

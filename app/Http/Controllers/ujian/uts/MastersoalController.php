@@ -328,6 +328,15 @@ class MastersoalController extends Controller
                 ])
             ->orderBy('created_at', 'DESC')
                 ->get();
+            
+            $perakit_soal = Detailsoal_ujian::where([
+                    'kd_mtk' => $pecah[0],
+                    'jenis' => $pecah[1]
+                    ])
+                ->select('id_user')
+                ->groupBy('id_user')
+                ->first();
+                // dd($perakit_soal);
         
             // essay
             $essay = DetailSoalEssay_ujian::where([
@@ -363,8 +372,7 @@ class MastersoalController extends Controller
                 'tgl_baak',)
                 ->first();
 
-              
-            return view('admin.ujian.uts.baak.mastersoal.show_uts', compact('soals', 'essay', 'soal','acc'));
+            return view('admin.ujian.uts.baak.mastersoal.show_uts', compact('soals', 'essay', 'soal','acc','perakit_soal'));
         } else {
             return redirect('/dashboard');
         }
