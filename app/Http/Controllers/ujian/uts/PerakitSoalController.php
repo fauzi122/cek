@@ -59,7 +59,15 @@ class PerakitSoalController extends Controller
                 'users.name',
                 'users.id',
                 'users.username',
-                'perakit_soals.*',
+                'perakit_soals.kd_dosen',
+                'perakit_soals.kd_mtk as kd_mtk_perakit',
+                'perakit_soals.paket',
+                'perakit_soals.status',
+                'perakit_soals.petugas',
+                'perakit_soals.petugas_acc',
+                'perakit_soals.created_at',
+                'perakit_soals.updated_at',
+                'perakit_soals.id',
 
                 DB::raw("CASE 
                             WHEN mtk_ujians.jenis_mtk = 'PG ONLINE' THEN ujian_detailsoals.id_user
