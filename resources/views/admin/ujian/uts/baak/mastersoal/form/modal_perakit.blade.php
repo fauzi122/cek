@@ -2,7 +2,7 @@
 										<div class="modal-dialog" role="document">
 											<div class="modal-content">
 												<div class="modal-header">
-													<h5 class="modal-title" id="basicModalLabel">Edit Perakit Soal - {{ $perakit_soal->id_user }}</h5>
+													<h5 class="modal-title" id="basicModalLabel">Edit Perakit Soal - {{ $perakit_soal->id_user ?? 'null'}}</h5>
 													<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 														<span aria-hidden="true">&times;</span>
 													</button>
@@ -16,7 +16,7 @@
                                           <label for="">kode dosen</label>
                                     <input type="text" hidden  name="kd_mtk" value="{{ $soal->kd_mtk }}">
                                     <input type="text" hidden  name="jenis" value="{{ $soal->paket }}">
-                                    <input type="text" hidden  name="jenis" value="{{ $perakit_soal->id_user }}">
+                                    <input type="text" hidden  name="jenis" value="{{ $perakit_soal->id_user ?? 'null' }}">
                                       <br>
                                     <input type="text" hidden  name="sesi" value="{{ md5(rand(0000000000, mt_getrandmax())) }}">
                            

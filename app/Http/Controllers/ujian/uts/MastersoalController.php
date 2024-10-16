@@ -56,8 +56,9 @@ class MastersoalController extends Controller
     if (Auth::user()->utype == 'ADM') {
 
         $pecah = explode(',', Crypt::decryptString($id));
+        
         $soals = Mtk_ujian::where('mtk_ujians.paket', $pecah[0])->get();
-    
+      
         // Mendapatkan data aprovasi dan mengurutkannya berdasarkan perakit_kirim
         $aprov = ujian_aprov::select('kd_mtk', 'perakit_kirim',
                 'perakit_kirim_essay',
@@ -69,13 +70,13 @@ class MastersoalController extends Controller
             ->get()
             ->sortByDesc('perakit_kirim') 
             ->keyBy('kd_mtk');
-    
+            
         $detailsoal = DB::table('ujian_detailsoals')
             ->select(DB::raw('kd_mtk, COUNT(*) as jumlah'))
             ->where('jenis', $pecah[0])
             ->groupBy('kd_mtk')
             ->pluck('jumlah', 'kd_mtk');
-
+         
             // dd($detailsoal);
     
         $detailsoal_essay = DB::table('ujian_detail_soal_esays')
@@ -83,7 +84,7 @@ class MastersoalController extends Controller
             ->where('jenis', $pecah[0])
             ->groupBy('kd_mtk')
             ->pluck('jumlah', 'kd_mtk');
-    
+            // dd($detailsoal_essay);
         return view('admin.ujian.uts.baak.mastersoal.uts', compact('soals', 'detailsoal', 'detailsoal_essay', 'aprov'));
         } else {
             return redirect('/dashboard');
