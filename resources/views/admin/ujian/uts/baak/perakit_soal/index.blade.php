@@ -29,7 +29,7 @@
 							<div class="table-container">
                                 @can('add_perakit_ujian')
                                 <button type="button" class="btn btn-info" data-toggle="modal" data-target="#basicModal">
-                                    Import Perakit Soal
+                                    Import Perakit Soal  {{ $pecah[0] ?? 'Tidak ada nilai' }}
                                   </button>
                                   @endcan
 								<div class="table-responsive">
@@ -61,7 +61,7 @@
 										<tbody>
 											@foreach ($panitia as $no => $panitia)
 											<tr>
-											
+                                               
 											<td>{{ $panitia->kd_dosen }}</td>
 											 <td>{{ $panitia->username }}-{{ $panitia->name }}</td>
 
