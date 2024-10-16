@@ -33,90 +33,72 @@
                                   </button>
                                   @endcan
 								<div class="table-responsive">
-									<table id="copy-print-csv" class="table custom-table">
-										<thead>
-											<tr>
-											  
-											  <th>Kd</th>
-											  <th>Nama</th>
-											
-											  <th>MTK</th>
-                                              <th>Perakit old</th>
-                                              <th>jenis ujian</th>
-											  <th>paket</th>
-											  
-											  <th>Petugas</th>
-											  <th>ACC</th>
-											
-											
-											  <th>Updated_at</th>
-											  
-											   <th> 
-                                                <center>
-                                                Aksi
-                                              </center>
-                                            </th> 
-											</tr>
-										</thead>
-										<tbody>
-											@foreach ($panitia as $no => $panitia)
-											<tr>
-                                               
-											<td>{{ $panitia->kd_dosen }}</td>
-											 <td>{{ $panitia->username }}-{{ $panitia->name }}</td>
-
-											 <td>{{ $panitia->kd_mtk }}</td>
-                                             <td>{{ $panitia->id_user }}</td>
-                                             <td>{{ $panitia->jenis_mtk }}</td>
-											 <td>{{ $panitia->paket }}</td>
-											 
-											 <td>{{ $panitia->petugas }}</td>
-											 <td>
-												<label class="switch">
-													<input type="checkbox" class="status-checkbox" id="switch{{ $panitia->id }}" data-id="{{ $panitia->id }}" {{ $panitia->status ? 'checked' : '' }}>
-													<span class="slider round"></span>
-												</label>
-											</td>
-											
-											 <td>{{ $panitia->updated_at }}</td>
-										
-											<td>
-                                                
-                                                @if ($panitia->kd_dosen !== $panitia->id_user)
-                                            <form action="{{ route('perakit.update', $panitia->id) }}" method="POST">
-                                                @csrf
-                                                @method('PUT')
-                                                <input type="hidden" name="jenis_mtk" value="{{ $panitia->jenis_mtk }}">
-                                                <input type="hidden" name="perakit_new" value="{{ $panitia->kd_dosen }}">
-                                                <input type="hidden" name="kd_mtk" value="{{ $panitia->kd_mtk }}">
-                                                <input type="hidden" name="jenis" value="{{ $panitia->paket }}">
-                                                <button type="submit" class="btn btn-xs btn-info">Ubah Perakit</button>
-                                            </form>
-                                        @else
-                                            {{-- <p>Data tidak dapat diubah karena kd_dosen dan id_user sama.</p> --}}
-                                        @endif
-
-                                                
-                                        @can('destroy_perakit_ujian')   
-                                                <center>
-													<form method="POST" class="d-inline"
-													 onsubmit="return confirm('Masukan ke tempat sampah?')" 
-													 action="/adm-perakit-soal/{{ $panitia->id }}/destroy">
-												   @csrf
-												   <input type="hidden" value="DELETE" name="_method">
-												   <button type="submit" value="Delete" class="btn btn-xs btn-danger">
-													 <i class="fas fa-trash"></i> Hapus </button>
-											   </form>
-																   
-												</center>
-                                                @endcan
-										</td>
-                        
-
-											</tr>
-											@endforeach
-										</tbody>
-						    	</table>
+                                    <table id="copy-print-csv" class="table custom-table">
+                                        <thead>
+                                            <tr>
+                                                <th>Kd</th>
+                                                <th>Nama</th>
+                                                <th>MTK</th>
+                                                <th>Perakit old</th>
+                                                <th>Jenis Ujian</th>
+                                                <th>Paket</th>
+                                                <th>Petugas</th>
+                                                <th>ACC</th>
+                                                <th>Updated_at</th>
+                                                <th>
+                                                    <center>Aksi</center>
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach ($panitia as $no => $panitia)
+                                            <tr>
+                                                <td>{{ $panitia->kd_dosen ?? 'null' }}</td>
+                                                <td>{{ $panitia->username ?? 'null' }} - {{ $panitia->name ?? 'null' }}</td>
+                                                <td>{{ $panitia->kd_mtk ?? 'null' }}</td>
+                                                <td>{{ $panitia->id_user ?? 'null' }}</td>
+                                                <td>{{ $panitia->jenis_mtk ?? 'null' }}</td>
+                                                <td>{{ $panitia->paket ?? 'null' }}</td>
+                                                <td>{{ $panitia->petugas ?? 'null' }}</td>
+                                                <td>
+                                                    <label class="switch">
+                                                        <input type="checkbox" class="status-checkbox" id="switch{{ $panitia->id }}" data-id="{{ $panitia->id }}" {{ $panitia->status ? 'checked' : '' }}>
+                                                        <span class="slider round"></span>
+                                                    </label>
+                                                </td>
+                                                <td>{{ $panitia->updated_at ?? 'null' }}</td>
+                                                <td>
+                                                    @if ($panitia->kd_dosen !== $panitia->id_user)
+                                                    <form action="{{ route('perakit.update', $panitia->id) }}" method="POST">
+                                                        @csrf
+                                                        @method('PUT')
+                                                        <input type="hidden" name="jenis_mtk" value="{{ $panitia->jenis_mtk ?? 'null' }}">
+                                                        <input type="hidden" name="perakit_new" value="{{ $panitia->kd_dosen ?? 'null' }}">
+                                                        <input type="hidden" name="kd_mtk" value="{{ $panitia->kd_mtk ?? 'null' }}">
+                                                        <input type="hidden" name="jenis" value="{{ $panitia->paket ?? 'null' }}">
+                                                        <button type="submit" class="btn btn-xs btn-info">Ubah Perakit</button>
+                                                    </form>
+                                                    @else
+                                                    {{-- Data tidak dapat diubah karena kd_dosen dan id_user sama. --}}
+                                                    @endif
+                                    
+                                                    @can('destroy_perakit_ujian')
+                                                    <center>
+                                                        <form method="POST" class="d-inline" onsubmit="return confirm('Masukan ke tempat sampah?')" action="/adm-perakit-soal/{{ $panitia->id }}/destroy">
+                                                            @csrf
+                                                            <input type="hidden" value="DELETE" name="_method">
+                                                            <button type="submit" value="Delete" class="btn btn-xs btn-danger">
+                                                                <i class="fas fa-trash"></i> Hapus
+                                                            </button>
+                                                        </form>
+                                                    </center>
+                                                    @endcan
+                                                </td>
+                                            </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                    
 								</div>
 							</div>
 

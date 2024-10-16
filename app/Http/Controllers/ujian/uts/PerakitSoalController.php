@@ -36,54 +36,48 @@ class PerakitSoalController extends Controller
        
     }
 
+    
     public function index($jenis)
     {
-       
-        $pecah = explode(',', Crypt::decryptString($jenis)); // Decrypt the jenis and split
-        
+        // Decrypt jenis ujian dan split menjadi array
+        $pecah = explode(',', Crypt::decryptString($jenis));
+        $jenis_pertama = $pecah[0] ?? 'UTS';  // Fallback ke 'UTS' jika tidak ada data
+    
+        // Query menggunakan join yang efisien
         $panitia = DB::table('perakit_soals')
-                    ->select(
-                        'users.name',
-                        'users.id',
-                        'users.username',
-                        'perakit_soals.*',
-                        DB::raw("CASE 
-                                    WHEN mtk_ujians.jenis_mtk = 'PG ONLINE' THEN ujian_detailsoals.id_user
-                                    WHEN mtk_ujians.jenis_mtk = 'ESSAY ONLINE' THEN ujian_detail_soal_esays.id_user
-                                 END AS id_user"),
-                        DB::raw("CASE 
-                                    WHEN mtk_ujians.jenis_mtk = 'PG ONLINE' THEN ujian_detailsoals.kd_mtk
-                                    WHEN mtk_ujians.jenis_mtk = 'ESSAY ONLINE' THEN ujian_detail_soal_esays.kd_mtk
-                                 END AS kd_mtk"),
-                        'mtk_ujians.jenis_mtk'
-                    )
-                    ->join('users', 'perakit_soals.kd_dosen', '=', 'users.kode')
-                    ->join('mtk_ujians', 'perakit_soals.kd_mtk', '=', 'mtk_ujians.kd_mtk')
-                    ->leftJoin('ujian_detailsoals', function ($join) use ($pecah) {
-                        $join->on('perakit_soals.kd_mtk', '=', 'ujian_detailsoals.kd_mtk')
-                             ->where('perakit_soals.paket', '=', $pecah[0])
-                             ->where('ujian_detailsoals.jenis', '=', $pecah[0]);
-                    })
-                    ->leftJoin('ujian_detail_soal_esays', function ($join) use ($pecah) {
-                        $join->on('perakit_soals.kd_mtk', '=', 'ujian_detail_soal_esays.kd_mtk')
-                             ->where('perakit_soals.paket', '=', $pecah[0])
-                             ->where('ujian_detail_soal_esays.jenis', '=', $pecah[0]);
-                    })
-                    ->where('perakit_soals.paket', '=', $pecah[0])
-                    ->where('mtk_ujians.paket', '=', $pecah[0])
-                    ->where(function($query) use ($pecah) {
-                        $query->where(function($q) use ($pecah) {
-                            $q->where('mtk_ujians.jenis_mtk', '=', 'PG ONLINE')
-                              ->where('ujian_detailsoals.jenis', '=', $pecah[0]);
-                        })
-                        ->orWhere(function($q) use ($pecah) {
-                            $q->where('mtk_ujians.jenis_mtk', '=', 'ESSAY ONLINE')
-                              ->where('ujian_detail_soal_esays.jenis', '=', $pecah[0]);
-                        });
-                    })
-                    ->groupBy('perakit_soals.kd_mtk')
-                    ->get();
-        // dd($panitia);
+            ->leftJoin('users', 'perakit_soals.kd_dosen', '=', 'users.kode')
+            ->leftJoin('mtk_ujians', 'perakit_soals.kd_mtk', '=', 'mtk_ujians.kd_mtk')
+            ->leftJoin('ujian_detailsoals', function ($join) use ($pecah) {
+                $join->on('perakit_soals.kd_mtk', '=', 'ujian_detailsoals.kd_mtk')
+                     ->whereIn('ujian_detailsoals.jenis', $pecah);
+            })
+            ->leftJoin('ujian_detail_soal_esays', function ($join) use ($pecah) {
+                $join->on('perakit_soals.kd_mtk', '=', 'ujian_detail_soal_esays.kd_mtk')
+                     ->whereIn('ujian_detail_soal_esays.jenis', $pecah);
+            })
+            ->select(
+                'users.name',
+                'users.id',
+                'users.username',
+                'perakit_soals.*',
+
+                DB::raw("CASE 
+                            WHEN mtk_ujians.jenis_mtk = 'PG ONLINE' THEN ujian_detailsoals.id_user
+                            WHEN mtk_ujians.jenis_mtk = 'ESSAY ONLINE' THEN ujian_detail_soal_esays.id_user
+                        END AS id_user"),
+                DB::raw("CASE 
+                            WHEN mtk_ujians.jenis_mtk = 'PG ONLINE' THEN ujian_detailsoals.kd_mtk
+                            WHEN mtk_ujians.jenis_mtk = 'ESSAY ONLINE' THEN ujian_detail_soal_esays.kd_mtk
+                        END AS kd_mtk"),
+                'mtk_ujians.jenis_mtk'
+            )
+            ->where('perakit_soals.paket', $jenis_pertama)
+            ->where('mtk_ujians.paket', $jenis_pertama)
+            ->groupBy('users.name', 'users.id', 'users.username', 'perakit_soals.kd_dosen', 'perakit_soals.kd_mtk',
+                      'perakit_soals.paket', 'mtk_ujians.jenis_mtk', 'ujian_detailsoals.id_user', 'ujian_detail_soal_esays.id_user',
+                      'ujian_detailsoals.kd_mtk', 'ujian_detail_soal_esays.kd_mtk')
+            ->get();
+    
         return view('admin.ujian.uts.baak.perakit_soal.index', compact('panitia','pecah'));
     }
     
