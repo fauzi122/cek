@@ -38,8 +38,9 @@ class PerakitSoalController extends Controller
 
     public function index($jenis)
     {
+       
         $pecah = explode(',', Crypt::decryptString($jenis)); // Decrypt the jenis and split
-        // dd($pecah);
+        
         $panitia = DB::table('perakit_soals')
                     ->select(
                         'users.name',
@@ -83,7 +84,7 @@ class PerakitSoalController extends Controller
                     ->groupBy('perakit_soals.kd_mtk')
                     ->get();
         // dd($panitia);
-        return view('admin.ujian.uts.baak.perakit_soal.index', compact('panitia'));
+        return view('admin.ujian.uts.baak.perakit_soal.index', compact('panitia','pecah'));
     }
     
     
