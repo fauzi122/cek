@@ -76,4 +76,9 @@ class User extends Authenticatable implements JWTSubject
     {
         return [];
     }
+    public function getRoleNamesAttribute()
+    {
+        return $this->roles->pluck('name');
+    }
+
 }
