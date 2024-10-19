@@ -167,10 +167,10 @@
                             </div>
                             <br>
                             <br>
-                            <div class="alert alert-danger" role="alert">
+                            {{-- <div class="alert alert-danger" role="alert">
                                 <h4 class="alert-heading"><strong>INFO:</strong> Batas Waktu Perakitan Soal HER 
                                     <br> Mulai Dari Tanggal <strong>08 Juli 2024 </strong> -<strong>02 Agustus 2024</strong></h4>
-                            </div>
+                            </div> --}}
                         </div>
                         <div class="tab-pane fade" id="home1" role="tabpanel" aria-labelledby="home1-tab">
                             <!-- Konten untuk tab kedua dapat ditambahkan di sini -->
