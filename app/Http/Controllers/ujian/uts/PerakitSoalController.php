@@ -106,7 +106,26 @@ class PerakitSoalController extends Controller
         ->update(['id_user' => $request->perakit_new]);
 
         // Redirect setelah sukses
-        return redirect()->back()->with('success', 'Data berhasil diperbarui.');
+        return redirect()->back()->with('success', 'Data perakit PG berhasil diperbarui.');
+    }
+
+    public function update_essay(Request $request, $id)
+    {
+        // dd($request->all());
+        // Validasi data yang diterima
+        $request->validate([
+            'perakit_new' => 'required',
+            'kd_mtk' => 'required',
+            'jenis' => 'required'
+        ]);
+
+        DB::table('ujian_detail_soal_esays')
+        ->where('kd_mtk', $request->kd_mtk)
+        ->where('jenis', $request->jenis) // Sesuaikan dengan kolom yang tepat
+        ->update(['id_user' => $request->perakit_new]);
+
+        // Redirect setelah sukses
+        return redirect()->back()->with('success', 'Data perakit essay berhasil diperbarui.');
     }
 
 
