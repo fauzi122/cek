@@ -71,7 +71,8 @@
                                                 <td>{{ $panitia->updated_at ?? 'null' }}</td>
                                                 <td>
                                                     @if ($panitia->kd_dosen !== $panitia->id_user)
-                                                    @if (!is_null($panitia->id_user))
+                                                @if (!is_null($panitia->id_user))
+                                                    @if ($panitia->jenis_mtk === 'PG ONLINE')
                                                         <form action="{{ route('perakit.update', $panitia->id) }}" method="POST">
                                                             @csrf
                                                             @method('PUT')
@@ -79,14 +80,26 @@
                                                             <input type="hidden" name="perakit_new" value="{{ $panitia->kd_dosen ?? 'null' }}">
                                                             <input type="hidden" name="kd_mtk" value="{{ $panitia->kd_mtk ?? 'null' }}">
                                                             <input type="hidden" name="jenis" value="{{ $panitia->paket ?? 'null' }}">
-                                                            <button type="submit" class="btn btn-xs btn-info">Ubah Perakit</button>
+                                                            <button type="submit" class="btn btn-xs btn-info">Ubah Perakit PG</button>
                                                         </form>
-                                                    @else
-                                                        {{-- Tombol update tidak ditampilkan karena id_user null --}}
+                                                    @elseif ($panitia->jenis_mtk === 'ESSAY ONLINE')
+                                                        <form action="{{ route('perakit.update.essay', $panitia->id) }}" method="POST">
+                                                            @csrf
+                                                            @method('PUT')
+                                                            <input type="hidden" name="jenis_mtk" value="{{ $panitia->jenis_mtk ?? 'null' }}">
+                                                            <input type="hidden" name="perakit_new" value="{{ $panitia->kd_dosen ?? 'null' }}">
+                                                            <input type="hidden" name="kd_mtk" value="{{ $panitia->kd_mtk ?? 'null' }}">
+                                                            <input type="hidden" name="jenis" value="{{ $panitia->paket ?? 'null' }}">
+                                                            <button type="submit" class="btn btn-xs btn-primary">Ubah Perakit ESSAY</button>
+                                                        </form>
                                                     @endif
                                                 @else
-                                                    {{-- Data tidak dapat diubah karena kd_dosen dan id_user sama. --}}
+                                                    {{-- Tombol update tidak ditampilkan karena id_user null --}}
                                                 @endif
+                                            @else
+                                                {{-- Data tidak dapat diubah karena kd_dosen dan id_user sama. --}}
+                                            @endif
+
                                                 
                                     
                                                     @can('destroy_perakit_ujian')
