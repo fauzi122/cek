@@ -12,6 +12,12 @@ class HitungsksController extends Controller
 {
     public function index_uas()
     {
+            // Periksa apakah ada data ujian di tabel
+    $count = DB::table('ujian_berita_acaras')->where('paket', 'UAS')->count();
+    if ($count == 0) {
+        // Jika tidak ada data, kembali ke halaman sebelumnya dengan pesan error
+        return redirect()->back()->with('error', 'Data rekap belum tersedia.');
+    }
         // Mengumpulkan tanggal ujian yang unik dengan filter paket = 'UAS'
         $dates = DB::table('ujian_berita_acaras')
                     ->selectRaw('DISTINCT tgl_ujian')
@@ -71,6 +77,12 @@ class HitungsksController extends Controller
 
     public function index_uts()
     {
+            // Periksa apakah ada data ujian di tabel
+    $count = DB::table('ujian_berita_acaras')->where('paket', 'UTS')->count();
+    if ($count == 0) {
+        // Jika tidak ada data, kembali ke halaman sebelumnya dengan pesan error
+        return redirect()->back()->with('error', 'Data rekap belum tersedia.');
+    }
         // Mengumpulkan tanggal ujian yang unik dengan filter paket = 'UAS'
         $dates = DB::table('ujian_berita_acaras')
                     ->selectRaw('DISTINCT tgl_ujian')
