@@ -1,6 +1,24 @@
 @extends('layouts.dosen.ujian.main')
 
 @section('content')
+    <style>
+        /* CSS untuk memperkecil tabel */
+        .custom-table th, .custom-table td {
+            font-size: 12px; /* Ukuran font lebih kecil */
+            padding: 5px; /* Padding lebih kecil */
+        }
+        
+        /* Agar tabel bisa discroll jika terlalu lebar */
+        .table-responsive {
+            overflow-x: auto;
+        }
+
+        /* Mengatur lebar kolom agar lebih pas */
+        .custom-table th, .custom-table td {
+            white-space: nowrap; /* Mencegah teks terpotong ke baris berikutnya */
+        }
+    </style>
+
     <div class="content-wrapper">
         <div class="row gutters">
             <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
@@ -21,18 +39,18 @@
                                 </p>
                             </div>
                         </div>
-                       
+
                         @if (session('success'))
-							<div class="alert alert-info">
-								{{ session('success') }}
-							</div>
-							@endif
-			
-							@if (session('error'))
-							<div class="alert alert-info">
-								{{ session('error') }}
-							</div>
-							@endif
+                            <div class="alert alert-info">
+                                {{ session('success') }}
+                            </div>
+                        @endif
+
+                        @if (session('error'))
+                            <div class="alert alert-info">
+                                {{ session('error') }}
+                            </div>
+                        @endif
                     </div>
                 </div>
                 <div class="card">
@@ -48,102 +66,80 @@
                                                         <th>NIP</th>
                                                         <th>kd</th>
                                                         <th>NM MTK</th>
-                                                        <th>Kode MTK</th>
+                                                        <th>MTK</th>
                                                         <th>Kelas</th>
                                                         <th>Kel-Ujian</th>
                                                         <th>Hari</th>
-                                                        <th>Mulai</th>
-                                                        <th>Selsai</th>
+                                                        <th>tgl ujian</th>
                                                        
+                                                        <th>Mulai</th>
+                                                        <th>Selesai</th>
                                                         <th>Ruang</th>
                                                         <th>paket</th>
                                                         <th>Kampus</th>
                                                         <th><span class="icon-edit1" title="petugas ganti pengawas"></span></th>
                                                         <th>status</th>
                                                         <th>ot</th>
-
                                                         <th>Aksi</th>
                                                         <th><span class="icon-edit1"></span></th>
-
-                                                       
                                                     </tr>
                                                 </thead>
                                                 <tbody>
                                                     @foreach ($jadwal as $no => $jadwal)
-											<tr>
-											
-											 <td>
-												{{ $jadwal->nip }}
-												
-											 </td>
-											 <td>{{ $jadwal->kd_dosen }}</td>
-											 <td>{{ $jadwal->nm_mtk }}</td>
-											 <td>{{ $jadwal->kd_mtk }}</td>
-											 <td>{{ $jadwal->kd_lokal }}</td>
-											 <td>{{ $jadwal->kel_ujian }}</td>
-											 <td>{{ $jadwal->hari_t }}</td>
-											 <td>{{ $jadwal->mulai }}</td>
-											 <td>{{ $jadwal->selesai }}</td>
-											
-											 <td>{{ $jadwal->no_ruang }}</td>
-											 <td>{{ $jadwal->paket }}</td>
-											
-											 <td>{{ $jadwal->nm_kampus }}</td>
-											 <td><b>{{ $jadwal->petugas_edit_pengawas }}</b></td>
-											 <td>
-                                                 {{-- Key definition for lookup in resultArray --}}
-                                                 @php
-                                                    $key = $jadwal->kd_dosen . '_' . $jadwal->kel_ujian . '_' . $jadwal->kd_mtk. '_' . $jadwal->paket;
-                                                @endphp
-                                            @php
-                                                $verifikasi = $resultArray[$key]->verifikasi ?? 0; // Menetapkan default sebagai 0 jika tidak ditemukan
-                                            @endphp
+                                                        <tr>
+                                                            <td>{{ $jadwal->nip }}</td>
+                                                            <td>{{ $jadwal->kd_dosen }}</td>
+                                                            <td>{{ $jadwal->nm_mtk }}</td>
+                                                            <td>{{ "\u{200B}" . str_pad($jadwal->kd_mtk, 4, '0', STR_PAD_LEFT) }}</td>
+                                                            <td>{{ $jadwal->kd_lokal }}</td>
+                                                            <td>{{ $jadwal->kel_ujian }}</td>
+                                                            <td>{{ $jadwal->hari_t }}</td>
+                                                            <td><center>{{ $jadwal->tgl_ujian }} 
+                                                               
+                                                                </center>
+                                                                </td>
+                                                            
+                                                            <td>{{ $jadwal->mulai }}</td>
+                                                            <td>{{ $jadwal->selesai }}</td>
+                                                            <td>{{ $jadwal->no_ruang }}</td>
+                                                            <td>{{ $jadwal->paket }}</td>
+                                                            <td>{{ $jadwal->nm_kampus }}</td>
+                                                            <td><b>{{ $jadwal->petugas_edit_pengawas }}</b></td>
+                                                            <td>
+                                                                @php
+                                                                    $key = $jadwal->kd_dosen . '_' . $jadwal->kel_ujian . '_' . $jadwal->kd_mtk . '_' . $jadwal->paket;
+                                                                    $verifikasi = $resultArray[$key]->verifikasi ?? 0;
+                                                                @endphp
 
-                                            @if($verifikasi == 1)
-                                                {{-- Jika verifikasi 1, tampilkan emoji ceklis dengan title "Ujian Lancar" --}}
-                                                <span title="Ujian Lancar" style="font-size: 24px;">✔️</span>
-                                            @elseif($verifikasi == 2)
-                                                {{-- Jika verifikasi 2, tampilkan emoji silang dengan title "Ujian Bermasalah" --}}
-                                                <span title="Ujian Bermasalah" style="font-size: 24px;">❌</span>
-                                            @endif
-                                            </td>
-                                            <td>
-                                                @php
-                                                    $ot = $resultArray[$key]->ot ?? 0; // Menetapkan default sebagai 0 jika tidak ditemukan
-                                                @endphp
-    
-                                                @if($ot == 1)
-                                                    {{-- Jika verifikasi 1, tampilkan emoji ceklis dengan title "Ujian Lancar" --}}
-                                                    <span title="Ujian Lancar" style="font-size: 12px;">YA</span>
-                                                @else
-
-                                                @endif
-                                            </td>
-											 <td>
-
-                                                @php
-                                                    $id = Crypt::encryptString($jadwal->kd_dosen.','.$jadwal->kd_mtk.','.$jadwal->kel_ujian.','.$jadwal->paket.','.$jadwal->nm_kampus);
-                                                @endphp
-                                                
-                                               
-
-                                                {{-- Check if the data already exists in the resultArray --}}
-                                                @if(array_key_exists($key, $resultArray))
-                                                    <!-- Jika ada data yang cocok di resultArray, aktifkan tombol Show -->
-                                                    <a href="/show/jadwal-uji-baak/{{ $id }}" class="btn btn-xs btn-info">Show</a>
-                                                @else
-                                                    <!-- Jika tidak ada data yang cocok di resultArray, tampilkan tombol Show yang tidak aktif atau pesan -->
-                                                    {{-- <button class="btn btn-xs btn-info" disabled>Show</button> --}}
-                                                @endif
-                                                
-											</td>
-                                            <td>
-                                                @if(!array_key_exists($key, $resultArray))
-												<a href="/ganti-pengawas/{{ $id }}" class="btn btn-xs btn-secondary" title="ganti pengawas">Pengawas</a>
-                                                @endif
-											</td>
-											</tr>
-											@endforeach
+                                                                @if($verifikasi == 1)
+                                                                    <span title="Ujian Lancar" style="font-size: 12px;">✔️</span>
+                                                                @elseif($verifikasi == 2)
+                                                                    <span title="Ujian Bermasalah" style="font-size: 12px;">❌</span>
+                                                                @endif
+                                                            </td>
+                                                            <td>
+                                                                @php
+                                                                    $ot = $resultArray[$key]->ot ?? 0;
+                                                                @endphp
+                                                                @if($ot == 1)
+                                                                    <span title="Ujian Lancar" style="font-size: 12px;">YA</span>
+                                                                @endif
+                                                            </td>
+                                                            <td>
+                                                                @php
+                                                                    $id = Crypt::encryptString($jadwal->kd_dosen.','.$jadwal->kd_mtk.','.$jadwal->kel_ujian.','.$jadwal->paket.','.$jadwal->nm_kampus);
+                                                                @endphp
+                                                                @if(array_key_exists($key, $resultArray))
+                                                                    <a href="/show/jadwal-uji-baak/{{ $id }}" class="btn btn-xs btn-info">Show</a>
+                                                                @endif
+                                                            </td>
+                                                            <td>
+                                                                @if(!array_key_exists($key, $resultArray))
+                                                                    <a href="/ganti-pengawas/{{ $id }}" class="btn btn-xs btn-secondary" title="ganti pengawas">Pengawas</a>
+                                                                @endif
+                                                            </td>
+                                                        </tr>
+                                                    @endforeach
                                                 </tbody>
                                             </table>
                                         </div>
