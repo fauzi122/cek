@@ -12,7 +12,7 @@
 							
 								<h4 class="m-b-0 text-white">
 
-									Jadwal Ujian</h4>
+									Jadwal Ujian ({{ implode(', ', $pecah) }})</h4>
 							</div>
 
 							<div class="table-container">
@@ -22,7 +22,8 @@
 									<table class="table custom-table">
 										<tr>
 											<td>Kelas</td>
-											<td><input type="text" name="kd_lokal" placeholder="Masukkan Kelas Mahasiswa" class="nilai form-control"></td>
+											<td><input type="text" name="kd_lokal" placeholder="Masukkan Kelas Mahasiswa" class="nilai form-control">
+											<input type="hidden" name="paket" value="{{ implode(', ', $pecah) }}" placeholder="Masukkan Kelas Mahasiswa" class="nilai form-control"></td>
 										</tr>
 										<tr>
 											<td>Kelompok Ujian</td>
