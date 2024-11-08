@@ -64,30 +64,36 @@ class JadwalujianController extends Controller
             return [$item->kd_dosen . '_' . $item->kel_ujian . '_' . $item->kd_mtk . '_' . $item->paket => $item];
         })->toArray();
 
-        return view('admin.ujian.uts.baak.jadwal.jadwal', compact('jadwal', 'resultArray'));
+        return view('admin.ujian.uts.baak.jadwal.jadwal', compact('jadwal', 'resultArray','pecah'));
     }
 
 
     public function search(Request $request)
     {
+ 
         $query = Soal_ujian::query();
-
+    
         if ($request->filled('kd_lokal')) {
             $query->where('kd_lokal', $request->kd_lokal);
         }
-
+    
         if ($request->filled('kel_ujian')) {
             $query->where('kel_ujian', $request->kel_ujian);
         }
-
+    
         if ($request->filled('tgl_ujian')) {
             $query->whereDate('tgl_ujian', $request->tgl_ujian);
         }
-
+    
+        if ($request->filled('paket')) {
+            $query->where('paket', $request->paket); // Ensure 'paket' column exists in your database
+        }
+    
         $jadwal = $query->get();
-
-        return view('admin.ujian.uts.baak.jadwal.cari', compact('jadwal'));
+    
+        return view('admin.ujian.uts.baak.jadwal.cari', ['jadwal' => $jadwal]);
     }
+    
     
     public function show_uts($id)
     {

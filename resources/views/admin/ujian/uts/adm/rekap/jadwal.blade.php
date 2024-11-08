@@ -24,7 +24,7 @@
 											  <th>Kel-Ujian</th>
 											  <th>Hari</th>
 											  <th>tgl ujian</th>
-											  <th>tgl ujian akhir</th>
+											
 											  <th>Mulai</th>
 											  <th>Selsai</th>
 											 
@@ -51,7 +51,7 @@
 											 <td>{{ $jadwal->hari_t }}</td>
 											 <td>{{ $jadwal->hari_t }}</td>
 											 <td>{{ $jadwal->tgl_ujian }}</td>
-											 <td>{{ $jadwal->tgl_ujian_akhir }}</td>
+											
 											 <td>{{ $jadwal->mulai }}</td>
 											 <td>{{ $jadwal->selesai }}</td>
 											
