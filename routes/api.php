@@ -7,7 +7,7 @@ use App\Http\Controllers\Api\{AbsenAjarController, JadwalController};
 use App\Http\Controllers\Api\Admin\LoginController;
 use App\Http\Controllers\Api\Mhs\{LoginmhsController, FileController};
 
-
+Route::middleware('throttle:user-agent-based')->group(function () {
 Route::get('/absen-ajars', [AbsenAjarController::class, 'index']);
 Route::get('/absen-ajar-praktek', [AbsenAjarController::class, 'ajar_praktek']);
 Route::get('/jadwal-dosen', [AbsenAjarController::class, 'jadwal']);
@@ -40,4 +40,5 @@ Route::prefix('mahasiswa')->group(function () {
         Route::get('/refresh', [LoginmhsController::class, 'refreshToken'])->name('customer.refresh');
         Route::post('/logout', [LoginmhsController::class, 'logout'])->name('customer.logout');
     });
+});
 });
