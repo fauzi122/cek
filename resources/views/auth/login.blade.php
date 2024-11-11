@@ -4,6 +4,8 @@
         <div class="slide-bg" style="background-image: url(./assets/images/bg-4.jpg);"></div>
 
     </div>
+    <H1> <CEnter>HALAMAN LOGIN PENGAWAS UJIAN</CEnter></H1>
+    <BR></BR>
     <!-- Session Status -->
     <x-auth-session-status class="mb-4" :status="session('status')" />
     <img src="{{ asset('assets_login/images/mybest_3.png') }}" alt="" height="70" class="me-1">
