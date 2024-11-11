@@ -119,7 +119,7 @@ Route::middleware('auth')->group(function () {
 
             // dasboard mengawas
         Route::controller(InfoController::class)->group(function () {
-            Route::get('/dashboard', 'index');
+            Route::get('/dashboard', 'index')->name('dashboard');
         });
 
 

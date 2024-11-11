@@ -12,6 +12,7 @@ use PHPOpenSourceSaver\JWTAuth\Exceptions\JWTException;
 
 class LoginController extends Controller
 {
+    
     public function index(Request $request)
     {
         // set validasi
