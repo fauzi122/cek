@@ -161,6 +161,14 @@ Route::controller(MtkujianController::class)->group(function () {
     Route::get('/create-mtk-uji', 'create');
     Route::post('/mtk-uji', 'store');
 });
+
+// log ujian mahasiswa
+Route::controller(LogUjianMhsController::class)->group(function () {
+    Route::get('/pilih-mtk-uji-log', 'utama');
+    Route::get('/mtk-uji-log/{id}', 'index');
+    Route::get('/show-mtk-uji-log/{id}', 'show');
+
+});
 // peserta Ujian
 Route::controller(PesertaujianController::class)->group(function () {
     Route::get('/peserta-ujian', 'index');

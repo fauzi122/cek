@@ -24,8 +24,7 @@ class RekapAbsenController extends Controller
     if (Auth::user()->utype == 'ADM') {
 
         $cabangs =Soal_ujian::groupBy('nm_kampus')->get();
-        $tgl =Soal_ujian::groupBy('tgl_ujian')->get();
-
+        $tgl =Soal_ujian::whereIn('paket', ['UTS', 'UAS'])->groupBy('tgl_ujian')->get();
         return view('admin.ujian.uts.adm.rekap_absen.index', compact('cabangs','tgl'));
         } else {
             return redirect('/dashboard');
