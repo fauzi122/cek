@@ -193,11 +193,11 @@
 			<li class="nav-item dropdown">
 				<a class="nav-link dropdown-toggle" href="#" id="formsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 					<i class="icon-file nav-icon"></i>
-					Log Aktivitas
+					Log Ujian Mahasiswa
 				</a>
 				<ul class="dropdown-menu" aria-labelledby="formsDropdown">
 					<li>
-						<a class="dropdown-item" href="">Log Aktivitas</a>
+						<a class="dropdown-item" href="{{url ('/pilih-mtk-uji-log') }}">Log Ujian Mahasiswa</a>
 					</li>
 
 
