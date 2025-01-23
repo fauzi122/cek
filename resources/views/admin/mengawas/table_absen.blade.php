@@ -145,7 +145,7 @@
 
                                 <b>Hadir</b>
                                 @else
-                                <b>Tidak Hdir</b>
+                                <b>Tidak Hadir</b>
                                 @endif
                             </td>
                             <td>{{ $item->ket }}</td>
