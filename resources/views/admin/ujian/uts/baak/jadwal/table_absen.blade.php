@@ -45,20 +45,12 @@
 
                                                     @if($beritaAcara && is_null($beritaAcara->field_yang_diperiksa))
                                                     <td>
-
+                                                        {{-- {{ $item->ket }} --}}
                                                         {{-- {{ $item->id }} --}}
                                                         <select disabled name="ket" class="custom-select ket-dropdown" data-id="{{ $item->id }}">
-                                                            <option value="">-- Pilih Status --</option>
-                                                            <option value="koneksi_server_gagal" {{ $item->ket == 'koneksi_server_gagal' ? 'selected' : '' }}>Koneksi Server Gagal</option>
-                                                            <option value="jaringan_loading_terus" {{ $item->ket == 'jaringan_loading_terus' ? 'selected' : '' }}>Jaringan Loading Terus</option>
-                                                            <option value="jaringan_putus_saat_mengerjakan_soal" {{ $item->ket == 'jaringan_putus_saat_mengerjakan_soal' ? 'selected' : '' }}>Jaringan Putus saat Mengerjakan Soal</option>
-                                                            <option value="soal_ujian_selalu_berulang" {{ $item->ket == 'soal_ujian_selalu_berulang' ? 'selected' : '' }}>Soal Ujian Selalu Berulang</option>
-                                                            <option value="mati_lampu" {{ $item->ket == 'mati_lampu' ? 'selected' : '' }}>Mati Lampu</option>
-                                                            <option value="laptop_bermasalah" {{ $item->ket == 'laptop_bermasalah' ? 'selected' : '' }}>Laptop Bermasalah</option>
-                                                            <option value="mahasiswa_tidak_bisa_koneksi_wifi" {{ $item->ket == 'mahasiswa_tidak_bisa_koneksi_wifi' ? 'selected' : '' }}>Mahasiswa Tidak Bisa Koneksi WiFi</option>
-                                                            <option value="nilai_tidak_diproses_diluar_kelas" {{ $item->ket == 'nilai_tidak_diproses_diluar_kelas' ? 'selected' : '' }}>Nilai Tidak Diproses (Mahasiswa Mengerjakan di Luar Kelas)</option>
-                                                            <option value="nilai_tidak_diproses_menyontek" {{ $item->ket == 'nilai_tidak_diproses_menyontek' ? 'selected' : '' }}>Nilai Tidak Diproses (Mahasiswa Menyontek)</option>
-                                                            <option value="nilai_tidak_diproses_bekerja_sama" {{ $item->ket == 'nilai_tidak_diproses_bekerja_sama' ? 'selected' : '' }}>Nilai Tidak Diproses (Bekerja Sama Saat Mengerjakan Ujian)</option>
+                                                            {{-- <option value="">-- Pilih Status --</option> --}}
+                                                            <option value="">{{ $item->ket }}</option>
+                                                            
                                                         </select>
                                                     </td> <!-- Assuming each item has an 'id' -->                                                  
                                                     <td>  
@@ -119,7 +111,7 @@
 
                                         <b>Hadir</b>
                                     @else
-                                        <b>Tidak Hdir</b>
+                                        <b>Tidak Hadir</b>
                                     @endif
                                     </td>
                                     <td>{{ $item->ket }}</td>
