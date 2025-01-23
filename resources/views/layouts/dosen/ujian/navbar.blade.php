@@ -190,7 +190,7 @@
 			@endcan
 
 			@can('log_ujian')
-			<li class="nav-item dropdown">
+			{{-- <li class="nav-item dropdown">
 				<a class="nav-link dropdown-toggle" href="#" id="formsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 					<i class="icon-file nav-icon"></i>
 					Log Ujian Mahasiswa
@@ -202,7 +202,7 @@
 
 
 				</ul>
-			</li>
+			</li> --}}
 			</ul>
 			@endcan
 		</div>
