@@ -25,6 +25,8 @@
                                     <th>Kel-Ujian</th>
                                     <th>Alasan</th>
                                     <th>Bukti</th>
+                                    <th>Created</th>
+                                    <th>Updated</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -40,6 +42,8 @@
                                         {{-- Asumsi $soal->bukti menyimpan nama file gambar --}}
                                         {{-- <img src="{{ asset('storage/bukti/' . $soal->bukti) }}" alt="bukti" width="100"> Sesuaikan path dan atribut sesuai kebutuhan --}}
                                     </td>
+                                    <td>{{ $soal->created_at }}</td>
+                                    <td>{{ $soal->updated_at }}</td>
                                 </tr>
                                 @endforeach
                             </tbody>
