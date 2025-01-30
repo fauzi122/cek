@@ -25,6 +25,8 @@
                                     <th>Kel-Ujian</th>
                                     <th>Alasan</th>
                                     <th>Bukti</th>
+                                    <th>Created</th>
+                                    <th>Updated</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -40,6 +42,8 @@
                                         <button class="downloadButton" data-url="{{$soal->bukti}}" data-id="{{$soal->nim.$soal->kd_mtk.$soal->paket}}">Download Bukti PDF</button>
 
                                     </td>
+                                    <td>{{ $soal->created_at }}</td>
+                                    <td>{{ $soal->updated_at }}</td>
                                 </tr>
                                 @endforeach
                             </tbody>
